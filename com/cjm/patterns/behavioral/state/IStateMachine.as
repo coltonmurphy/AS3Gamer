@@ -1,9 +1,9 @@
-package cjm.patterns.behavioral.state
+package com.cjm.patterns.behavioral.state
 {
-	import cjm.patterns.core.IUpdate;
-	import cjm.patterns.creational.core.ICreate;
-	import cjm.patterns.creational.core.IDestroy;
-	import cjm.patterns.structural.composite.IComposite;
+	import com.cjm.patterns.core.IUpdate;
+	import com.cjm.patterns.creational.core.ICreate;
+	import com.cjm.patterns.creational.core.IDestroy;
+	import com.cjm.patterns.structural.composite.IComposite;
 	import org.osflash.signals.ISignal;
 	
 	/**

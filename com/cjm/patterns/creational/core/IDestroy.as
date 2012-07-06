@@ -1,4 +1,4 @@
-package cjm.patterns.creational.core
+package com.cjm.patterns.creational.core
 {
 	import org.osflash.signals.ISignal;
 	/**

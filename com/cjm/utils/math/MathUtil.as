@@ -1,4 +1,4 @@
-package cjm.utils.math 
+package com.cjm.utils.math 
 {
 	/**
 	 * ...

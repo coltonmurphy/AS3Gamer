@@ -1,7 +1,7 @@
-package cjm.patterns.multi.mvc 
+package com.cjm.patterns.multi.mvc 
 {
-	import cjm.patterns.behavioral.command.ICommand;
-	import cjm.patterns.core.IName;
+	import com.cjm.patterns.behavioral.command.ICommand;
+	import com.cjm.patterns.core.IName;
 	import org.osflash.signals.ISignal;
 	
 	/**

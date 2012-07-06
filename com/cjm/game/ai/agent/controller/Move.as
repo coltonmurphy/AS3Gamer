@@ -1,9 +1,9 @@
-package cjm.game.ai.agent.controller 
+package com.cjm.game.ai.agent.controller 
 {
-	import cjm.patterns.behavioral.command.Command;
-	import cjm.patterns.behavioral.command.ICommand;
-	import cjm.patterns.behavioral.observer.INotification;
-	import cjm.patterns.structural.core.IContext;
+	import com.cjm.patterns.behavioral.command.Command;
+	import com.cjm.patterns.behavioral.command.ICommand;
+	import com.cjm.patterns.behavioral.observer.INotification;
+	import com.cjm.patterns.structural.core.IContext;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	

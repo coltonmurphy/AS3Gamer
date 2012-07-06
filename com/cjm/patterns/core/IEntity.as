@@ -1,6 +1,6 @@
-package cjm.patterns.core
+package com.cjm.patterns.core
 {
-	import cjm.patterns.core.IAbstract;
+	import com.cjm.patterns.core.IAbstract;
 	/**
 	 * ...
 	 * @author Colton Murphy

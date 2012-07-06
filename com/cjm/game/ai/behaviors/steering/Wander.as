@@ -1,8 +1,8 @@
-package cjm.game.ai.behaviours
+package com.cjm.game.ai.behaviours
 {
-	import cjm.patterns.behavioral.command;
-	import cjm.core.IContext;
-	import cjm.core.INotification;
+	import com.cjm.patterns.behavioral.command;
+	import com.cjm.core.IContext;
+	import com.cjm.core.INotification;
 	
 	/**
 	 * ...

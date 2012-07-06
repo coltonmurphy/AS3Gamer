@@ -1,13 +1,13 @@
-package cjm.patterns.structural.composite  
+package com.cjm.patterns.structural.composite  
 {
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	import cjm.patterns.structural.core.AbstractComponent;
-	import cjm.patterns.Abstract;
-	import cjm.core.IDestroy;
-	import cjm.core.IComposite;
+	import com.cjm.patterns.structural.core.AbstractComponent;
+	import com.cjm.patterns.Abstract;
+	import com.cjm.core.IDestroy;
+	import com.cjm.core.IComposite;
 	
 	public class AbstractComposite extends AbstractComponent 
 	{

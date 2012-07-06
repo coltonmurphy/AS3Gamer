@@ -1,7 +1,7 @@
-package cjm.game.ai.naivebayes 
+package com.cjm.game.ai.naivebayes 
 {
-	import cjm.patterns.creational.core.IDestroy;
-	import cjm.utils.math.MathUtil;
+	import com.cjm.patterns.creational.core.IDestroy;
+	import com.cjm.utils.math.MathUtil;
 	public final class NaiveBayesPredictor implements IDestroy
 	{
 		private var attributes:Vector.<Attribute> = new Vector.<Attribute>();

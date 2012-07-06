@@ -1,4 +1,4 @@
-package cjm.game.ai.behaviors.steering 
+package com.cjm.game.ai.behaviors.steering 
 {
 	/**
 	 * ...
@@ -6,8 +6,8 @@ package cjm.game.ai.behaviors.steering
 	 */
 	public class Evade extends Behavior
 	{
-		import cjm.core.IContext;
-		import cjm.core.INotification;
+		import com.cjm.core.IContext;
+		import com.cjm.core.INotification;
 		public function execute( ...params ) 
 		{
 			

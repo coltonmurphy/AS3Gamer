@@ -1,4 +1,4 @@
-package cjm.game.core 
+package com.cjm.game.core 
 {
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;

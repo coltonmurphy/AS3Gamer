@@ -1,4 +1,4 @@
-package cjm.events
+package com.cjm.events
 {
 	/**
 	 * ...

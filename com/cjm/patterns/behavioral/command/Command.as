@@ -1,10 +1,10 @@
-package cjm.patterns.behavioral.command 
+package com.cjm.patterns.behavioral.command 
 {
-	import cjm.patterns.behavioral.observer.INotification;
-	import cjm.patterns.core.Abstract;
-	import cjm.patterns.core.Entity;
-	import cjm.patterns.multi.mvc.IFacade;
-	import cjm.patterns.structural.core.IContext;
+	import com.cjm.patterns.behavioral.observer.INotification;
+	import com.cjm.patterns.core.Abstract;
+	import com.cjm.patterns.core.Entity;
+	import com.cjm.patterns.multi.mvc.IFacade;
+	import com.cjm.patterns.structural.core.IContext;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	/**

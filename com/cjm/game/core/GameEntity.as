@@ -1,6 +1,6 @@
-package cjm.game.core 
+package com.cjm.game.core 
 {
-	import cjm.patterns.core.Entity;
+	import com.cjm.patterns.core.Entity;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	/**

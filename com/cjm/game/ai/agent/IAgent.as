@@ -1,9 +1,9 @@
-package cjm.game.ai.agent 
+package com.cjm.game.ai.agent 
 {
-	import cjm.game.ai.pathfinding.IPath;
-	import cjm.game.core.IGameMovingEntity;
-	import cjm.game.core.IGameWorld;
-	import cjm.patterns.behavioral.state.IStateMachine;
+	import com.cjm.game.ai.pathfinding.IPath;
+	import com.cjm.game.core.IGameMovingEntity;
+	import com.cjm.game.core.IGameWorld;
+	import com.cjm.patterns.behavioral.state.IStateMachine;
 	import org.osflash.signals.ISignal;
 	
 	/**

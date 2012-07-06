@@ -1,4 +1,4 @@
-package cjm.patterns.behavioral.observer
+package com.cjm.patterns.behavioral.observer
 {
 	
 	/**

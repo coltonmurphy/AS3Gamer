@@ -1,8 +1,8 @@
-package cjm.game.ai.agent.state 
+package com.cjm.game.ai.agent.state 
 {
-	import cjm.game.ai.behaviours.Behavior;
-	import cjm.patterns.behavioral.state.IState;
-	import cjm.patterns.behavioral.state.State;
+	import com.cjm.game.ai.behaviours.Behavior;
+	import com.cjm.patterns.behavioral.state.IState;
+	import com.cjm.patterns.behavioral.state.State;
 	
 	/**
 	 * ...
@@ -17,7 +17,7 @@ package cjm.game.ai.agent.state
 			
 		}
 		
-		/* INTERFACE cjm.patterns.behavioral.state.IState */
+		/* INTERFACE com.cjm.patterns.behavioral.state.IState */
 		
 		public function enter(...params):Boolean 
 		{

@@ -1,6 +1,6 @@
 package  
 {
-	import cjm.patterns.behavioral.state.State;
+	import com.cjm.patterns.behavioral.state.State;
 	
 	/**
 	 * ...

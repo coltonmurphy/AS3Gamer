@@ -1,4 +1,4 @@
-package cjm.patterns.structural.core
+package com.cjm.patterns.structural.core
 {
 	
 	/**

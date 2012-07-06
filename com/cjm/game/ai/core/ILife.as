@@ -1,4 +1,4 @@
-package cjm.game.ai.core 
+package com.cjm.game.ai.core 
 {
 	
 	/**

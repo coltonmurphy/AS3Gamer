@@ -1,6 +1,6 @@
-package cjm.patterns.behavioral.state 
+package com.cjm.patterns.behavioral.state 
 {
-	import cjm.patterns.behavioral.command.Command;
+	import com.cjm.patterns.behavioral.command.Command;
 	import org.osflash.signals.ISignal;
 	/**
 	 * ...
@@ -13,7 +13,7 @@ package cjm.patterns.behavioral.state
 			
 		}
 		
-		/* INTERFACE cjm.patterns.behavioral.state.IState */
+		/* INTERFACE com.cjm.patterns.behavioral.state.IState */
 		
 		public function get onEnterState():ISignal 
 		{

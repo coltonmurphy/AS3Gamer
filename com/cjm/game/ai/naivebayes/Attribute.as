@@ -1,4 +1,4 @@
-package cjm.game.ai.naivebayes 
+package com.cjm.game.ai.naivebayes 
 {
 	import com.pzuh.Basic;
 	public class Attribute

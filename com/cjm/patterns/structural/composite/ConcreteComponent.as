@@ -1,14 +1,14 @@
-package cjm.patterns.structural.composite 
+package com.cjm.patterns.structural.composite 
 {
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	import cjm.core.IDestroy;
-	import cjm.core.IComposite;
-	import cjm.patterns.Abstract;
-	import cjm.patterns.structural.composite;
-	import cjm.core.IEntity;
+	import com.cjm.core.IDestroy;
+	import com.cjm.core.IComposite;
+	import com.cjm.patterns.Abstract;
+	import com.cjm.patterns.structural.composite;
+	import com.cjm.core.IEntity;
 	import appkit.responders.NResponder;
 	
 	public class ConcreteComponent extends AbstractComponent 

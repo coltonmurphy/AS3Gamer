@@ -1,9 +1,9 @@
-package cjm.game.ai.behaviors 
+package com.cjm.game.ai.behaviors 
 {
-	import cjm.patterns.behavioral.state.IState;
-	import cjm.patterns.behavioral.state.State;
-	import cjm.patterns.core.IUpdate;
-	import cjm.patterns.creational.core.IDestroy;
+	import com.cjm.patterns.behavioral.state.IState;
+	import com.cjm.patterns.behavioral.state.State;
+	import com.cjm.patterns.core.IUpdate;
+	import com.cjm.patterns.creational.core.IDestroy;
 
 	/**
 	 * ...
@@ -18,7 +18,7 @@ package cjm.game.ai.behaviors
 			super();
 		}
 		
-		/* INTERFACE cjm.patterns.behavioral.state.IState */
+		/* INTERFACE com.cjm.patterns.behavioral.state.IState */
 		
 		public function enter(...params):Boolean 
 		{

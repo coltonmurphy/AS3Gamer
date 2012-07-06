@@ -1,9 +1,9 @@
-package cjm.game.ai.agent.state 
+package com.cjm.game.ai.agent.state 
 {
-	import cjm.game.ai.agent.Agent;
-	import cjm.patterns.behavioral.state.IState;
-	import cjm.patterns.behavioral.state.IStateMachine;
-	import cjm.patterns.structural.core.IContext;
+	import com.cjm.game.ai.agent.Agent;
+	import com.cjm.patterns.behavioral.state.IState;
+	import com.cjm.patterns.behavioral.state.IStateMachine;
+	import com.cjm.patterns.structural.core.IContext;
 	import org.osflash.signals.ISignal;
 	new IContext
 	new INo
@@ -20,7 +20,7 @@ package cjm.game.ai.agent.state
 			_agents = new Vector.<Agent>;
 		}
 		
-		/* INTERFACE cjm.patterns.behavioral.state.IStateMachine */
+		/* INTERFACE com.cjm.patterns.behavioral.state.IStateMachine */
 		public static function getInstance():IStateMachine
 		{
 			return _instance || _instance = new AgentStateMachine(new Key());

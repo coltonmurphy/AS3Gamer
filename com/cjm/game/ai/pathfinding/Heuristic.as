@@ -1,1 +1,1 @@
-﻿package cjm.game.ai.pathfinding{	import cjm.game.ai.pathfinding.INode;	import cjm.game.ai.pathfinding.IHeuristic;		public class Heuristic implements IHeuristic	{				public function estimateCost(fromNode:INode, toNode:INode):Number		{				return 1;		}			}}
+﻿package com.cjm.game.ai.pathfinding{	import com.cjm.game.ai.pathfinding.INode;	import com.cjm.game.ai.pathfinding.IHeuristic;		public class Heuristic implements IHeuristic	{				public function estimateCost(fromNode:INode, toNode:INode):Number		{				return 1;		}			}}

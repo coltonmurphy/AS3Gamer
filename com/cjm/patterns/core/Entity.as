@@ -1,7 +1,7 @@
-package cjm.patterns.core 
+package com.cjm.patterns.core 
 {
-	import cjm.core.IEntity;
-	import cjm.patterns.Abstract;
+	import com.cjm.core.IEntity;
+	import com.cjm.patterns.Abstract;
 	
 	/**
 	 * ...

@@ -1,8 +1,8 @@
-package cjm.patterns.behavioral.command 
+package com.cjm.patterns.behavioral.command 
 {
-	import cjm.patterns.behavioral.observer.INotification;
-	import cjm.patterns.creational.core.IDestroy;
-	import cjm.patterns.structural.core.IContext;
+	import com.cjm.patterns.behavioral.observer.INotification;
+	import com.cjm.patterns.creational.core.IDestroy;
+	import com.cjm.patterns.structural.core.IContext;
 	import org.osflash.signals.Signal;
 	
 	/**

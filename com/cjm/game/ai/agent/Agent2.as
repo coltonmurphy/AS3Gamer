@@ -1,21 +1,21 @@
-package  cjm.game.ai.agent
+package com.cjm.game.ai.agent
 {
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	import cjm.core.IContext;
+	import com.cjm.core.IContext;
 
-	import cjm.core.IEntity;
-	import cjm.core.IState;
+	import com.cjm.core.IEntity;
+	import com.cjm.core.IState;
 	i
-	import cjm.game.ai.behaviours.Behaviour;
-	import cjm.core.IState;
-	import cjm.patterns.structural.composite.IComposite;
+	import com.cjm.game.ai.behaviours.Behaviour;
+	import com.cjm.core.IState;
+	import com.cjm.patterns.structural.composite.IComposite;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
 	import flash.geom.Vector3D;
-	import cjm.patterns.core.IUpdate;
+	import com.cjm.patterns.core.IUpdate;
 	
 	public class Agent implements IAgent
 	{

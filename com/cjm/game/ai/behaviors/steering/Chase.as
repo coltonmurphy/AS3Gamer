@@ -1,9 +1,9 @@
-package cjm.game.ai.behaviors.steering 
+package com.cjm.game.ai.behaviors.steering 
 {
-	import cjm.game.ai.behaviors.Behavior;
-	import cjm.patterns.behavioral.observer.INotification;
-	import cjm.patterns.behavioral.state.IState;
-	import cjm.patterns.structural.core.IContext;
+	import com.cjm.game.ai.behaviors.Behavior;
+	import com.cjm.patterns.behavioral.observer.INotification;
+	import com.cjm.patterns.behavioral.state.IState;
+	import com.cjm.patterns.structural.core.IContext;
 	import org.osflash.signals.ISignal;
 	
 	/**
@@ -19,7 +19,7 @@ package cjm.game.ai.behaviors.steering
 			
 		}
 		
-		/* INTERFACE cjm.patterns.behavioral.state.IState */
+		/* INTERFACE com.cjm.patterns.behavioral.state.IState */
 		//Calling supers for signal sending
 		public function enter(...params):Boolean 
 		{

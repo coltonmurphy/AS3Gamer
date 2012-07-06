@@ -1,4 +1,4 @@
-package cjm.patterns.core 
+package com.cjm.patterns.core 
 {
 	/**
 	 * ...

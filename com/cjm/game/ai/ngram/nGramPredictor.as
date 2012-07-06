@@ -1,8 +1,8 @@
 
 //For pattern recognition via grammar and a statistically reduced prediction
-package cjm.game.ai.ngram
+package com.cjm.game.ai.ngram
 {
-	import cjm.utils.math.MathUtil;
+	import com.cjm.utils.math.MathUtil;
 	
 	public class nGramPredictor
 	{

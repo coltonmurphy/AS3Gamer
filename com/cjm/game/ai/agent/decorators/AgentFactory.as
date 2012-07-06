@@ -1,6 +1,6 @@
-package cjm.game.ai.agent.decorators 
+package com.cjm.game.ai.agent.decorators 
 {
-	import cjm.game.ai.agent.Agent;
+	import com.cjm.game.ai.agent.Agent;
 	/**
 	 * ...
 	 * @author Colton Murphy

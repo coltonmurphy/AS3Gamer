@@ -1,4 +1,4 @@
-package cjm.game.core 
+package com.cjm.game.core 
 {
 	import org.osflash.signals.ISignal;
 	
