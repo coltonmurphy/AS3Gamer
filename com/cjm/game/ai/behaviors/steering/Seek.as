@@ -1,17 +1,18 @@
 package com.cjm.game.ai.behaviors.steering 
 {
+	import com.cjm.game.ai.behaviors.Behavior;
+	
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	import com.cjm.game.ai.agent.IAgent;
-	import com.cjm.game.ai.behaviors.Behavior;
-	import flash.geom.Vector3D;
-	
-	internal class Evade extends Behavior
+	internal class Seek extends Behavior 
 	{
-		private var _evader :IAgent;
-		private var _pursuer:IAgent;
+		
+		public function Seek() 
+		{
+			
+		}
 		
 		override public function enter( ...params ) :Boolean
 		{
@@ -47,6 +48,5 @@ package com.cjm.game.ai.behaviors.steering
 		}
 		
 	}
-
 
 }

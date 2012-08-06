@@ -9,6 +9,8 @@ package com.cjm.patterns.core
 	{
 		public function getType():String
 		public function setType(t:String):void;
+		public function destroy():void;
+		
 	}
 
 }

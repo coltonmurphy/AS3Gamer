@@ -14,7 +14,7 @@ package com.cjm.game.ai.pathfinding
 		
 		public static function find( g:IGraph, a:INode, b:INode ):IPath
 		{
-			var p:AStar = new AStar().findPath( g, a, b)
+			var p:AStar = new AStar();
 			p.findPath( g, a, b);
 			return new Path(p.path);
 		}

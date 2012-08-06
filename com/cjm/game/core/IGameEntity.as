@@ -11,8 +11,6 @@ package com.cjm.game.core
 	 */
 	public interface IGameEntity extends IEntity
 	{
-		
-		
 		public function get onSetScale:ISignal;
 		public function setScale(s:Number):void
 		public function getScale():Number;
@@ -24,6 +22,9 @@ package com.cjm.game.core
 		public function get onSetRadius:ISignal;
 		public function setRadius(b:Number):void
 		public function getRadius(b):Number
+		
+		public function get onUpdate:ISignal;
+		public function update(b):Number
 	}
 	
 }

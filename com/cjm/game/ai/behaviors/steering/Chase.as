@@ -10,7 +10,7 @@ package com.cjm.game.ai.behaviors.steering
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public class Chase extends Behavior implements IState 
+	internal class Chase extends Behavior
 	{
 		
 		public function Chase(state:String) 

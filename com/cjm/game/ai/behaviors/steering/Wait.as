@@ -1,15 +1,12 @@
-package com.cjm.game.ai.behaviours 
+package com.cjm.game.ai.behaviors.steering 
 {
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-
-	import com.cjm.core.IContext;
-	import com.cjm.core.INotification;
-	public class Wait implements Behaviour 
+	import com.cjm.game.ai.behaviors.Behavior;
+	internal class Wait implements Behavior 
 	{
-		
 		public function Wait() 
 		{
 			

@@ -8,8 +8,16 @@ package com.cjm.game.ai.pathfinding
 	 */
 	public interface IPath 
 	{
-		public function setPath( vs:Vector.<Vector3D> ):Boolean;
-		public function getPath( ):Vector.<Vector3D>;
+		public function next():INode//using cursor for iterations
+		public function end():INode
+		public function front():INode;
+		public function length():uint;
+		public function getNode( i:uint ):INode;
+		public function addNode( n:INode ):uint;
+		public function removeNode( n:INode ):uint
+		public function setNodes( vs:Vector.<INode> ):Boolean;
+		public function getNodes( ):Vector.<INode>;
+		public function inverse( ):Vector.<INode>;
 	}
 	
 }

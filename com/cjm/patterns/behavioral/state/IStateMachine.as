@@ -1,19 +1,19 @@
 package com.cjm.patterns.behavioral.state
 {
-	import com.cjm.patterns.core.IUpdate;
-	import com.cjm.patterns.creational.core.ICreate;
-	import com.cjm.patterns.creational.core.IDestroy;
-	import com.cjm.patterns.structural.composite.IComposite;
+	import com.cjm.game.core.IUpdate
 	import org.osflash.signals.ISignal;
 	
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public interface IStateMachine extends IComposite, IUpdate, IDestroy, ICreate
+	public interface IStateMachine extends IUpdate
 	{
 		public function get onChangeState:ISignal;
-		public function changeState(from:IState,to:IState, ...params):Boolean;
+		public function changeState(to:IState, ...params):Boolean;
+		public function setCurrentState( to:IState, ...params):Boolean;
+		public function setGlobalState(to:IState, ...params):Boolean;
+		public function setPreviousState(to:IState, ...params):Boolean;
 	}
 	
 }

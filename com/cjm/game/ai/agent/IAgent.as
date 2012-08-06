@@ -10,7 +10,7 @@ package com.cjm.game.ai.agent
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public interface IAgent extends IGameMovingEntity, IStateMachine 
+	public interface IAgent extends IGameMovingEntity 
 	{
 		public function get onSetAwarenessRadius:ISignal;
 		public function setAwarenessRadius(ar:uint):Boolean;
