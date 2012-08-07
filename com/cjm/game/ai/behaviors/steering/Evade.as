@@ -43,10 +43,8 @@ package com.cjm.game.ai.behaviors.steering
 			var toPusuer:Vector3D = agent2.getPosition().subtract(agent1.getPosition());
 			var lookAhead:Number = toPusuer.length / (agent1.getMaxSpeed() + agent2.getSpeed());
 			
-			return (new Flee()).execute(agent2.getPosition().add(agent2.getVelocity()).scaleBy(lookAhead));
+			return (new Flee(_owner)).execute(agent2.getPosition().add(agent2.getVelocity()).scaleBy(lookAhead));
 		}
 		
 	}
-
-
 }

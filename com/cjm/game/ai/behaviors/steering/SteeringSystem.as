@@ -47,6 +47,11 @@ package com.cjm.game.ai.behaviors.steering
 			return _instances[ owner ];
 		}
 		
+		public function calculate(...params):Vector3D
+		{
+			throw new Error("SteeringSystem calculate() must be overriden by subclass")
+		}
+		
 		public function get onMapBehaviorToAction():GameAction 
 		{
 			return _onMapBehaviorToAction;
@@ -102,6 +107,24 @@ package com.cjm.game.ai.behaviors.steering
 		public function get timeElapsed():Number 
 		{
 			return _timeElapsed;
+		}
+		
+		public function queryRadiusByEntityType(radius:int = 1, type:Class = null):Vector.<IAgent>
+		{
+			var agents = new Vector.<IAgent>;
+			
+			for each( agent:IAgent in _systems )
+			{
+				if ( null == type || ( agent is type ))
+				{
+					if ( _owner.getDistance( agent.getPosition() ) <= radius )
+					{
+						agents.push(agent)
+					}
+				}
+			}
+			
+			return agents;
 		}
 	}	
 }

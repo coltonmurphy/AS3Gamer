@@ -18,6 +18,7 @@ package com.cjm.game.core
 		private var _scale:uint         = 1;
 		private var _position:Vector3D  = new Vector3D();
 		private var _radius:uint        = 1;
+		protected var _mass:Number      = 1;
 		
 		public function GameEntity() 
 		{
@@ -42,6 +43,16 @@ package com.cjm.game.core
 		public function render( ...params ):void
 		{
 			onRender.dispatch(params);
+		}
+		
+		public function setMass(m:uint):Boolean 
+		{
+			_mass = m;
+		}
+		
+		public function getMass():uint 
+		{
+			return _mass;
 		}
 		
 		public function get onSetScale():ISignal 

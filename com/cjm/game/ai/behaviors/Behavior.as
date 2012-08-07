@@ -8,7 +8,7 @@ package com.cjm.game.ai.behaviors
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public class Behavior implements IBehavior
+	public class Behavior extends State implements IBehavior
 	{
 		protected var _owner:IGameMovingEntity;
 		

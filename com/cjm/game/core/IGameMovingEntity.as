@@ -17,10 +17,6 @@ package com.cjm.game.core
 		public function setHeading(v:Vector3D):Boolean;
 		public function getHeading():Vector3D;
 		
-		public function get onSetMass:ISignal;
-		public function setMass(m:uint):Boolean;
-		public function getMass():uint;
-		
 		public function get onSetMaxSpeed:ISignal;
 		public function setMaxSpeed(s:uint):Boolean;
 		public function getMaxSpeed():uint;
