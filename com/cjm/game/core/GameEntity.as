@@ -15,14 +15,27 @@ package com.cjm.game.core
 		private var _onSetPosition  :ISignal;
 		private var _onSetScale     :ISignal;
 		private var _onSetRadius    :ISignal;
-		private var _scale:uint         = 1;
-		private var _position:Vector3D  = new Vector3D();
-		private var _radius:uint        = 1;
-		protected var _mass:Number      = 1;
 		
-		public function GameEntity() 
+		protected var _wold:IGameWorld    = null;
+		protected var _tagged:Boolean     = false;
+		protected var _scale:uint         = 1;
+		protected var _position:Vector3D  = new Vector3D();
+		protected var _radius:uint        = 1;
+		protected var _mass:Number        = 1;
+		
+		public function GameEntity( world:IGameWorld ) 
 		{
-			
+			_wold = world;
+		}
+		
+		public function initializeSystems():Boolean
+		{
+			return false;
+		}
+		
+		public function getGameWorld():IGameWorld
+		{
+			return _world
 		}
 		
 		public function get onUpdate:ISignal
@@ -129,6 +142,16 @@ package com.cjm.game.core
 			var t:Number = super._id;
 			super._id = id;
 			onSetID.dispatch(t, id);
+		}
+		
+		public function isTagged():Boolean
+		{
+			return _tagged
+		}
+		
+		public function setTagged(t):void
+		{
+			 _tagged = t;
 		}
 		
 	}

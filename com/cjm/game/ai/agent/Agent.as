@@ -37,7 +37,10 @@ package com.cjm.game.ai.agent
 		public function update(timeElapsed:Number):void
 		{
 			//Get steering force
+			///Force = Mass*Acceleration
 			var steeringForce:Vector3D = _steeringSystem.calculate();
+			
+			///Acceleration = Force / Mass
 			var acceleration: Vector3D = steeringForce.scaleBy( getMass() );
 			
 			getVelocity().add( acceleration.scaleBy( timeElapsed ) );
@@ -45,7 +48,7 @@ package com.cjm.game.ai.agent
 			//TODO: Truncate to max speed
 			
 			//Update coordinate location
-			getPosition().add( getVelocity().scaleBy( timeElapsed ) );
+			_position.add( getVelocity().scaleBy( timeElapsed ) );
 			
 			//Update heading if moving
 			if ( getVelocity().lengthSquared > 0.00000001 )

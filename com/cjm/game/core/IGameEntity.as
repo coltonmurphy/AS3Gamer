@@ -11,6 +11,14 @@ package com.cjm.game.core
 	 */
 	public interface IGameEntity extends IEntity
 	{
+		public function getGameWorld():IGameWorld;
+		
+		public function initializeSystems( ...params ):Boolean;
+		
+		public function get onSetTagged:ISignal;
+		public function isTagged():Boolean;
+		public function setTagged(t:Boolean):void;
+		
 		public function get onSetMass:ISignal;
 		public function setMass(m:uint):Boolean;
 		public function getMass():uint;
