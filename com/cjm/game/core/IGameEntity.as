@@ -2,6 +2,7 @@ package com.cjm.game.core
 {
 	import com.cjm.patterns.core.IEntity;
 	import com.cjm.patterns.core.IUpdate;
+	import flash.display.DisplayObject;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	
@@ -9,9 +10,15 @@ package com.cjm.game.core
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public interface IGameEntity extends IEntity
+	public interface IGameEntity extends IUpdate implements IRender
 	{
+		public function get onSetView:ISignal;
+		public function setView(v:DisplayObject)//TODO: Determine 3D engine.
+		public function getView():DisplayObject
+		
 		public function getGameWorld():IGameWorld;
+		
+		public function render(...params):void;
 		
 		public function initializeSystems( ...params ):Boolean;
 		

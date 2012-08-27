@@ -1,1 +1,0 @@
-﻿package com.cjm.game.ai.pathfinding{	public interface IGraph	{			function addNode(node:INode):void;		function addNeighbour(fromNode:INode, toNode:INode, cost:Number):void;		function getNeighbours(node:INode):Array;		function getCost(fromNode:INode, toNode:INode):Number;			}}

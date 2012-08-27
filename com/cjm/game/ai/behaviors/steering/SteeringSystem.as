@@ -129,3 +129,4 @@ package com.cjm.game.ai.behaviors.steering
 	}	
 }
 private class SingletonKey { public function SingletonKey() { }};
+private class 

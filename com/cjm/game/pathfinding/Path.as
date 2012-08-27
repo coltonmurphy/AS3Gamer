@@ -1,4 +1,4 @@
-package com.cjm.game.ai.pathfinding 
+package com.cjm.game.pathfinding 
 {
 	import com.cjm.game.core.IRender;
 	import com.cjm.game.signals.GameAction;

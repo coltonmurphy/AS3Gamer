@@ -1,0 +1,1 @@
+﻿package com.cjm.game.pathfinding{		import com.cjm.game.ai.pathfinding.INode;		public interface IHeuristic	{		function estimateCost(fromNode:INode, toNode:INode):Number;	}}
