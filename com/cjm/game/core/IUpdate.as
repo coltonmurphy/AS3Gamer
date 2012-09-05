@@ -8,7 +8,7 @@ package com.cjm.game.core
 	 */
 	public interface IUpdate 
 	{
-		public function get onUpdate:ISignal;
+		public function get updateSignal:ISignal;
 		public function update( ...params ):Boolean
 	}
 	

@@ -1,6 +1,6 @@
-package com.cjm.game.core 
+package com.cjm.patterns.core 
 {
-	import org.osflash.signals.ISignal;
+	import com.cjm.game.event.GameSignal;
 	
 	/**
 	 * ...
@@ -8,8 +8,8 @@ package com.cjm.game.core
 	 */
 	public interface IUpdate 
 	{
-		public function get onUpdate:ISignal;
-		public function update( ...params ):Boolean
+		public function get updateSignal:GameSignal;
+		public function update( time:Number ):void
 	}
 	
 }

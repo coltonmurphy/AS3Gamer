@@ -9,7 +9,7 @@ package com.cjm.game.pathfinding
 	 */
 	public final class Path implements IPath, IRender
 	{
-		private var _onRender:GameAction = new GameAction();
+		private var _renderSignal:GameAction = new GameAction();
 		private var _nodes:Vector.<INode>;
 		private var _cursor:int;
 		private var _visible:Boolean;
@@ -33,7 +33,7 @@ package com.cjm.game.pathfinding
 				
 			}
 			
-			onRender.dispatch(payLoad)
+			renderSignal.dispatch(payLoad)
 		}
 		
 		public function end():INode

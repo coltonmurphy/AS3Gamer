@@ -69,10 +69,10 @@ package com.cjm.game.core
 			_onChangeState.dispatch( toState );
 		}
 
-		public function get onUpdate():ISignal {return _onUpdate;}
+		public function get updateSignal():ISignal {return _updateSignal;}
 		public function update(...params):Boolean 
 		{
-			_onUpdate.dispatch(this)
+			_updateSignal.dispatch(this)
 		}
 		
 	}

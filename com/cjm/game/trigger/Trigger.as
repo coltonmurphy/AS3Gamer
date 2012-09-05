@@ -20,10 +20,12 @@ package com.cjm.game.trigger
 		protected var _active:Boolean;
 		protected var _region:ITriggerRegion;
 		protected var _graphNode:INode;
+		protected var _pulled:Boolean;
+		
 		
 		public function Trigger() 
 		{
-			
+			super()
 		}
 		
 		/* INTERFACE com.cjm.game.trigger.ITrigger */
@@ -35,16 +37,7 @@ package com.cjm.game.trigger
 			}
 		}
 		
-		//Wrappers/////////////////////////////////
-		public function addListener( callBack:Function ):void
-		{
-			_dispatcher.add( callBack );
-		}
-		
-		public function removeListener( callBack:Function ):void
-		{
-			_dispatcher.remove( callBack );
-		}
+	
 		
 		//Region Data//////////////
 		public function setRegion(tr:ITriggerRegion):void 
@@ -59,7 +52,12 @@ package com.cjm.game.trigger
 		
 		
 		
-		public function removeFromGame(tr:ITriggerRegion):void 
+		public function remove():void 
+		{
+			_
+		}
+		
+		public function destroy():void
 		{
 			_active = false;
 			_region = null;

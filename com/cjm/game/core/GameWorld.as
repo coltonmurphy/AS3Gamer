@@ -71,9 +71,9 @@ package com.cjm.game.core
 			
 		}
 		
-		public function get onSetScale():ISignal 
+		public function get scaleSignal():ISignal 
 		{
-			return _onSetScale;
+			return _scaleSignal;
 		}
 		
 		public function setScale(s:Number):void 
@@ -86,9 +86,9 @@ package com.cjm.game.core
 			
 		}
 		
-		public function get onSetPosition():ISignal 
+		public function get _positionSignal():ISignal 
 		{
-			return _onSetPosition;
+			return __positionSignal;
 		}
 		
 		public function setPosition(v:Vector3D):void 
@@ -101,9 +101,9 @@ package com.cjm.game.core
 			
 		}
 		
-		public function get onSetRadius():ISignal 
+		public function get radiusSignal():ISignal 
 		{
-			return _onSetRadius;
+			return _radiusSignal;
 		}
 		
 		public function setRadius(b:Number):void 
@@ -121,9 +121,9 @@ package com.cjm.game.core
 			
 		}
 		
-		public function get onUpdate():ISignal 
+		public function get updateSignal():ISignal 
 		{
-			return _onUpdate;
+			return _updateSignal;
 		}
 		
 		public function update(b):Number 

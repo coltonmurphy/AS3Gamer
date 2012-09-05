@@ -1,6 +1,6 @@
 package com.cjm.game.core 
 {
-	import org.osflash.signals.ISignal;
+	import com.cjm.game.event.GameSignal;
 	
 	/**
 	 * ...
@@ -8,7 +8,7 @@ package com.cjm.game.core
 	 */
 	public interface IRender 
 	{
-		public function get onRender:ISignal;
+		public function get renderSignal:GameSignal;
 		public function render(...params):void
 	}
 	
