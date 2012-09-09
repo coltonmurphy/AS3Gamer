@@ -20,18 +20,17 @@ package com.cjm.game.core
 		}
 		
 		/* INTERFACE com.cjm.game.core.IGameSystem */
-		
-		public function getGameWorld():IGameWorld
-		{
-			return _world;
-		}
-		
 		public function initialize( active:Boolean = false ):void 
 		{
 			if ( active )
 				setActive( true );
 		}
 		
+		public function getGameWorld():IGameWorld
+		{
+			return _world;
+		}
+
 		public function setActive(b:Boolean):void 
 		{
 			_active = b;
@@ -47,6 +46,11 @@ package com.cjm.game.core
 			return _list;
 		}
 		
+		public function addEntity(e:IGameEntity):Vector.<IGameEntity> 
+		{
+			_list.push(e);
+		}
+		
 		public function get updateSignal():GameSignal 
 		{
 			return _updateSignal;
@@ -58,7 +62,7 @@ package com.cjm.game.core
 			for each( item:IGameEntity in _list )
 			{
 				if ( item.isToBeRemoved())
-					item.destroy();
+					 item.destroy();
 				else
 					item.update( time )
 			}
@@ -77,7 +81,5 @@ package com.cjm.game.core
 			_active = null;
 			_updateSignal = null;
 		}
-
 	}
-
 }

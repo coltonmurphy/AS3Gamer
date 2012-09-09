@@ -6,14 +6,13 @@ package com.cjm.game.core
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public interface IGameWorld extends IGameEntity, ITick, IRun
+	public interface IGameWorld extends IUpdate implements ITick, IRun
 	{
-		public function getInstance( ):IGameWorld;
+		public function initialize():void
 		public function render( ...params ):void;
 		public function tick( ...param ):void;
 		public function run():Boolean;
 		public function pause():Boolean;
-		public function draw():Boolean;
 		
 		//Tag for processing
 		public function tagObstaclesWithinViewRange( ige:IGameEntity, range:Number ):Boolean;

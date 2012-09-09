@@ -1,5 +1,8 @@
 package com.cjm.game.core 
 {
+	import com.cjm.game.ai.agent.AgentSystem;
+	import com.cjm.game.trigger.TriggerSystem;
+	import com.cjm.utils.math.Vector2D;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	/**
@@ -8,6 +11,10 @@ package com.cjm.game.core
 	 */
 	public class GameWorld implements IGameWorld 
 	{
+		protected var _agentSystem:AgentSystem;
+		protected var _triggerSystem:TriggerSystem;
+		
+		protected var _lastUpdateTime:Number;
 		
 		public function GameWorld() 
 		{
@@ -15,15 +22,10 @@ package com.cjm.game.core
 		}
 		
 		/* INTERFACE com.cjm.game.core.IGameWorld */
-		
-		public function getInstance():IGameWorld 
+		public function initialize():Boolevoid 
 		{
-			
-		}
-		
-		public function initializeSystems(...params):Boolean 
-		{
-			
+			_agentSystem   = new AgentSystem( this );
+			_triggerSystem = new TriggerSystem( this )
 		}
 		
 		public function render(...params):void 
@@ -45,117 +47,54 @@ package com.cjm.game.core
 		{
 			
 		}
-		
-		public function draw():Boolean 
+
+		public function tagObstaclesWithinViewRange(ige:IGameEntity, range:Number):void
 		{
+			var entities:Vector.<IGameEntity> = queryRadiusByEntityType( ige.getPosition(), range );
 			
+			for each( e:IGameEntity in entities )
+					  e.setTagged( true );
+
 		}
 		
-		public function tagObstaclesWithinViewRange(ige:IGameEntity, range:Number) 
+		public function queryRadiusByEntityType(fromPosition:Vector2D, radius:int = 5, type:Class = null):Vector.<IAgent>
 		{
+			var entities:Vector.<IGameEntity> = _agentSystem.getEntities();
 			
-		}
-		
-		public function get onSetMass():ISignal 
-		{
-			return _onSetMass;
-		}
-		
-		public function setMass(m:uint):Boolean 
-		{
+			for each( e:IGameEntity in entities )
+			{
+				if ( null == type || ( e is type ))
+				{
+					if ( fromPosition.getDistance( e.getPosition() ) <= radius )
+					{
+						entities.push(e)
+					}
+				}
+			}
 			
+			return entities;
 		}
 		
-		public function getMass():uint 
-		{
-			
-		}
-		
-		public function get scaleSignal():ISignal 
-		{
-			return _scaleSignal;
-		}
-		
-		public function setScale(s:Number):void 
-		{
-			
-		}
-		
-		public function getScale():Number 
-		{
-			
-		}
-		
-		public function get _positionSignal():ISignal 
-		{
-			return __positionSignal;
-		}
-		
-		public function setPosition(v:Vector3D):void 
-		{
-			
-		}
-		
-		public function getPosition():Vector3D 
-		{
-			
-		}
-		
-		public function get radiusSignal():ISignal 
-		{
-			return _radiusSignal;
-		}
-		
-		public function setRadius(b:Number):void 
-		{
-			
-		}
-		
-		public function getRadius(b):Number 
-		{
-			
-		}
-		
-		public function getDistance(s:Vector3D):Number 
-		{
-			
-		}
-		
+
 		public function get updateSignal():ISignal 
 		{
 			return _updateSignal;
 		}
 		
-		public function update(b):Number 
+		public function update( ):void 
 		{
+			var time  = new Date().getMilliseconds();
+			var step = ( time - _lastUpdateTime );
 			
-		}
-		
-		public function getType():String 
-		{
+			_agentSystem.update( step );
+			_triggerSystem.update( step );
 			
+			_lastUpdateTime = time;
 		}
-		
-		public function setType(t:String):void 
-		{
-			
-		}
-		
+
 		public function destroy():void 
 		{
 			
 		}
-		
-		public function getID():String 
-		{
-			
-		}
-		
-		public function setID(id:String):void 
-		{
-			
-		}
-		
 	}
-
 }

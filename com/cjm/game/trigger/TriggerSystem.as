@@ -1,6 +1,7 @@
 package com.cjm.game.trigger 
 {
 	import com.cjm.game.core.GameSystem;
+	import com.cjm.game.core.IGameWorld;
 	
 	/**
 	 * ...
@@ -8,11 +9,9 @@ package com.cjm.game.trigger
 	 */
 	public class TriggerSystem extends GameSystem 
 	{
-		
-		public function TriggerSystem() 
+		public function TriggerSystem( w:IGameWorld ) 
 		{
-			super();
-			
+			super( w );
 		}
 		
 		override public function update( time:Number ):void 
@@ -32,5 +31,4 @@ package com.cjm.game.trigger
 			//Render visible triggers
 		}
 	}
-
 }
