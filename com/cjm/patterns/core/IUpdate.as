@@ -8,7 +8,6 @@ package com.cjm.patterns.core
 	 */
 	public interface IUpdate 
 	{
-		public function get updateSignal:GameSignal;
 		public function update( time:Number ):void
 	}
 	

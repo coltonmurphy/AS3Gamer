@@ -1,7 +1,7 @@
 package com.cjm.game.core 
 {
-	import flash.geom.Vector3D;
-	import org.osflash.signals.ISignal;
+	import com.cjm.utils.math.Vector2D;
+
 	
 	/**
 	 * ...
@@ -9,27 +9,21 @@ package com.cjm.game.core
 	 */
 	public interface IGameMovingEntity extends IGameEntity
 	{
-		public function get onSetVelocity:ISignal;
-		public function setVelocity(v:Vector3D):Boolean;
-		public function getVelocity():Vector3D;
+		public function setVelocity(v:Vector2D):Boolean;
+		public function getVelocity():Vector2D;
 		
-		public function get onSetHeading:ISignal;
-		public function setHeading(v:Vector3D):Boolean;
-		public function getHeading():Vector3D;
-		
-		public function get onSetMaxSpeed:ISignal;
+		public function setHeading(v:Vector2D):Boolean;
+		public function getHeading():Vector2D;
+
 		public function setMaxSpeed(s:uint):Boolean;
 		public function getMaxSpeed():uint;
 		
-		public function get onSetSpeed:ISignal;
 		public function setSpeed(s:uint):Boolean;
 		public function getSpeed():uint;
 		
-		public function get onSetMaxForce:ISignal;
 		public function setMaxForce(g:uint):Boolean;
 		public function getMaxForce():uint;
 	
-		public function get onSetTurnRate:ISignal;
 		public function setTurnRate(g:uint):Boolean;
 		public function getTurnRate():uint;
 	}

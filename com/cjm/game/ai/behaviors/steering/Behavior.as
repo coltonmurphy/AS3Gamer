@@ -20,11 +20,11 @@ package com.cjm.game.ai.behaviors.steering
 		/*Constructor parameters:
 		 * gme                  = is the entity to which the force derived is applied to
 		 * paramsForAutoExecute = is used for when instantiating behavior from inside a behavior, because some behaviors execute others*/
-		public function Behavior( gme:IGameMovingEntity, ...paramsForAutoExecute ) 
+		public function Behavior( gme:IGameMovingEntity, autoRun:Boolean = false, ...paramsForAutoExecute ) 
 		{
 			_owner = gme;
 			
-			if ( paramsForAutoExecute.length > 0 )
+			if ( autoRun )
 			{
 				enter( paramsForAutoExecute );
 				execute( paramsForAutoExecute );//Updates _steeringForce

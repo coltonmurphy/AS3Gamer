@@ -2,7 +2,9 @@ package com.cjm.game.ai.behaviors.steering
 {
 	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
+	import com.cjm.game.core.GameError;
 	import com.cjm.game.core.IGameEntity;
+	import com.cjm.game.core.IGameMovingEntity;
 	import com.cjm.patterns.behavioral.observer.INotification;
 	import com.cjm.patterns.behavioral.state.IState;
 	import com.cjm.patterns.structural.core.IContext;
@@ -18,12 +20,20 @@ package com.cjm.game.ai.behaviors.steering
 		private var _neighbors:Vector.<IGameEntity>;
 		private var _centerOfMass:Vector2D;
 		
-		
-		override public function enter( ...params ) :void
+		public function Cohesion( owner:IGameMovingEntity, autoRun:Boolean = false,neighbors:Vector.<IGameEntity> = null )
+		{
+			super( owner, autoRun, neighbors )
+			
+			_neighbors = neighbors;
+		}
+		override public function enter( ...params ) :Vector2D
 		{
 			super.enter(params);
 			
-			_neighbors  = params[0] as Vector.<IGameEntity>;
+			if ( _neighbors.length != 0 )
+				_neighbors  = params[0] as Vector.<IGameEntity>;
+		
+			return _steeringForce;
 		}
 
 		override public function execute( ...params ) :Vector2D

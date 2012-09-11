@@ -74,7 +74,7 @@ package com.cjm.game.ai.behaviors.steering
 			//Update distance from agent
 			var targetLocal:Vector2D = _target.add( new Vector2D(_distance));
 			
-			var targetWorld:Vector2D = _owner.getGameWorld().pointToWorldSpace( targetLocal, 
+			var targetWorld:Vector2D = _owner.getWorld().pointToWorldSpace( targetLocal, 
 																				_owner.getHeading(), 
 																				_owner.getSide(), 
 																				_owner.getPosition());

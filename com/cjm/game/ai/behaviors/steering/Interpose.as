@@ -21,13 +21,17 @@ package com.cjm.game.ai.behaviors.steering
 		protected var _furturePosB:Vector2D;
 		protected var _furturePosC:Vector2D;
 		
+		override public function enter( ...params ) :Vector3D
+		{
+			_agentA  = params[0] as IGameMovingEntity;
+			_agentB = params[1] as IGameMovingEntity;
+			_agentC = params[1] as IGameMovingEntity;
+		}
 		
 		override public function execute( ...params ) :Vector3D
 		{
 			super.execute(params);
-			_agentA  = params[0] as IGameMovingEntity;
-			_agentB = params[1] as IGameMovingEntity;
-			_agentC = params[1] as IGameMovingEntity;
+			
 			
 			_midpoint = ( _agentB.getPosition().add(_agentC.getPosition()) ).scaleBy( 0.5 );
 			_timeToReachMidpoint = _agentA.getDistance( _midpoint ) / _agentA.getMaxSpeed();
@@ -39,7 +43,7 @@ package com.cjm.game.ai.behaviors.steering
 			
 			var howFast:Number = 2;
 			
-			return new Arrive(_owner, _midpoint, howFast ).getSteeringForce();
+			return new Arrive(_owner, true, _midpoint, howFast ).getSteeringForce();
 		}
 		
 	}

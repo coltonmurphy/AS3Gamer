@@ -33,7 +33,7 @@ package com.cjm.game.ai.behaviors.steering
 			var detectBoxLength = ( _minDetectBoxLength + _owner.getSpeed() ) / ( _owner.getMaxSpeed() + _minDetectBoxLength );
 			
 			//Tag all close range obstacles
-			_owner.getGameWorld().tagObstaclesWithinViewRange( _owner, detectBoxLength );
+			_owner.getWorld().tagObstaclesWithinViewRange( _owner, detectBoxLength );
 			
 			var obstacles:Vector.<IGameEntity> = params as Vector.<IGameEntity>;
 			var curbObj:IGameEntity;
@@ -43,7 +43,7 @@ package com.cjm.game.ai.behaviors.steering
 				if ( curbObj.isTagged() )
 				{
 					//Local position
-					var localPos:Vector3D = curbObj.getGameWorld().pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
+					var localPos:Vector3D = curbObj.getWorld().pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
 				
 					//If the local position has a negative x calue then it must lay behind th agent
 					if ( localPos.x >= 0 )
@@ -96,7 +96,7 @@ package com.cjm.game.ai.behaviors.steering
 			}
 			
 			//Steering force updated
-			_owner.getGameWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
+			_owner.getWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
 		}
 		
 		override public function exit( ...params ) :Boolean

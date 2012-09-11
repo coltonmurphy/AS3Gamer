@@ -20,13 +20,12 @@ package com.cjm.game.core
 		}
 		
 		/* INTERFACE com.cjm.game.core.IGameSystem */
-		public function initialize( active:Boolean = false ):void 
+		public function initialize(  ):void 
 		{
-			if ( active )
-				setActive( true );
+	
 		}
 		
-		public function getGameWorld():IGameWorld
+		public function getWorld():IGameWorld
 		{
 			return _world;
 		}

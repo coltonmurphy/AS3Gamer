@@ -40,7 +40,7 @@ package com.cjm.game.core
 			throw new GameError("GameEntity initialize() must be overridden.");
 		}
 		
-		public function getGameWorld():IGameWorld
+		public function getWorld():IGameWorld
 		{
 			return _world
 		}
