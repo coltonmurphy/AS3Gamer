@@ -4,46 +4,30 @@ package com.cjm.game.ai.behaviors.steering
 	 * ...
 	 * @author Colton Murphy
 	 */
-	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
-	import flash.geom.Vector3D;
-	
+	import com.cjm.game.core.IGameEntity;
+	import com.cjm.utils.math.Vector2D;
+
 	internal class Evade extends Behavior
 	{
-		private var _evader :IAgent;
-		private var _pursuer:IAgent;
+		private var _evader :IGameEntity;
+		private var _pursuer:IGameEntity;
 		
-		override public function enter( ...params ) :Boolean
-		{
-			super.enter(params);
-			
-			_evader  = params[0] as IAgent;
-			_pursuer = params[1] as IAgent;
-			
-			return _evader && _pursuer;
-		}
-		
-		override public function exit( ...params ) :Boolean
-		{
-			super.exit(params);
-			
-			_evader  = params[0] as IAgent;
-			_pursuer = params[1] as IAgent;
-			
-			return _evader && _pursuer;
-		}
-		
-		override public function execute( ...params ) :Boolean
+		override public function execute( ...params ) :Vector2D
 		{
 			super.execute(params);
 			
-			var agent1:IAgent = params[0] as IAgent;
-			var agent2:IAgent = params[1] as IAgent;
+			_evader  = params[0] as IAgent;
+			_pursuer = params[1] as IAgent;
 			
-			var toPusuer:Vector3D = agent2.getPosition().subtract(agent1.getPosition());
+			var agent1:IAgent = params[0] as IGameEntity;
+			var agent2:IAgent = params[1] as IGameEntity;
+			
+			var toPusuer:Vector2D = agent2.getPosition().subtract(agent1.getPosition());
 			var lookAhead:Number = toPusuer.length / (agent1.getMaxSpeed() + agent2.getSpeed());
+			var toPosition:Vector2D = agent2.getPosition().add(agent2.getVelocity()).scaleBy(lookAhead);
+			return (new Flee(_owner, true, toPosition)).getSteeringForce();
 			
-			return (new Flee(_owner)).execute(agent2.getPosition().add(agent2.getVelocity()).scaleBy(lookAhead));
 		}
 		
 	}

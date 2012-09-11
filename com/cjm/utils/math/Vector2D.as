@@ -64,7 +64,9 @@ package com.cjm.utils.math
 			if ( length > maxLength )
 			{
 				normalize( maxLength );//normalize is scalar to argument and should work fine
+				
 			}
+			
 		}
 		
 		/*Returns the distance between vectors*/
@@ -99,6 +101,18 @@ package com.cjm.utils.math
 		public function getReverse():Vector2D
 		{
 			return new Vector2D(-x,-y);
+		}
+		
+		public function divideBy( amount:Number ):void
+		{
+			super.x /= amount;
+			super.y /= amount;
+		}
+		
+		public function scaleBy( amount:Number ):void
+		{
+			super.x *= amount;
+			super.y *= amount;
 		}
 		
 		public static function Vec2DNormalize(v:Vector2D):Vector2D

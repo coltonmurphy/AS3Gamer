@@ -12,6 +12,12 @@ package com.cjm.utils.math
 			throw new Error("MathUtil cannot be instanciated.");
 		}
 		
+		//Return value between -1 and 1
+		public static function randomClamped():Number
+		{
+			var result:Number = (Math.random() * 2) - 1;
+		}
+		
 		public static function degreeToRadian(valueDegree:Number):Number
 		{
 			var valueRadian:Number;

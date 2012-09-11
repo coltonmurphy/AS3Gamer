@@ -15,25 +15,13 @@ package com.cjm.game.ai.behaviors.steering
 	{
 		protected var _toPosition:Vector2D;
 		protected var _deceleration:Number;
-		
-		override public function enter( ...params ) :void
-		{
-			super.enter(params);
-			
-			_toPosition   = params[0] as Vector2D;
-			_deceleration = params[1] as Number; 
-		}
-		
-		override public function exit( ...params ) :void
-		{
-			super.exit(params);
-			
-			//TODO: Exit functionality, record data for reuse
-		}
-		
+
 		override public function execute( ...params ) :Vector2D
 		{
 			super.execute(params);
+			
+			_toPosition   = params[0] as Vector2D;
+			_deceleration = params[1] as Number; 
 			
 			var distance:Number = _toPosition.length;
 			
@@ -50,8 +38,10 @@ package com.cjm.game.ai.behaviors.steering
 				
 				var desiredVelocity:Vector2D = _toPosition.normalize( speed / distance );
 				
-				return desiredVelocity.subtract(_owner.getVelocity())
+				_steeringForce = desiredVelocity.subtract(_owner.getVelocity());
 			}
+			
+			return _steeringForce;
 		}
 	}
 

@@ -7,6 +7,7 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
+	import com.cjm.utils.math.Vector2D;
 	import flash.geom.Vector3D;
 	
 	internal class ObstacleAvoidance extends Behavior
@@ -44,8 +45,8 @@ package com.cjm.game.ai.behaviors.steering
 				if ( curbObj.isTagged() )
 				{
 					//Local position
-					var localPos:Vector3D = curbObj.getGameWorld().pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
-				
+					var localPos:Vector2D = curbObj.getGameWorld().pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
+			
 					//If the local position has a negative x calue then it must lay behind th agent
 					if ( localPos.x >= 0 )
 					{
@@ -59,7 +60,7 @@ package com.cjm.game.ai.behaviors.steering
 							//We only need t look at the smallest positive value of x because that will be th closest poi
 							var cX:Number = localPos.x;
 							var cY:Number = localPos.y;
-							var xZ:Number = localPos.z;//TODO: add to formula
+							var xZ:Number = localPos.z;//TODO: add to formula for 3d versionings
 							
 							//Lets square the proper parts of formula
 							var sqprts:Number = Math.sqrt((expandedRadius * expandedRadius) - (cY * cY));
@@ -82,7 +83,7 @@ package com.cjm.game.ai.behaviors.steering
 				}
 			}	
 			
-			var steeringForce:Vector3D;
+			_steeringForce = new Vector2D();
 			
 			if ( _closetObstacle)
 			{
@@ -97,22 +98,9 @@ package com.cjm.game.ai.behaviors.steering
 			}
 			
 			//Steering force updated
-			_owner.getGameWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
+			_steeringForce = _owner.getGameWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
+			
+			return _steeringForce;
 		}
-		
-		override public function exit( ...params ) :Boolean
-		{
-			super.exit(params);
-			
-			
-		}
-		
-		override public function execute( ...params ) :Boolean
-		{
-			super.execute(params);
-			
-			
-		}
-		
 	}
 }

@@ -4,6 +4,7 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.behaviors.IBehavior;
 	import com.cjm.game.core.IGameMovingEntity;
 	import com.cjm.patterns.behavioral.state.IState;
+	import com.cjm.utils.math.Vector2D;
 	import org.osflash.signals.ISignal;
 	
 	/**
@@ -21,14 +22,14 @@ package com.cjm.game.ai.behaviors.steering
 		}
 		
 		/* INTERFACE com.cjm.game.ai.behaviors.IBehavior */
-		public function enter(...params):Boolean 
+		override public function enter(...params):Vector2D 
 		{
 			super.enter(params);
 			
 			_rotating = true;
 		}
 		
-		public function exit(...params):Boolean 
+		override public function exit(...params):Vector2D 
 		{
 			super.exit(params);
 			
@@ -36,11 +37,12 @@ package com.cjm.game.ai.behaviors.steering
 		}
 		
 	
-		public function execute(...params):void 
+		override public function execute(...params):Vector2D 
 		{
 			super.execute(params);
 			
-			var te:Number = SteeringSystem.getInstance( _owner ).timeElapsed;//time elapsed
+			_direction = params[0] as Number;//0 == clockwise
+			var te:Number = _owner.getSteeringSystem().timeElapsed;//time elapsed
 			
 			if (_rotating)
 			{
@@ -64,27 +66,7 @@ package com.cjm.game.ai.behaviors.steering
 			while ( _memory.length )
 				_owner.setHeading( _memory.pop() );
 		}
-	
-		
-		public function destroy():void 
-		{
-			super.destroy();
-			
-			_memory = null;
-			
-		}
-	
-		
-		public function get direction():uint 
-		{
-			return _direction;
-		}
-		
-		public function set direction(value:uint):void 
-		{
-			_direction = value;
-		}
-		
+
 	}
 
 }
