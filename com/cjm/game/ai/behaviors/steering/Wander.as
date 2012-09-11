@@ -58,10 +58,6 @@ package com.cjm.game.ai.behaviors.steering
 		{
 			super.execute(params);
 		
-			_radius   = params[0] as Number;
-			_distance = params[1] as Number; 
-			_jitter   = params[2] as Number; 
-
 			//add small random vector to the targets position
 			_target.add(new Vector2D( MathUtil.randomClamped() * _jitter, MathUtil.randomClamped() * _jitter));
 			
