@@ -28,21 +28,25 @@ package com.cjm.game.ai.behaviors.steering
 		  jitter   = DEFAULT_JITTER; */
 		  
 		public function Wander( owner:IGameMovingEntity, 
+								autoRun:Boolean = false,
 								radius:Number = DEFAULT_RADIUS, 
 								distance:Number = DEFAULT_DISTANCE, 
 								jitter:Number=DEFAULT_JITTER ) 
-		{
-			_radius   = radius;
+		{	_radius   = radius;
 			_distance = distance; 
 			_jitter   = jitter; 
+			
+			super(owner, autoRun, radius, distance, jitter)
 		}
 		
 		/*Enter method parameters are optional
 		  radius   = DEFAULT_RADIUS;
 		  distance = DEFAULT_DISTANCE; 
 		  jitter   = DEFAULT_JITTER; */
-		override public function enter(...params):Vector2D 
+		override public function start(...params):void 
 		{
+			super.start();
+			
 			_target = new Vector2D();
 			
 			//NOTE: Control variable assignment// Taking advantage of reverse index stack evaluation by not using break statements
@@ -54,10 +58,8 @@ package com.cjm.game.ai.behaviors.steering
 			}
 		}
 		
-		override public function execute(...params):Vector2D 
+		override public function calculate( multiplierModifier:Number = 1 ):Vector2D 
 		{
-			super.execute(params);
-		
 			//add small random vector to the targets position
 			_target.add(new Vector2D( MathUtil.randomClamped() * _jitter, MathUtil.randomClamped() * _jitter));
 			
@@ -77,7 +79,7 @@ package com.cjm.game.ai.behaviors.steering
 																				
 			_steeringForce = targetWorld.subtract(_owner.getPosition());
 			
-			return _steeringForce;
+			return super.calculate( multiplierModifier );
 		}
 		
 	}

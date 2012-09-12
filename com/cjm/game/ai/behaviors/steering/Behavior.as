@@ -26,29 +26,28 @@ package com.cjm.game.ai.behaviors.steering
 			
 			if ( autoRun )
 			{
-				enter( paramsForAutoExecute );
-				execute( paramsForAutoExecute );//Updates _steeringForce
-				exit( paramsForAutoExecute )
+				enter( paramsForAutoExecute );//initialize forces
+				calculate( );//Updates _steeringForce
+				exit( )
 			}
 		}	
 		
-		public function enter(...params):Vector2D 
+		public function start(...params):void 
 		{
 			_active = true;
 			
-			return _steeringForce;
+			if ( null == _steeringForce )
+				_steeringForce = new Vector2D();
 		}
 		
-		public function exit(...params):Vector2D 
+		public function stop():void 
 		{
 			_active = false;
-			
-			return _steeringForce;
 		}
 		
-		public function execute( ...params):Vector2D
+		public function calculate(multiplierModifier:Number = 1 ):Vector2D
 		{
-			return _steeringForce;
+			return _steeringForce.scaleBy( multiplierModifier );
 		}
 		
 		public function getSteeringForce():Vector2D

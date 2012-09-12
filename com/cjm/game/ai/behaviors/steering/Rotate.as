@@ -13,50 +13,31 @@ package com.cjm.game.ai.behaviors.steering
 	 */
 	internal class Rotate extends Behavior 
 	{
-	
 		private var _memory:Vector.<Number>;
-		
-		public function Rotate( owner:IGameMovingEntity ) 
-		{
-			super(owner)
-		}
-		
+		private var _direction:Number;	
+
 		/* INTERFACE com.cjm.game.ai.behaviors.IBehavior */
-		override public function enter(...params):Vector2D 
+		override public function start(...params):Vector2D 
 		{
-			super.enter(params);
-			
-			_rotating = true;
-		}
-		
-		override public function exit(...params):Vector2D 
-		{
-			super.exit(params);
-			
-			_rotating = false;
-		}
-		
-	
-		override public function execute(...params):Vector2D 
-		{
-			super.execute(params);
+			super.start(params);
 			
 			_direction = params[0] as Number;//0 == clockwise
-			var te:Number = _owner.getSteeringSystem().timeElapsed;//time elapsed
-			
-			if (_rotating)
-			{
-				var h:Number  = _owner.getHeading();
-				var tr:Number = _owner.getTurnRate();
-				var nh:Number = _direction == 0 ? (h += ( tr * te )) : (h -= ( tr * te ));
-				
-				_memory.push(h);
-				
-			    _owner.setHeading( nh  ) ;
-			}
 		}
 		
-	
+		override public function calculate( multiplierModifier:Number = 1 ):Vector2D 
+		{
+			var te:Number = _owner.getSteeringSystem().timeElapsed;//time elapsed
+			var h:Number  = _owner.getHeading();
+			var tr:Number = _owner.getTurnRate();
+			var nh:Number = _direction == 0 ? (h += ( tr * te )) : (h -= ( tr * te ));
+			
+			_memory.push(h);
+			
+			_owner.setHeading( nh  ) ;
+			
+			return super.calculate( multiplierModifier );//Blank vector, heading is modified, not position
+		}
+
 		public function undo():void 
 		{
 			super.undo();
@@ -66,7 +47,5 @@ package com.cjm.game.ai.behaviors.steering
 			while ( _memory.length )
 				_owner.setHeading( _memory.pop() );
 		}
-
 	}
-
 }

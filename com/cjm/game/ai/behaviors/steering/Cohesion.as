@@ -26,23 +26,20 @@ package com.cjm.game.ai.behaviors.steering
 			
 			_neighbors = neighbors;
 		}
-		override public function enter( ...params ) :Vector2D
+		override public function start( ...params ) :void
 		{
-			super.enter(params);
+			super.start();
 			
 			if ( _neighbors.length != 0 )
 				_neighbors  = params[0] as Vector.<IGameEntity>;
+			
+			_centerOfMass = new Vector2D();	
 		
 			return _steeringForce;
 		}
 
-		override public function execute( ...params ) :Vector2D
+		override public function calculate ( multiplierModifier:Number = 1 ) :Vector2D
 		{
-			super.execute(params);
-			
-			_centerOfMass = new Vector2D();
-			_steeringForce = new Vector2D();
-			
 			//Amount of neighbors
 			var neighborCount:Number = 0'
 			
@@ -59,10 +56,10 @@ package com.cjm.game.ai.behaviors.steering
 			if ( neighborCount > 0 )
 			{
 				_centerOfMass.divideBy( neighborCount );
-				_steeringForce = (new Seek(_owner, _centerOfMass)).getSteeringForce();
+				_steeringForce = (new Seek(_owner, true,_centerOfMass)).getSteeringForce();
 			}
 			
-			return _steeringForce;
+			return super.calculate( multiplierModifier );
 		}
 		
 	}

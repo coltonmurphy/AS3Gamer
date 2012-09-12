@@ -78,7 +78,7 @@ package com.cjm.game.ai.behaviors.steering
 			arriveTolerance				 = .9;
 			alignmentTolerance 			 = .7;
 			
-			//NOTE: Can set radius, distance, and jitter thru constructor as well as enter method within the wanderOn method.
+			//NOTE: Can set radius, distance, and jitter thru constructor as well as start method within the wanderOn method.s
 			_behaviorWander 		 	= new Wander( _owner );
 			_behaviorWait   		 	= new Wait( _owner );
 			_behaviorSeek   		 	= new Seek( _owner );
@@ -100,40 +100,40 @@ package com.cjm.game.ai.behaviors.steering
 			
 			//Execute activated behaviors
 			if (_behaviorWander.isActive())
-				steeringForce.add( _behaviorWander.execute().scaleBy( wanderTolerance ));
+				steeringForce.add( _behaviorWander.calculate(wanderTolerance));
 				
 			if (_behaviorWait.isActive())
-				steeringForce.add( _behaviorWait.execute().scaleBy( waitTolerance ));
+				steeringForce.add( _behaviorWait.calculate(waitTolerance));
 				
 			if (_behaviorSeek.isActive())
-				steeringForce.add( _behaviorSeek.execute().scaleBy( seekTolerance ));
+				steeringForce.add( _behaviorSeek.calculate(seekTolerance));
 				
 			if (_behaviorWallAvoidance.isActive())
-				steeringForce.add( _behaviorWallAvoidance.execute().scaleBy( wallAvoidanceTolerance ));
+				steeringForce.add( _behaviorWallAvoidance.calculate(wallAvoidanceTolerance));
 				
 			if (_behaviorRotate.isActive())
-				steeringForce.add( _behaviorRotate.execute().scaleBy( rotateTolerance ));
+				steeringForce.add( _behaviorRotate.calculate(rotateTolerance));
 				
 			if (_behaviorObstacleOvoidance.isActive())
-				steeringForce.add( _behaviorObstacleOvoidance.execute().scaleBy( obstacleOvoidanceTolerance ));
+				steeringForce.add( _behaviorObstacleOvoidance.calculate(obstacleOvoidanceTolerance));
 				
 			if (_behaviorInterpose.isActive())
-				steeringForce.add( _behaviorInterpose.execute().scaleBy( interposeTolerance ));
+				steeringForce.add( _behaviorInterpose.calculate(interposeTolerance));
 				
 			if (_behaviorHide.isActive())
-				steeringForce.add( _behaviorHide.execute().scaleBy( hideTolerance ));
+				steeringForce.add( _behaviorHide.calculate(hideTolerance));
 				
 			if (_behaviorEvade.isActive())
-				steeringForce.add( _behaviorEvade.execute().scaleBy( evadeTolerance ));
+				steeringForce.add( _behaviorEvade.calculate(evadeTolerance));
 			
 			if (_behaviorCohesion.isActive())
-				steeringForce.add( _behaviorCohesion.execute().scaleBy( cohesionTolerance ));
+				steeringForce.add( _behaviorCohesion.calculate(cohesionTolerance));
 				
 			if (_behaviorArrive.isActive())
-				steeringForce.add( _behaviorArrive.execute().scaleBy( arriveTolerance ));
+				steeringForce.add( _behaviorArrive.calculate(arriveTolerance));
 			
 			if (_behaviorAlignment.isActive())
-				steeringForce.add( _behaviorAlignment.execute().scaleBy( alignmentTolerance ));	
+				steeringForce.add( _behaviorAlignment.calculate(alignmentTolerance));	
 				
 			steeringForce.truncate(MAX_STEERING_FORCE)
 			
@@ -145,132 +145,132 @@ package com.cjm.game.ai.behaviors.steering
 								  wanderDistance = Wander.DEFAULT_DISTANCE, 
 								  wanderJitter=Wander.DEFAULT_JITTER ):void
 		{
-			_behaviorWander.enter( wanderRadius, wanderDistance, wanderJitter );
+			_behaviorWander.start( wanderRadius, wanderDistance, wanderJitter );
 		}
 		
 		public function wanderOff():void
 		{
-			_behaviorWander.exit();
+			_behaviorWander.stop();
 		}
 		
 		public function waitOn( time = Wait.DEFAULT_TIME ):void
 		{
-			_behaviorWait.enter( time );
+			_behaviorWait.start( time );
 		}
 		
 		public function waitOff():void
 		{
-			_behaviorWait.exit();
+			_behaviorWait.stop();
 		}
 		
 		public function seekOn( target:IGameEntity ):void
 		{
-			_behaviorSeek.enter( target );
+			_behaviorSeek.start( target );
 		}
 		
 		public function seekOff():void
 		{
-			_behaviorSeek.exit();
+			_behaviorSeek.stop();
 		}
 		
 		public function seekOn( target:IGameEntity ):void
 		{
-			_behaviorSeek.enter( target );
+			_behaviorSeek.start( target );
 		}
 		
 		public function seekOff():void
 		{
-			_behaviorSeek.exit();
+			_behaviorSeek.stop();
 		}
 		
 		public function wallAvoidanceOn( walls:Vector.<IGameEntity> ):void
 		{
-			_behaviorWallAvoidance.enter( walls );
+			_behaviorWallAvoidance.start( walls );
 		}
 		
 		public function wallAvoidanceOff():void
 		{
-			_behaviorWallAvoidance.exit();
+			_behaviorWallAvoidance.stop();
 		}
 		
 		public function rotateOn( target:IGameEntity ):void
 		{
-			_behaviorRotate.enter( target );
+			_behaviorRotate.start( target );
 		}
 		
 		public function rotateOff():void
 		{
-			_behaviorRotate.exit();
+			_behaviorRotate.stop();
 		}
 		
 		public function obstacleOvoidanceOn( obstacles:Vector.<IGameEntity> ):void
 		{
-			_behaviorObstacleOvoidance.enter( obstacles );
+			_behaviorObstacleOvoidance.start( obstacles );
 		}
 		
 		public function obstacleOvoidanceOff():void
 		{
-			_behaviorObstacleOvoidance.exit();
+			_behaviorObstacleOvoidance.stop();
 		}
 		
 		public function interposeOn( entity1:IGameEntity, entity2:IGameEntity ):void
 		{
-			_behaviorInterpose.enter( entity1, entity2 );
+			_behaviorInterpose.start( entity1, entity2 );
 		}
 		
 		public function interposeOff():void
 		{
-			_behaviorInterpose.exit();
+			_behaviorInterpose.stop();
 		}
 		
 		public function hideOn( fromEntity:IGameEntity ):void
 		{
-			_behaviorHide.enter( fromEntity );
+			_behaviorHide.start( fromEntity );
 		}
 		
 		public function hideOff():void
 		{
-			_behaviorHide.exit();
+			_behaviorHide.stop();
 		}
 		
 		public function evadeOn( pursuer:IGameMovingEntity ):void
 		{
-			_behaviorEvade.enter( pursuer );
+			_behaviorEvade.start( pursuer );
 		}
 		
 		public function evadeOff():void
 		{
-			_behaviorEvade.exit();
+			_behaviorEvade.stop();
 		}
 		
 		public function cohesionOn( neighbors:Vector.<IGameEntity> ):void
 		{
-			_behaviorCohesion.enter( neighbors );
+			_behaviorCohesion.start( neighbors );
 		}
 		
 		public function cohesionOff():void
 		{
-			_behaviorCohesion.exit();
+			_behaviorCohesion.stop();
 		}
 		
 		public function arriveOn( location:Vector2D, howFast:Number ):void
 		{
-			_behaviorArrive.enter( location, howFast );
+			_behaviorArrive.start( location, howFast );
 		}
 		
 		public function arriveOff():void
 		{
-			_behaviorArrive.exit();
+			_behaviorArrive.stop();
 		}
 		
 		public function alignmentOn( neighbors:Vector.<IGameEntity>y ):void
 		{
-			_behaviorAlignment.enter( neighbors );
+			_behaviorAlignment.start( neighbors );
 		}
 		
 		public function alignmentOff():void
 		{
-			_behaviorAlignment.exit();
+			_behaviorAlignment.stop();
 		}
 		
 		

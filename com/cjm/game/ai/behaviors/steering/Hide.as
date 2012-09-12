@@ -18,13 +18,16 @@ package com.cjm.game.ai.behaviors.steering
 		
 		private var _obstacles :Vector.<IGameEntity>;
 		
-		override public function execute( ...params ) :Boolean
+		override public function start( ...params ) :void
 		{
-			super.execute(params);
+			super.start();
 			
 			_obstacles  = params[0] as Vector.<IGameEntity>;
 		    _target  = params[1] as IGameEntity;
-			
+		}
+		
+		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
+		{
 			var distToClosest:Number = Number.MAX_VALUE;
 			var bestHidingSpot:Vector2D;
 	
@@ -43,10 +46,14 @@ package com.cjm.game.ai.behaviors.steering
 			//No obstacles
 			if ( distToClosest == Number.MAX_VALUE )
 			{
-				return (new Evade(_owner, true, _target)).getSteeringForce();
+				_steeringForce = (new Evade(_owner, true, _target)).getSteeringForce();
 			}
-
-			return (new Arrive(_owner, true, bestHidingSpot)).getSteeringForce();
+			else
+			{
+				_steeringForce = (new Arrive(_owner, true, bestHidingSpot, 2)).getSteeringForce();
+			}
+			
+			return super.calculate( multiplierModifier );
 		}
 		
 		private function getHidingPosition( position:Vector3D, radius:Number, target:Vector3D):Vector3D

@@ -18,20 +18,15 @@ package com.cjm.game.ai.behaviors.steering
 		private var _neighbors:Vector.<IGameEntity>;
 		private var _avgHeading:Vector2D;//result/returned vector
 
-		override public function enter( ...params ) :void
+		override public function start( ...params ) :void
 		{
-			super.enter(params);
-			
-			
-		}
-
-		override public function execute( ...params ) :Vector2D
-		{
-			super.execute(params);
+			super.start();
 			
 			_neighbors  = params[0] as Vector.<IGameEntity>;
-			_avgHeading = new Vector2D();
-			
+		}
+
+		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
+		{
 			//Amount of neighbors
 			var neighborCount:Number = 0'
 			
@@ -39,7 +34,7 @@ package com.cjm.game.ai.behaviors.steering
 			{
 				if ( n != _owner && n.isTagged() )
 				{
-					_avgHeading.add( n.getHeading() );
+					_steeringForce.add( n.getHeading() );
 					
 					++neighborCount;
 				}
@@ -47,13 +42,11 @@ package com.cjm.game.ai.behaviors.steering
 			
 			if ( neighborCount > 0 )
 			{
-				_avgHeading.divideBy( neighborCount );
-				_avgHeading.subtract( _owner.getHeading() );
+				_steeringForce.divideBy( neighborCount );
+				_steeringForce.subtract( _owner.getHeading() );
 			}
 			
-			return _avgHeading;
+			return super.calculate( multiplierModifier );
 		}
-		
 	}
-
 }

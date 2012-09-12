@@ -8,12 +8,9 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
 	import com.cjm.utils.math.Vector2D;
-	import flash.geom.Vector3D;
-	
+
 	internal class ObstacleAvoidance extends Behavior
 	{
-		protected var _steeringForce:Vector3D    = new Vector3D;
-		
 		protected const _minDetectBoxLength:Number = 10;
 		protected const _breakingWeight:Number     = 0.2;
 		
@@ -25,19 +22,22 @@ package com.cjm.game.ai.behaviors.steering
 		protected const _closetObstacle:IGameEntity;
 		
 		//Record local position
-		protected const _localPosOfClosestObj:Vector3D;
+		protected const _localPosOfClosestObj:Vector2D;
+		protected const _obstacles:Vector.<IGameEntity>;
 		
-		override public function enter( ...params ) :Boolean
+		override public function start( ...params ) :Vector2D
 		{
-			super.enter(params);
-			
+			_obstacles = params[0] as Vector.<IGameEntity>;
+		}
+		
+		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
+		{
 			//Create Detection Box
 			var detectBoxLength = ( _minDetectBoxLength + _owner.getSpeed() ) / ( _owner.getMaxSpeed() + _minDetectBoxLength );
 			
 			//Tag all close range obstacles
 			_owner.getWorld().tagObstaclesWithinViewRange( _owner, detectBoxLength );
-			
-			var obstacles:Vector.<IGameEntity> = params as Vector.<IGameEntity>;
+
 			var curbObj:IGameEntity;
 			
 			while ( curbObj = obstacles.pop() )
@@ -83,8 +83,6 @@ package com.cjm.game.ai.behaviors.steering
 				}
 			}	
 			
-			_steeringForce = new Vector2D();
-			
 			if ( _closetObstacle)
 			{
 				//The closer the entity, the stronger the force
@@ -100,7 +98,7 @@ package com.cjm.game.ai.behaviors.steering
 			//Steering force updated
 			_steeringForce = _owner.getWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
 			
-			return _steeringForce;
+			return super.calculate( multiplierModifier );
 		}
 	}
 }

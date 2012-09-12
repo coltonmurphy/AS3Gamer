@@ -16,13 +16,16 @@ package com.cjm.game.ai.behaviors.steering
 		protected var _toPosition:Vector2D;
 		protected var _deceleration:Number;
 
-		override public function execute( ...params ) :Vector2D
+		override public function start( ...params ) :void
 		{
-			super.execute(params);
+			super.start( );
 			
 			_toPosition   = params[0] as Vector2D;
 			_deceleration = params[1] as Number; 
-			
+		}
+		
+		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
+		{
 			var distance:Number = _toPosition.length;
 			
 			if ( distance > 0 )
@@ -41,7 +44,7 @@ package com.cjm.game.ai.behaviors.steering
 				_steeringForce = desiredVelocity.subtract(_owner.getVelocity());
 			}
 			
-			return _steeringForce;
+			return super.calculate( multiplierModifier );
 		}
 	}
 
