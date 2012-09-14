@@ -82,7 +82,7 @@ package com.cjm.game.ai.behaviors.steering
 			_behaviorWander 		 	= new Wander( _owner );
 			_behaviorWait   		 	= new Wait( _owner );
 			_behaviorSeek   		 	= new Seek( _owner );
-			_behaviorWallAvoidance   	= new WallAvoidance( _owner );
+			//_behaviorWallAvoidance   	= new WallAvoidance( _owner );
 			_behaviorRotate  			= new Rotate( _owner );
 			_behaviorObstacleOvoidance  = new ObstacleAvoidance( _owner );
 			_behaviorInterpose   		= new Interpose( _owner );
