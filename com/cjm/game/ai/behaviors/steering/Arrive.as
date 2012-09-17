@@ -13,6 +13,10 @@ package com.cjm.game.ai.behaviors.steering
 	 */
 	internal class Arrive extends Behavior
 	{
+		public static var FAST:Number = 3;
+		public static var NORMAL:Number = 5;
+		public static var SLOW:Number = 10;
+		
 		protected var _toPosition:Vector2D;
 		protected var _deceleration:Number;
 
@@ -39,7 +43,7 @@ package com.cjm.game.ai.behaviors.steering
 				//make sure the velocity is truncated
 				speed = Math.min( speed, _owner.getMaxSpeed());
 				
-				var desiredVelocity:Vector2D = _toPosition.normalize( speed / distance );
+				var desiredVelocity:Vector2D = _toPosition.scaleBy( speed / distance );
 				
 				_steeringForce = desiredVelocity.subtract(_owner.getVelocity());
 			}

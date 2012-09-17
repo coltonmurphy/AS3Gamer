@@ -18,6 +18,9 @@ package com.cjm.game.pathfinding
 		public function setNodes( vs:Vector.<INode> ):Boolean;
 		public function getNodes( ):Vector.<INode>;
 		public function inverse( ):Vector.<INode>;
+		public function getCurrentWaypoint( ):INode;
+		public function setNextWaypoint( ):void;
+		public function finshed( ):void;
 	}
 	
 }

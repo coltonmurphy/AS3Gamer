@@ -6,42 +6,58 @@ package com.cjm.game.pathfinding
 	 */
 	public class SearchAlgorithm 
 	{
-		protected var _heuristic:IHeuristic;
-		protected var endNode:INode;
-		protected var startNode:INode;
-
-		protected var _open:Array;
-		protected var _closed:Array;
 		protected var _graph:IGraph;
-		protected var _path:IPath;//Result
+		protected var _heuristic:IHeuristic;
+		protected var _endNode:INode;
+		protected var _startNode:INode;
+
 		
-		public function SearchAlgorithm( g:IGraph, h:IHeuristic ) 
+		protected var _result:*;
+
+		public function SearchAlgorithm( g:IGraph, a:INode, b:INode, h:IHeuristic, autoRun:Boolean = true ) 
 		{
 			_graph = g;
 			_heuristic = h;
+
+			_startNode = a
+			_endNode   = b;
 			
-			_open = new Vector.<INode>;
-			_closed = new Vector.<INode>;
-		}
-		
-		
-		public function setTargetNode( n:INode ):void
-		{
-			endNode = n;
-		}
-		
-		public function setStartingNode( n:INode ):void
-		{
-			startNode = n;
+			if ( autoRun )
+			{
+				preProcess();
+				process();
+				postProcess();
+			}
+
 		}
 		
 		public function process():void
 		{
-			startNode.g = 0;
-			startNode.h = _heuristic.estimateCost(startNode, endNode);
-			startNode.f = startNode.g + startNode.h;
+			while( _currentNode != _endNode )
+			{
+				processOnce();
+			}
 		}
 		
+		/*The methods below should be overriden by subclass*/
+		public function preProcess():void
+		{
+			trace("Warning: SearchAlgorith preProcess is not overriden.");
+		}
 		
+		public function postProcess():void
+		{
+			trace("Warning: SearchAlgorith postProcess is not overriden.");
+		}
+		
+		public function processOnce():void
+		{
+			trace("Warning: SearchAlgorith processOnce is not overriden.");
+		}
+		
+		public function getResult():*
+		{
+			return _result;
+		}
 	}
 }

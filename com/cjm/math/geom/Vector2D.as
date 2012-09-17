@@ -1,4 +1,4 @@
-package com.cjm.utils.math 
+package com.cjm.math.geom 
 {
 	import flash.geom.Point;
 	
@@ -64,9 +64,7 @@ package com.cjm.utils.math
 			if ( length > maxLength )
 			{
 				normalize( maxLength );//normalize is scalar to argument and should work fine
-				
 			}
-			
 		}
 		
 		/*Returns the distance between vectors*/
@@ -115,13 +113,24 @@ package com.cjm.utils.math
 			super.y *= amount;
 		}
 		
+		public function addBy( amount:Number ):void
+		{
+			super.x += amount;
+			super.y += amount;
+		}
+		
+		public function subtractBy( amount:Number ):void
+		{
+			super.x -= amount;
+			super.y -= amount;
+		}
+		
 		public static function Vec2DNormalize(v:Vector2D):Vector2D
 		{
 		   var  len = v.length;
 
 			if ( len > (1 - Number.MIN_VALUE ) )//TODO: Verify if epsilon differential is ported correctly
 			{
-		
 				v.x /= len;
 				v.y /= len;
 			}
@@ -129,13 +138,9 @@ package com.cjm.utils.math
 			return v;
 		}
 
-
 		public static function Vec2DDistance( v1:Vector2D, v2:Vector2D):Number
 		{
-			var yD = v2.y - v1.y;
-			var xD = v2.x - v1.x;
-
-		    return Math.sqrt(yD*yD + xD*xD);
+		    return Math.sqrt( Vec2DDistanceSq(v1,v2) );
 		}
 
 		public static function Vec2DDistanceSq(v1:Vector2D, v2:Vector2D):Number
