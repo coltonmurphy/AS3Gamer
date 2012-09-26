@@ -49,19 +49,19 @@ package com.cjm.game.ai.behaviors.steering
 		public var arriveTolerance				 = 1;
 		public var alignmentTolerance 			 = 1;
 		
-		protected var _behaviorWander:IBehavior;
-		protected var _behaviorWait:IBehavior;
-		protected var _behaviorSeperation:IBehavior;
-		protected var _behaviorSeek:IBehavior;
-		protected var _behaviorWallAvoidance:IBehavior;
-		protected var _behaviorRotate:IBehavior;
-		protected var _behaviorObstacleOvoidance:IBehavior;
-		protected var _behaviorInterpose:IBehavior;
-		protected var _behaviorHide:IBehavior;
-		protected var _behaviorEvade:IBehavior;
-		protected var _behaviorCohesion:IBehavior;
-		protected var _behaviorArrive:IBehavior;
-		protected var _behaviorAlignment:IBehavior;
+		protected var _wander:IBehavior;
+		protected var _wait:IBehavior;
+		protected var _seperation:IBehavior;
+		protected var _seek:IBehavior;
+		protected var _wallAvoidance:IBehavior;
+		protected var _rotate:IBehavior;
+		protected var _obstacleOvoidance:IBehavior;
+		protected var _interpose:IBehavior;
+		protected var _hide:IBehavior;
+		protected var _evade:IBehavior;
+		protected var _cohesion:IBehavior;
+		protected var _arrive:IBehavior;
+		protected var _alignment:IBehavior;
 		
 		public function SteeringSystem( owner:IGameMovingEntity ) 
 		{
@@ -91,20 +91,23 @@ package com.cjm.game.ai.behaviors.steering
 			arriveTolerance				 = .9;
 			alignmentTolerance 			 = .7;
 			
+			prWallAvoidance
+			prObstacleAvoidance
+			
 			//NOTE: Can set radius, distance, and jitter thru constructor as well as start method within the wanderOn method.s
-			_behaviorWander 		 	= new Wander( _owner );
-			_behaviorWait   		 	= new Wait( _owner );
-			_behaviorSeperation         = new Seperation( _owner );
-			_behaviorSeek   		 	= new Seek( _owner );
-			//_behaviorWallAvoidance   	= new WallAvoidance( _owner );
-			_behaviorRotate  			= new Rotate( _owner );
-			_behaviorObstacleOvoidance  = new ObstacleAvoidance( _owner );
-			_behaviorInterpose   		= new Interpose( _owner );
-			_behaviorHide   			= new Hide( _owner );
-			_behaviorEvade  			= new Evade( _owner );
-			_behaviorCohesion   		= new Cohesion( _owner );
-			_behaviorArrive   		    = new Arrive( _owner );
-			_behaviorAlignment   		= new Alignment( _owner );
+			_wander 		 	= new Wander( _owner );
+			_wait   		 	= new Wait( _owner );
+			_seperation         = new Seperation( _owner );
+			_seek   		 	= new Seek( _owner );
+			//_wallAvoidance   	= new WallAvoidance( _owner );
+			_rotate  			= new Rotate( _owner );
+			_obstacleOvoidance  = new ObstacleAvoidance( _owner );
+			_interpose   		= new Interpose( _owner );
+			_hide   			= new Hide( _owner );
+			_evade  			= new Evade( _owner );
+			_cohesion   		= new Cohesion( _owner );
+			_arrive   		    = new Arrive( _owner );
+			_alignment   		= new Alignment( _owner );
 			
 			
 		}
@@ -120,18 +123,18 @@ package com.cjm.game.ai.behaviors.steering
 		    if (!isSpacePartitioningOn())
 		    {
 			  //tag for group behavior
-			  if ( _behaviorSeperation.isActive() || 
-				   _behaviorAlignment.isActive() || 
-				   _behaviorCohesion.isActive())
+			  if ( _seperation.isActive() || 
+				   _alignment.isActive() || 
+				   _cohesion.isActive())
 				   
 				   _owner.getWorld().tagVehiclesWithinViewRange(_owner, _viewDistance);
 		    }
 		    else
 		    {
 			  //calculate neighbours in cell-space for group behavior
-			  if ( _behaviorSeperation.isActive() || 
-				   _behaviorAlignment.isActive() || 
-				   _behaviorCohesion.isActive())
+			  if ( _seperation.isActive() || 
+				   _alignment.isActive() || 
+				   _cohesion.isActive())
 			       _owner.getWorld().getCellSpace().calculateNeighbors(_owner.getPosition(), _viewDistance);
 			  
 		    }
@@ -153,52 +156,182 @@ package com.cjm.game.ai.behaviors.steering
 
 		   }//end switch
 
-
-			/*var steeringForce = new Vector2D();
+			return steeringForce;
+		}
+		
+		protected function calculateWeightedSum():Vector2D 
+		{
+			var steeringForce:Vector2D = new Vector2D();
 			
 			//Execute activated behaviors
-			if (_behaviorWander.isActive())
-				steeringForce.add( _behaviorWander.calculate(wanderTolerance));
+			if (_wander.isActive())
+				steeringForce.add( _wander.calculate( wanderTolerance ));
 				
-			if (_behaviorWait.isActive())
-				steeringForce.add( _behaviorWait.calculate(waitTolerance));
+			if (_wait.isActive())
+				steeringForce.add( _wait.calculate( waitTolerance ));
 				
-			if (_behaviorSeek.isActive())
-				steeringForce.add( _behaviorSeek.calculate(seekTolerance));
+			if (_seek.isActive())
+				steeringForce.add( _seek.calculate( seekTolerance ));
 				
-			if (_behaviorWallAvoidance.isActive())
-				steeringForce.add( _behaviorWallAvoidance.calculate(wallAvoidanceTolerance));
+			if (_wallAvoidance.isActive())
+				steeringForce.add( _wallAvoidance.calculate( wallAvoidanceTolerance ));
 				
-			if (_behaviorRotate.isActive())
-				steeringForce.add( _behaviorRotate.calculate(rotateTolerance));
+			if (_rotate.isActive())
+				steeringForce.add( _rotate.calculate( rotateTolerance ));
 				
-			if (_behaviorObstacleOvoidance.isActive())
-				steeringForce.add( _behaviorObstacleOvoidance.calculate(obstacleOvoidanceTolerance));
+			if (_obstacleOvoidance.isActive())
+				steeringForce.add( _obstacleOvoidance.calculate( obstacleOvoidanceTolerance ));
 				
-			if (_behaviorInterpose.isActive())
-				steeringForce.add( _behaviorInterpose.calculate(interposeTolerance));
+			if (_interpose.isActive())
+				steeringForce.add( _interpose.calculate(interposeTolerance));
 				
-			if (_behaviorHide.isActive())
-				steeringForce.add( _behaviorHide.calculate(hideTolerance));
+			if (_hide.isActive())
+				steeringForce.add( _hide.calculate(hideTolerance));
 				
-			if (_behaviorEvade.isActive())
-				steeringForce.add( _behaviorEvade.calculate(evadeTolerance));
+			if (_evade.isActive())
+				steeringForce.add( _evade.calculate(evadeTolerance));
 			
-			if (_behaviorCohesion.isActive())
-				steeringForce.add( _behaviorCohesion.calculate(cohesionTolerance));
+			if (_cohesion.isActive())
+				steeringForce.add( _cohesion.calculate(cohesionTolerance));
 				
-			if (_behaviorArrive.isActive())
-				steeringForce.add( _behaviorArrive.calculate(arriveTolerance));
+			if (_arrive.isActive())
+				steeringForce.add( _arrive.calculate(arriveTolerance));
 			
-			if (_behaviorAlignment.isActive())
-				steeringForce.add( _behaviorAlignment.calculate(alignmentTolerance));	
+			if (_alignment.isActive())
+				steeringForce.add( _alignment.calculate(alignmentTolerance));	
 				
-			steeringForce.truncate(MAX_STEERING_FORCE)*/
+			steeringForce.truncate(MAX_STEERING_FORCE);
 			
 			return steeringForce;
 		}
 		
-		protected function accumulateForce( runningTot:Vector2D,
+		
+		
+		//  CalculatePrioritized : calls each active behavior in order of priority
+		//  and acumulates their forces until the max steering force is aquired.
+		protected function calculatePrioritized():Vector2D
+		{       
+			var force:Vector2D         = new Vector2D();
+		    var steeringForce:Vector2D = new Vector2D();
+			
+		    if ( _wallAvoidance.isActive() )
+		    {
+			    force = _wallAvoidance.calculate( wallAvoidanceTolerance )
+			    
+				if ( !accumulateForce( steeringForce, force )) return steeringForce;
+		    }
+		  
+			//TODO: update behavior with obstacles of this timeslice
+		    if ( _obstacleOvoidance.isActive() )
+		    {
+			    force = _obstacleOvoidance.calculate( obstableAvoidanceTolerance );
+
+			    if ( !accumulateForce( steeringForce, force )) return steeringForce;
+		    }
+
+		    //TODO: update behavior with target of this timeslice
+		    if (On(_evade.isActive()))
+		    {
+			    force = _evade.calculate( evadeTolerance );
+
+				if ( !accumulateForce(steeringForce, force)) return steeringForce;
+		    }
+
+		    //TODO: update behavior with position to run to of this timeslice
+		    if ( _behaviorFlee.isActive() )
+		    {
+			   force = _behaviorFlee.calculate( fleeTolerance );
+
+			   if ( !accumulateForce( steeringForce, force) ) return steeringForce;
+		    }
+
+			//TODO: Spacial partitioning
+			if (_seperation.isActive())
+			{
+				//TODO: update with param = _owner.getWorld().getAgents()
+			    force = _seperation.calculate( seperationTolerance );
+
+			    if ( !accumulateForce(steeringForce, force)) return steeringForce;
+			}
+
+			if (_alignment.isActive())
+			{
+				//TODO: update with param = _owner.getWorld().getAgents()
+			    force = _alignment.calculate( alignmentTolerance );
+
+			    if ( !accumulateForce(steeringForce, force)) return steeringForce;
+			}
+
+			if (_cohesion.isActive())
+			{
+				//TODO: update with param = _owner.getWorld().getAgents()
+			    force = _cohesion.calculate( cohesionTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+			}
+
+		    if ( _seek.isActive() )
+		    {
+			    force = _seek.calculate( seekTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+
+		    if ( _arrive.isActive() )
+		    {
+			    force = _arrive.calculate( arriveTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+			
+			if ( _wander.isActive() )
+		    {
+			    force = _wander.calculate( wanderTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+
+		    if ( _behaviorPursuit.isActive() )
+		    {
+			    force = _behaviorPursuit.calculate( pursuitTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+			
+			//For follow the leader behavior, racing or RTS party navigational control
+			if ( _behaviorOffsetPursuit.isActive() )
+		    {
+			    force = _behaviorOffsetPursuit.calculate( offsetPursuitTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+
+		    if ( _interpose.isActive() )
+		    {
+			    force = _interpose.calculate( interposeTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+
+		    //Hide requires a target and the obstacles for use for the hiding
+			if ( _hide.isActive() )
+		    {
+			    force = _hide.calculate( hideTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+  
+		    if ( _behaviorFollowPath.isActive() )
+		    {
+			    force = _behaviorFollowPath.calculate( followPathTolerance );
+
+			    if ( !accumulateForce( steeringForce, force ) ) return steeringForce;
+		    }
+
+		    return steeringForce;
+		}
+		
+		private function accumulateForce( runningTot:Vector2D,
                                             forceToAdd:Vector2D )
 		{
 		    //calculate how much steering force the vehicle has used so far
@@ -231,303 +364,331 @@ package com.cjm.game.ai.behaviors.steering
 		    return true;
 		}
 		
-		//---------------------- CalculatePrioritized ----------------------------
-		//
-		//  calls each active steering behavior in order of priority
-		//  and acumulates their forces until the max steering force
-		//  is aquired
-		//------------------------------------------------------------------------
-		protected function calculatePrioritized():Vector2D
-		{       
-			var force:Vector2D;
-		  
-		    if ( _behaviorWallAvoidance.isActive() )
-		    {
-			    force = _behaviorWallAvoidance.calculate( wallAvoidanceTolerance )
-			    
-				if ( !accumulateForce( _steeringForce, force )) return _steeringForce;
-		    }
-		  
-			//TODO: update behavior with obstacles of this timeslice
-		    if ( _behaviorObstacleOvoidance.isActive() )
-		    {
-			    force = _behaviorObstacleOvoidance.calculate( obstableAvoidanceTolerance );
+		
+		// CalculateDithered ----------------------------
+		//TODO: explain
+		protected function calculateDithered():Vector2D
+		{  
+		  //reset the steering force
+		  var steeringForce:Vector2D = new Vector2D();
 
-			    if ( !accumulateForce( _steeringForce, force )) return _steeringForce;
-		    }
+		  if (On(wall_avoidance) && Math.random() < prWallAvoidance)
+		  {
+			steeringForce = WallAvoidance(_owner.getWorld().Walls()) *
+								 m_dWeightWallAvoidance / prWallAvoidance;
 
-		    //TODO: update behavior with target of this timeslice
-		    if (On(_behaviorEvade.isActive()))
-		    {
-			    force = _behaviorEvade.calculate( evadeTolerance );
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce; 
+			}
+		  }
+		   
+		  if (On(obstacle_avoidance) && Math.random() < prObstacleAvoidance)
+		  {
+			steeringForce += ObstacleAvoidance(_owner.getWorld().Obstacles()) * 
+					m_dWeightObstacleAvoidance / prObstacleAvoidance;
 
-				if ( !accumulateForce(m_vSteeringForce, force)) return _steeringForce;
-		    }
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
+		  }
 
-		    //TODO: update behavior with position to run to of this timeslice
-		    if ( _behaviorFlee.isActive() )
-		    {
-			   force = _behaviorFlee.calculate( fleeTolerance );
-
-			   if ( !accumulateForce( _steeringForce, force) ) return _steeringForce;
-		    }
-
-
-		 
-		  //can be used for group behaviors like flocking
 		  if (!isSpacePartitioningOn())
 		  {
-			if (_behaviorSeperation.isActive())
+			if (On(separation) && Math.random() < prSeparation)
 			{
-				//TODO: update with param = _owner.getWorld().getAgents()
-			    force = _behaviorSeperation.calculate( seperationTolerance );
+			  steeringForce += Separation(_owner.getWorld().Agents()) * 
+								  m_dWeightSeparation / prSeparation;
 
-			    if ( !accumulateForce(_steeringForce, force)) return _steeringForce;
-			}
-
-			if (_behaviorAlignment.isActive())
-			{
-				//TODO: update with param = _owner.getWorld().getAgents()
-			    force = _behaviorAlignment.calculate( alignmentTolerance );
-
-			    if ( !accumulateForce(_steeringForce, force)) return _steeringForce;
-			}
-
-			if (_behaviorCohesion.isActive())
-			{
-				//TODO: update with param = _owner.getWorld().getAgents()
-			    force = _behaviorCohesion.calculate( cohesionTolerance );
-
-			    if ( !accumulateForce( _steeringForce, force ) ) return _steeringForce;
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
 			}
 		  }
 
 		  else
 		  {
-
-			if (On(separation))
+			if (On(separation) && Math.random() < prSeparation)
 			{
-			  force = SeparationPlus(_owner.getWorld().getAgents()) * m_dWeightSeparation;
+			  steeringForce += SeparationPlus(_owner.getWorld().Agents()) * 
+								  m_dWeightSeparation / prSeparation;
 
-			  if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
-			}
-
-			if (On(allignment))
-			{
-			  force = AlignmentPlus(_owner.getWorld().getAgents()) * m_dWeightAlignment;
-
-			  if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
-			}
-
-			if (On(cohesion))
-			{
-			  force = CohesionPlus(_owner.getWorld().getAgents()) * m_dWeightCohesion;
-
-			  if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
 			}
 		  }
 
-		  if (On(seek))
-		  {
-			force = Seek(_owner.getWorld()->Crosshair()) * m_dWeightSeek;
 
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+		  if (On(flee) && Math.random() < prFlee)
+		  {
+			steeringForce += Flee(_owner.getWorld().Crosshair()) * m_dWeightFlee / prFlee;
+
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
+		  }
+
+		  if (On(evade) && Math.random() < prEvade)
+		  {
+			
+			steeringForce += Evade(m_pTargetAgent1) * m_dWeightEvade / prEvade;
+
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
 		  }
 
 
-		  if (On(arrive))
+		  if (!isSpacePartitioningOn())
 		  {
-			force = Arrive(_owner.getWorld()->Crosshair(), m_Deceleration) * m_dWeightArrive;
+			if ( _allignment.isActive() && Math.random() < prAlignment)
+			{
+			  steeringForce.add(_allignment.calculate(alignmentTolerance).divideBy( prAlignment))
+			  
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
+			}
 
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+			if ( _cohesion.isActive() && Math.random() < prCohesion)
+			{
+			  steeringForce += _cohesion.calculate( cohesionTolerance ).divideBy( prCohesion );
+								  
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
+			}
+		  }
+		  else
+		  {
+			if (_allignment.isActive && Math.random() < prAlignment)
+			{
+			  steeringForce += AlignmentPlus(_owner.getWorld().getAgents()) *
+								  m_dWeightAlignment / prAlignment;
+
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
+			}
+
+			if (On(cohesion) && Math.random() < prCohesion)
+			{
+			  steeringForce += CohesionPlus(_owner.getWorld().getAgents()) *
+								  m_dWeightCohesion / prCohesion;
+
+			  if (!steeringForce.isZero())
+			  {
+				steeringForce.truncate(_owner.getMaxForce()); 
+			  
+				return steeringForce;
+			  }
+			}
 		  }
 
-		  if (On(wander))
+		  if (On(wander) && Math.random() < prWander)
 		  {
-			force = Wander() * m_dWeightWander;
+			steeringForce += Wander() * m_dWeightWander / prWander;
 
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
 		  }
 
-		  if (On(pursuit))
+		  if (On(seek) && Math.random() < prSeek)
 		  {
-			assert(m_pTargetAgent1 && "pursuit target not assigned");
+			steeringForce += Seek(_owner.getWorld().Crosshair()) * seekTolerance / prSeek;
 
-			force = Pursuit(m_pTargetAgent1) * m_dWeightPursuit;
-
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
 		  }
 
-		  if (On(offset_pursuit))
+		  if (On(arrive) && Math.random() < prArrive)
 		  {
-			assert (m_pTargetAgent1 && "pursuit target not assigned");
-			assert (!m_vOffset.isZero() && "No offset assigned");
+			steeringForce += Arrive(_owner.getWorld().Crosshair(), _deceleration) * 
+								arriveTolerance / prArrive;
 
-			force = OffsetPursuit(m_pTargetAgent1, m_vOffset);
-
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+			if (!steeringForce.isZero())
+			{
+			  steeringForce.truncate(_owner.getMaxForce()); 
+			  
+			  return steeringForce;
+			}
 		  }
-
-		  if (On(interpose))
-		  {
-			assert (m_pTargetAgent1 && m_pTargetAgent2 && "Interpose agents not assigned");
-
-			force = Interpose(m_pTargetAgent1, m_pTargetAgent2) * m_dWeightInterpose;
-
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
-		  }
-
-		  if (On(hide))
-		  {
-			assert(m_pTargetAgent1 && "Hide target not assigned");
-
-			force = Hide(m_pTargetAgent1, _owner.getWorld().getObstacles()) * m_dWeightHide;
-
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
-		  }
-
-
-		  if (On(follow_path))
-		  {
-			force = FollowPath() * m_dWeightFollowPath;
-
-			if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
-		  }
-
-		  return m_vSteeringForce;
+		 
+		  return steeringForce;
 		}
+		
+		public function isSpacePartitioningOn():void 
+		{
+			return false;//TODO: add spt
+		}
+
 		
 		//Wandering around, activates wanderer steering.
 		public function wanderOn( wanderRadius = Wander.DEFAULT_RADIUS, 
 								  wanderDistance = Wander.DEFAULT_DISTANCE, 
 								  wanderJitter=Wander.DEFAULT_JITTER ):void
 		{
-			_behaviorWander.start( wanderRadius, wanderDistance, wanderJitter );
+			_wander.start( wanderRadius, wanderDistance, wanderJitter );
 		}
 		
 		public function wanderOff():void
 		{
-			_behaviorWander.stop();
+			_wander.stop();
 		}
 		
 		public function waitOn( time = Wait.DEFAULT_TIME ):void
 		{
-			_behaviorWait.start( time );
+			_wait.start( time );
 		}
 		
 		public function waitOff():void
 		{
-			_behaviorWait.stop();
+			_wait.stop();
 		}
 		
 		public function seekOn( target:IGameEntity ):void
 		{
-			_behaviorSeek.start( target );
+			_seek.start( target );
 		}
 		
 		public function seekOff():void
 		{
-			_behaviorSeek.stop();
+			_seek.stop();
 		}
 		
 		public function seekOn( target:IGameEntity ):void
 		{
-			_behaviorSeek.start( target );
+			_seek.start( target );
 		}
 		
 		public function seekOff():void
 		{
-			_behaviorSeek.stop();
+			_seek.stop();
 		}
 		
 		public function wallAvoidanceOn( walls:Vector.<IGameEntity> ):void
 		{
-			_behaviorWallAvoidance.start( walls );
+			_wallAvoidance.start( walls );
 		}
 		
 		public function wallAvoidanceOff():void
 		{
-			_behaviorWallAvoidance.stop();
+			_wallAvoidance.stop();
 		}
 		
 		public function rotateOn( target:IGameEntity ):void
 		{
-			_behaviorRotate.start( target );
+			_rotate.start( target );
 		}
 		
 		public function rotateOff():void
 		{
-			_behaviorRotate.stop();
+			_rotate.stop();
 		}
 		
 		public function obstacleOvoidanceOn( obstacles:Vector.<IGameEntity> ):void
 		{
-			_behaviorObstacleOvoidance.start( obstacles );
+			_obstacleOvoidance.start( obstacles );
 		}
 		
 		public function obstacleOvoidanceOff():void
 		{
-			_behaviorObstacleOvoidance.stop();
+			_obstacleOvoidance.stop();
 		}
 		
 		public function interposeOn( entity1:IGameEntity, entity2:IGameEntity ):void
 		{
-			_behaviorInterpose.start( entity1, entity2 );
+			_interpose.start( entity1, entity2 );
 		}
 		
 		public function interposeOff():void
 		{
-			_behaviorInterpose.stop();
+			_interpose.stop();
 		}
 		
-		public function hideOn( fromEntity:IGameEntity ):void
+		public function hideOn( fromEntity:IGameEntity, obstaclesToUse:Vector.<IGameEntity> ):void
 		{
-			_behaviorHide.start( fromEntity );
+			_hide.start( fromEntity, obstaclesToUse );
 		}
 		
 		public function hideOff():void
 		{
-			_behaviorHide.stop();
+			_hide.stop();
 		}
 		
 		public function evadeOn( pursuer:IGameMovingEntity ):void
 		{
-			_behaviorEvade.start( pursuer );
+			_evade.start( pursuer );
 		}
 		
 		public function evadeOff():void
 		{
-			_behaviorEvade.stop();
+			_evade.stop();
 		}
 		
 		public function cohesionOn( neighbors:Vector.<IGameEntity> ):void
 		{
-			_behaviorCohesion.start( neighbors );
+			_cohesion.start( neighbors );
 		}
 		
 		public function cohesionOff():void
 		{
-			_behaviorCohesion.stop();
+			_cohesion.stop();
 		}
 		
 		public function arriveOn( location:Vector2D, howFast:Number ):void
 		{
-			_behaviorArrive.start( location, howFast );
+			_arrive.start( location, howFast );
 		}
 		
 		public function arriveOff():void
 		{
-			_behaviorArrive.stop();
+			_arrive.stop();
 		}
 		
 		public function alignmentOn( neighbors:Vector.<IGameEntity>y ):void
 		{
-			_behaviorAlignment.start( neighbors );
+			_alignment.start( neighbors );
 		}
 		
 		public function alignmentOff():void
 		{
-			_behaviorAlignment.stop();
+			_alignment.stop();
 		}
 		
 		
