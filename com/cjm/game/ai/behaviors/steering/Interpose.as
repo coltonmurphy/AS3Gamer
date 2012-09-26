@@ -13,8 +13,7 @@ package com.cjm.game.ai.behaviors.steering
 	internal class Interpose extends Behavior
 	{
 		protected var _agentA :IGameMovingEntity;
-		protected var _agentB :IGameMovingEntity;// B and C interposes A
-		protected var _agentC :IGameMovingEntity;
+		protected var _agentB :IGameMovingEntity;
 		
 		protected var _midpoint:Vector2D;
 		protected var _timeToReachMidpoint:Number;
@@ -25,20 +24,19 @@ package com.cjm.game.ai.behaviors.steering
 		{
 			super.start();
 			
-			_agentA  = params[0] as IGameMovingEntity;
-			_agentB = params[1] as IGameMovingEntity;
-			_agentC = params[1] as IGameMovingEntity;
+			_agentA = params[0] as IGameMovingEntity;
+			_agentB = params[1] as IGameMovingEntity;	
 		}
 		
 		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
 		{
-			_midpoint = ( _agentB.getPosition().add(_agentC.getPosition()) ).scaleBy( 0.5 );
-			_timeToReachMidpoint = _agentA.getDistance( _midpoint ) / _agentA.getMaxSpeed();
+			_midpoint = ( _agentA.getPosition().add(_agentB.getPosition()) ).scaleBy( 0.5 );
+			_timeToReachMidpoint = _owner.getDistance( _midpoint ) / _agentA.getMaxSpeed();
+			_furturePosA = _agentA.getPosition().add(_agentA.getVelocity()).scaleBy(_timeToReachMidpoint);
 			_furturePosB = _agentB.getPosition().add(_agentB.getVelocity()).scaleBy(_timeToReachMidpoint);
-			_furturePosC = _agentC.getPosition().add(_agentC.getVelocity()).scaleBy(_timeToReachMidpoint);
 			
 			//Midpoint of predicted positions
-			_midpoint = _furturePosB.add( _furturePosC).scaleBy( 0.5 );
+			_midpoint = _furturePosA.add( _furturePosB ).scaleBy( 0.5 );
 			
 			var howFast:Number = 2;
 			_steeringForce = (new Arrive(_owner, true, _midpoint, howFast)).getSteeringForce();

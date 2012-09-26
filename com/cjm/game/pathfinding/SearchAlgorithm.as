@@ -10,35 +10,47 @@ package com.cjm.game.pathfinding
 		protected var _heuristic:IHeuristic;
 		protected var _endNode:INode;
 		protected var _startNode:INode;
-
+		protected var _completed:Boolean;
 		
 		protected var _result:*;
 
-		public function SearchAlgorithm( g:IGraph, a:INode, b:INode, h:IHeuristic, autoRun:Boolean = true ) 
+		public function SearchAlgorithm( g:IGraph, a:INode, b:INode, h:IHeuristic, autoExecute:Boolean = true ) 
 		{
 			_graph = g;
 			_heuristic = h;
-
+			_completed = false;
 			_startNode = a
 			_endNode   = b;
 			
-			if ( autoRun )
+			if ( autoExecute )
 			{
-				preProcess();
-				process();
-				postProcess();
+				execute();
 			}
 
 		}
 		
-		public function process():void
+		public function execute():void
 		{
-			while( _currentNode != _endNode )
+			preProcess();
+			process();
+			postProcess();
+		}
+		
+		private function process():void
+		{
+			while( !isComplete()  )
 			{
 				processOnce();
+				
+				trace("SearchAlgorithm processing. process cycle.");//should be responsible for changing _completed's value.
 			}
 		}
 		
+		/*This method is checked within internal processing*/
+		public function isComplete():void
+		{
+			return false;
+		}
 		/*The methods below should be overriden by subclass*/
 		public function preProcess():void
 		{
@@ -50,9 +62,14 @@ package com.cjm.game.pathfinding
 			trace("Warning: SearchAlgorith postProcess is not overriden.");
 		}
 		
-		public function processOnce():void
+		/*This method is responsible for updating the _completed member's value, please
+		 * not if this method is called thru public means by external object, preProcess and postProcess
+		 * methods will NOT run automatically
+		 * returns false if can no longer process,\*/
+		public function processOnce():Boolean
 		{
 			trace("Warning: SearchAlgorith processOnce is not overriden.");
+			return false;
 		}
 		
 		public function getResult():*

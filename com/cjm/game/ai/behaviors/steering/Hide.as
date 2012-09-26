@@ -3,7 +3,7 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
-	import com.cjm.utils.math.Vector2D;
+	import com.cjm.math.geom.Vector2D;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	
@@ -56,15 +56,16 @@ package com.cjm.game.ai.behaviors.steering
 			return super.calculate( multiplierModifier );
 		}
 		
-		private function getHidingPosition( position:Vector3D, radius:Number, target:Vector3D):Vector3D
+		private function getHidingPosition( position:Vector2D, radius:Number, target:Vector2D):Vector2D
 		{
+			//Distance away from obstacle
 			var distAway:Number = radius + _distance;
 			
 			//Calculate the heading toward target
-			var heading = position.subtract( target ).normalize();
+			var heading:Vector2D = position.subtract( target ).normalize();
 			
-			//Scale it to size and add to the obstacles position to get hiding spot
-			return position.add( heading * distAway ) 
+			//Scale it and add the obstacle's position to get hiding spot
+			return position.add( heading.scaleBy( distAway ) ) 
 		}
 		
 	}
