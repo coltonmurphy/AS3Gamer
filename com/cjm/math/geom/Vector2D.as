@@ -125,15 +125,34 @@ package com.cjm.math.geom
 			super.y -= amount;
 		}
 		
+		public function norm():void
+		{
+			if (length < Number.MIN_VALUE)
+			{
+				zero();
+			}
+			var inv:Number = 1.0 / length;
+			super.x *= inv;
+			super.y *= inv;
+		}
+		
 		public static function Vec2DNormalize(v:Vector2D):Vector2D
 		{
 		   var  len = v.length;
 
-			if ( len > (1 - Number.MIN_VALUE ) )//TODO: Verify if epsilon differential is ported correctly
+			/*if ( len > (1 - Number.MIN_VALUE ) )//TODO: Verify if epsilon differential is ported correctly
 			{
 				v.x /= len;
 				v.y /= len;
+			}*/
+			
+			if (len < Number.MIN_VALUE)
+			{
+				v.zero();
 			}
+			var inv:Number = 1.0 / len;
+			v.x *= inv;
+			v.y *= inv;
 
 			return v;
 		}
@@ -152,12 +171,12 @@ package com.cjm.math.geom
 		    return yD*yD + xD*xD;
 		}
 
-		public static function Vec2DLength(v:Vector2D)
+		public static function Vec2DLength(v:Vector2D):Number
 		{
 		  return Math.sqrt(v.x*v.x + v.y*v.y);
 		}
 
-		public static function Vec2DLengthSq(v:Vector2D)
+		public static function Vec2DLengthSq(v:Vector2D):Number
 		{
 		  return (v.x*v.x + v.y*v.y);
 		}

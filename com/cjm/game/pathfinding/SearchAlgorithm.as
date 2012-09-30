@@ -7,18 +7,21 @@ package com.cjm.game.pathfinding
 	 */
 	public class SearchAlgorithm extends Algorithm
 	{
+		public static const NOT_FOUND:Number = 0;
+		public static const NOT_FOUND:Number = 0;
+		public static const FOUND:Number     = 1;
+		
 		protected var _graph:IGraph;
 		protected var _heuristic:IHeuristic;
 		protected var _endNode:INode;
 		protected var _startNode:INode;
 
-		public function SearchAlgorithm( useTicks:Boolean = false, 
-										 tickPerCycle:int = 100,
-										 g:IGraph, 
+		public function SearchAlgorithm( g:IGraph, 
 										 a:INode, 
 										 b:INode, 
 										 h:IHeuristic, 
-										
+										 useTicks:Boolean = false, 
+										 tickPerCycle:int = 100
 										 ) 
 		{
 			super( useTicks, tickPerCycle );

@@ -18,24 +18,26 @@ package com.cjm.math
 			_useTicks = useTicks;
 			_ticksPerCycle = tickPerCycle;
 			_ticksCount = 0;
-			_completed = false;
+			_solved = false;
 		}
 		
 		public function cycle():void
 		{
 			do {
-				var finished = processOnce();
-				var ticksSatisfied:Boolean = (_useTicks &&  _ticksCount++ != tickPerCycle)
+				var finished:Boolean = processOnce();
+				var ticksSatisfied:Boolean = _useTicks ? _useTicks :  (_ticksCount++ == tickPerCycle);
 			}
-			while( !finished && ticksSatisfied )
+			while( !finished && !ticksSatisfied )
 				trace("SearchAlgorithm processing. process cycle.");//should be responsible for changing _completed's value.);
 			
+			_ticksCount = 0;
+			_solved = finished;
 		}
 		
 		/*This method is checked within internal processing*/
-		public function isComplete():void
+		public function isSolved():void
 		{
-			return _completed;
+			return _solved;
 		}
 		
 		

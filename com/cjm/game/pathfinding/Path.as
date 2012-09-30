@@ -1,10 +1,10 @@
 package com.cjm.game.pathfinding 
 {
-	import com.cjm.core.Iterator;
+	import com.cjm.collections.Iterator;
 	import com.cjm.game.core.IRender;
-	import com.cjm.game.signals.GameAction;
 	import com.cjm.math.geom.Vector2D;
 	import com.cjm.math.MathUtil;
+	import com.cjm.view.Line;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -24,8 +24,9 @@ package com.cjm.game.pathfinding
 			_visible = false;
 			_graph = g;
 		}
+	
 		
-		public function draw():void
+		public function render(...context):void
 		{
 			var parentView:Sprite = _graph.getView();
 			
@@ -41,24 +42,18 @@ package com.cjm.game.pathfinding
 			_view.graphics.lineStyle(3, 3);
 			
 			var it:Iterator = getIterator()
-			var node:Node = it.front();
-			
-			_view.moveTo(node.x, node.y);
-			
-			while ( node != it.end() )
+			var line:Line = new Line( _view );
+	
+			while ( it.hasNext() )
 			{
-				_view.lineTo(node.x, node.y);
+				var node:Node = it.getNext() as Node;
+				
+				line.to(node.x, node.y);
 				
 				node.render( _view );
-				node = it.next();
 			}
 			
 			parentView.addChild( _view );
-		}
-		
-		public function render(...context):void
-		{
-			
 		}
 		
 		//For cursing the list of nodes
