@@ -1,3 +1,4 @@
+//Original from pzuh package, with minor modifications from myself. 
 package com.cjm.game.ai.naivebayes 
 {
 	import com.cjm.patterns.creational.core.IDestroy;

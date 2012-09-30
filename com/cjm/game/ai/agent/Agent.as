@@ -5,8 +5,11 @@ package com.cjm.game.ai.agent
 	 * @author Colton Murphy
 	 */
 
+	import com.cjm.game.ai.agent.state.AgentState;
+	import com.cjm.game.ai.agent.state.AgentStateMachine;
 	import com.cjm.game.ai.behaviors.steering.SteeringSystem;
 	import com.cjm.game.core.GameMovingEntity;
+	import com.cjm.game.weapon.WeaponSystem;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
 	import flash.geom.Vector3D;
@@ -17,7 +20,8 @@ package com.cjm.game.ai.agent
 		//systems
 		protected var _steeringSystem:SteeringSystem;
 		
-		protected var _state:State						= new State(null);
+		protected var _alive:Boolean                    = false;
+		protected var _stateMachine:AgentStateMachine					= new AgentState(null);
 		protected var _defense:Number					= 1;
 		protected var _offense:Number					= 1;
 		protected var _life:Number    					= 1;
@@ -28,10 +32,17 @@ package com.cjm.game.ai.agent
 		
 		public function Agent( id :String ) 
 		{
-			super( id )
-			
+			super( id );
+			new AgentStateMachine
+		}
+		
+		override public function initialize():void
+		{
 			//Initialize systems
-			_steeringSystem = SteeringSystem.getInstance( this );
+			_steeringSystem = new SteeringSystem( this );
+			
+			_stateMachine = AgentStateMachine.getInstance();
+			_weaponeSystem = new WeaponSystem( this );
 		}
 		
 		public function update(timeElapsed:Number):void
@@ -41,7 +52,7 @@ package com.cjm.game.ai.agent
 			var steeringForce:Vector3D = _steeringSystem.calculate();
 			
 			///Acceleration = Force / Mass
-			var acceleration: Vector3D = steeringForce.scaleBy( getMass() );
+			var acceleration: Vector2D = steeringForce.scaleBy( getMass() );
 			
 			getVelocity().add( acceleration.scaleBy( timeElapsed ) );
 			
@@ -55,6 +66,22 @@ package com.cjm.game.ai.agent
 			{
 				setHeading( _velocity.normalize() );
 			}
+		}
+		
+		override public function render(...context):void
+		{
+			if ( _visible && null == _view)
+			{
+				var parentView:DisplayObject = context[0] as DisplayObject;
+				_view = getView();
+				_view.graphics.lineStyle(1, 1);
+				_view.graphics.beginFill(0xC4FB89);
+				_view.graphics.drawCircle(0, 0, 1);
+				_view.graphics.endFill();
+				_view.x = _position.x;
+				_view.y = _position.y;
+				parentView.addChild(_view);
+			}	
 		}
 		
 		public function changeState( state:IState ):void
@@ -122,6 +149,12 @@ package com.cjm.game.ai.agent
 		{
 			_intellegence = value;
 		}
+		
+		// If health > damage we are still kicking
+		public function isAlive( ):Boolean
+		{
+			return _alive;
+		};
 	}
 
 }

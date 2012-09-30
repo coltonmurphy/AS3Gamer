@@ -1,6 +1,7 @@
+
+//Original from pzuh package, with minor modifications from myself. 
 package com.cjm.game.ai.naivebayes 
 {
-	import com.pzuh.Basic;
 	public class Attribute
 	{
 		private var name:String;

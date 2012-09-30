@@ -1,5 +1,6 @@
 
 //For pattern recognition via grammar and a statistically reduced prediction
+//Original from pzuh package, with minor modifications from myself. 
 package com.cjm.game.ai.ngram
 {
 	import com.cjm.utils.math.MathUtil;

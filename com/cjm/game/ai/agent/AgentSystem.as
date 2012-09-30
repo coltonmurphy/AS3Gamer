@@ -1,5 +1,6 @@
 package com.cjm.game.ai.agent 
 {
+	import com.cjm.core.Iterator;
 	import com.cjm.game.core.GameSystem;
 	import com.cjm.game.core.IGameWorld;
 	
@@ -19,9 +20,22 @@ package com.cjm.game.ai.agent
 		
 		override public function initialize():void
 		{
-			
+			//Common pathfinding goals, or weapons system, most likely be in Agent initialize tho
 		}
 		
+		public function getIterator():Iterator
+		{
+			return new Iterator( _agents as Array );
+		}
+		
+		public function createAgents( amount:int ):Vector<IAgent>
+		{
+			while (amount--)
+			{
+				_agents.push( new Agent(amount.toString() );
+			}
+			return _agents;
+		}
 	}
 
 }

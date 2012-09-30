@@ -1,4 +1,4 @@
-package com.cjm.utils.math 
+package com.cjm.math 
 {
 	/**
 	 * ...
@@ -16,6 +16,14 @@ package com.cjm.utils.math
 		public static function randomClamped():Number
 		{
 			var result:Number = (Math.random() * 2) - 1;
+		}
+		
+		public static function clamp(val:uint, min:uint,max:uint):Number
+		{
+			if (val > max )
+				val = min;
+				
+			return val;
 		}
 		
 		public static function degreeToRadian(valueDegree:Number):Number

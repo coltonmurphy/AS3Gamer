@@ -2,6 +2,7 @@ package com.cjm.game.core
 {
 	import com.cjm.game.event.GameSignal;
 	import com.cjm.game.event.IGameSignal;
+	import com.cjm.math.geom.Vector2D;
 	import com.cjm.patterns.core.Entity;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
@@ -20,7 +21,7 @@ package com.cjm.game.core
 		
 		protected var _world:IGameWorld   		   = null;
 		protected var _tagged:Boolean     		   = false;
-		protected var _alive:Boolean               = false;
+		
 		protected var _removeNextUpdate:Boolean    = false;//For managing systems to check for entity destruction
 		protected var _readyForNextUpdate:Boolean  = false; // depends on update frequency
 		protected var _scale:uint        	       = 1;
@@ -163,12 +164,13 @@ package com.cjm.game.core
 			_radius                = Number.NaN;
 			_mass                  = Number.NaN;
 		};
-		
-		// If health > damage we are still kicking
-		public function isAlive( ):Boolean
-		{
-			return _alive;
-		};
+
+		public function intersects(ge:IGameEntity):Boolean
+        {
+			var radius:Number   =  (getRadius() + ge.getRadius()) * (getRadius() + ge.getRadius())
+            var distance:Number = Vector2D.Vec2DDistance( getPosition(), ge.getPosition() );
+			return Boolean(radius > distance);     
+        }
 	}
 
 }

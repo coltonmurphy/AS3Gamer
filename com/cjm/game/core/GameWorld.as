@@ -3,6 +3,7 @@ package com.cjm.game.core
 	import com.cjm.game.ai.agent.AgentSystem;
 	import com.cjm.game.trigger.TriggerSystem;
 	import com.cjm.utils.math.Vector2D;
+	import flash.display.DisplayObject;
 	import flash.geom.Vector3D;
 	import org.osflash.signals.ISignal;
 	/**
@@ -13,24 +14,32 @@ package com.cjm.game.core
 	{
 		protected var _agentSystem:AgentSystem;
 		protected var _triggerSystem:TriggerSystem;
-		
+		protected var _view:DisplayObject;
 		protected var _lastUpdateTime:Number;
 		
-		public function GameWorld() 
+		public function GameWorld(root:DisplayObject) 
 		{
-			
+			_view = root;
 		}
 		
 		/* INTERFACE com.cjm.game.core.IGameWorld */
 		public function initialize():Boolevoid 
 		{
 			_agentSystem   = new AgentSystem( this );
-			_triggerSystem = new TriggerSystem( this )
+			_triggerSystem = new TriggerSystem( this );
+			
+			_agentSystem.createAgents( 50 );
 		}
 		
-		public function render(...params):void 
+		public function getView():DisplayObject
 		{
-			
+			return _view;
+		}
+		
+		public function render():void 
+		{
+			_agentSystem.render(_view);
+			_triggerSystem.render(_view);
 		}
 		
 		public function tick(...param):void 

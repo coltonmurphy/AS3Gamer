@@ -1,62 +1,70 @@
 package com.cjm.game.pathfinding 
 {
+	import com.cjm.core.Iterator;
 	import com.cjm.game.core.IRender;
 	import com.cjm.game.signals.GameAction;
+	import com.cjm.math.geom.Vector2D;
+	import com.cjm.math.MathUtil;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.geom.Vector3D;
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
 	public final class Path implements IPath, IRender
-	{
-		private var _renderSignal:GameAction = new GameAction();
+	{		
 		private var _nodes:Vector.<INode>;
-		private var _cursor:int;
 		private var _visible:Boolean;
+		private var _graph:IGraph;
 		
-		public function Path( sv:Vector.<INode> = null ) 
+		public function Path( g:IGraph ) 
 		{
-			setNodes( sv || new Vector.<INode> );
-			_cursor = -1;
 			_visible = false;
+			_graph = g;
 		}
 		
-		public function render(...payLoad):void
+		public function draw():void
 		{
-			if ( _visible )
+			var parentView:Sprite = _graph.getView();
+			
+			if ( null != getView() )
 			{
-				while ( var node:IRender = next() != end() )
-				{
-					node.render(payLoad);
-				}
-				//TODO: Draw line
-				
+				_view.graphics.clear();
+			}
+			else
+			{
+				_view = new Shape();
 			}
 			
-			renderSignal.dispatch(payLoad)
+			_view.graphics.lineStyle(3, 3);
+			
+			var it:Iterator = getIterator()
+			var node:Node = it.front();
+			
+			_view.moveTo(node.x, node.y);
+			
+			while ( node != it.end() )
+			{
+				_view.lineTo(node.x, node.y);
+				
+				node.render( _view );
+				node = it.next();
+			}
+			
+			parentView.addChild( _view );
 		}
 		
-		public function end():INode
+		public function render(...context):void
 		{
-			return _nodes[_nodes.length - 1];
+			
 		}
 		
-		public function front():INode
+		//For cursing the list of nodes
+		public function getIterator():Iterator
 		{
-			return _nodes[0];
-		}
-		
-		public function next():INode
-		{
-			if ( _cursor++ > length() )
-				_cursor = 0;
-		   
-			return _nodes[_cursor];
-		}
-		
-		public function length():uint
-		{
-			return _nodes.length;
+			return new Iterator(_nodes as Array);
 		}
 		
 		public function addNode( n:INode ):uint
@@ -68,12 +76,23 @@ package com.cjm.game.pathfinding
 		
 		public function getNode( i:uint ):INode
 		{
-			return _nodes[i] || null;
+			if ( length() > 0 )
+			{
+				return _nodes[i];
+			}
+			return null;
 		}
 		
-		public function removeNode( n:INode ):uint
+		public function removeNode( n:INode ):Boolean
 		{
-			return _nodes.unshift( n )
+			var i:Number;
+			if ( -1 !=  (i = _nodes.indexOf(n)))
+			{
+				_nodes.splice(i, 1);
+				return true;
+			}
+			
+			return false;
 		}
 		
 		public function setNodes(sv:Vector.<INode>):Boolean
@@ -87,43 +106,44 @@ package com.cjm.game.pathfinding
 			return _nodes;
 		}
 		
+		//Just use euclidean distance for now
 		public function getCost():Number
 		{
-			var val:Number;
-			
-			while (next() != end())
+			var it:Iterator = getIterator();
+			var val:Number = 1;
+			var n:INode; var p:INode;
+			while (n = it.next() != it.end())
 			{
-				
-			}
-			if(_nodes[fromNode] != null)
-			{
-				if(_nodes[fromNode].neighbours[toNode] != null)
+				if ( null != p )
 				{
-					val = _nodes[fromNode].neighbours[toNode];
+					val += Vector2D.Vec2DDistanceSq(n, p);
 				}
+				p = n;
 			}
-			return val;
+
+			return Math.sqrt(val);
 		}
 		
 		public function reverse():Vector.<INode>
 		{
-			return _nodes.reverse();:Vector.<INode>
+			return _nodes.reverse();
 		}
 		
-		public function clone()
+		public function clone():Vector.<INode>
 		{
 			return _nodes.slice(0);
 		}
 		
 		public function get visible():Boolean 
 		{
-			return _visible;
+			return _view.visible;
 		}
 		
 		public function set visible(value:Boolean):void 
 		{
-			_visible = value;
+			_view.visible = value;
+			
+			draw();
 		}
 	}
-
 }
