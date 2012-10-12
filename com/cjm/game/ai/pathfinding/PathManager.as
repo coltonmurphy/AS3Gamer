@@ -2,7 +2,10 @@
 
 package com.cjm.game.ai.pathfinding
 {
-	public class PathManager
+	import com.cjm.game.ai.pathfinding.alg.GraphSearch;
+	import com.cjm.game.core.GameSystem;
+	
+	public class PathFinderSystem extends GameSystem
 	{
 
 	  //a container of all the active search requests
@@ -35,7 +38,7 @@ package com.cjm.game.ai.pathfinding
 	//  notified accordingly by Telegram
 	//-----------------------------------------------------------------------------
 
-	public function update( dtime:Number ):void
+	override public function update( dtime:Number ):void
 	{
 	    var cyclesRemaining:int = _seachCyclesPerUpdate;
 		var pathCount:int = 0;

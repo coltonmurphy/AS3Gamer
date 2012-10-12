@@ -16,6 +16,11 @@ package com.cjm.collections.iterators
 			
 			reset();
 		}
+		
+		public static function getIterator( data:Vector.<*>):IIterator
+		{
+			return new Iterator( data );
+		}
 
 		public function current():*
 		{

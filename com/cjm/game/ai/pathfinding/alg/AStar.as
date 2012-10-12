@@ -18,8 +18,6 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.game.graph.NavGraphEdge;
 	import com.cjm.game.ai.pathfinding.heuristic.EuclidHeuristic;
 	import com.cjm.game.ai.pathfinding.heuristic.IHeuristic;
-	import com.cjm.game.ai.pathfinding.IPath;
-	import com.cjm.game.ai.pathfinding.Path;
 	import com.cjm.collections.IndexedPriorityQLow;
 	
 	public class AStar extends GraphSearch
@@ -52,6 +50,7 @@ package com.cjm.game.ai.pathfinding.alg
 		{               
 			super( useTicks, tickAmt );
 			
+			_type = "AStar";
 			_graph = graph;
 			_start = start;
 			_goal = target
@@ -59,9 +58,9 @@ package com.cjm.game.ai.pathfinding.alg
 			_route   =  new Vector<int>
 			_heu = h;
 		
-			//create an indexed priority queue that sorts smallest to largest
-		    //(front to back).Note that the maximum number of elements the iPQ
-		    //may contain is N. This is because no node can be represented on the 
+			//A great queue from Matt Buckland.create an indexed priority queue that sorts smallest to largest
+		    //(front to back).Note that the maximum number of elements the q
+		    //may contain is n. This is because no node can be represented on the 
 		    //queue more than once.
 		    _queue = new IndexedPriorityQLow(_fCost, _graph.getNumNodes());
 
@@ -69,6 +68,7 @@ package com.cjm.game.ai.pathfinding.alg
             pq.insert(_start);
 		}
 
+		//Shortest path tree:
 		//returns a vector containing pointers to all the edges the search has examined
 		//returns the vector of edges that defines the SPT. If a target was given
 	    //in the constructor then this will be an SPT comprising of all the nodes
@@ -79,6 +79,9 @@ package com.cjm.game.ai.pathfinding.alg
 			return _spt;
 		}
 
+		//Cycle once 
+		//returns an integer representative to search state, respectfully 'solve','unsolved', and
+		//'unsolved_complete'
 		override public function searchOnce():int
 		{
 			if ( _queue.isEmpty() )
@@ -99,19 +102,16 @@ package com.cjm.game.ai.pathfinding.alg
 
 				//push the edges leading from the node at the end of this edge 
                 //onto the queue)
-				//graph_type::ConstEdgeIterator ConstEdgeItr(_graph, nextClosest);
-				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() )
-				
-				/*for (const Edge* edge=ConstEdgeItr.begin();!ConstEdgeItr.end(); edge=ConstEdgeItr.next()){*/
+				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() );
 				while ( edgeIterator.next() )
 				{
 					var edge:GraphEdge = edgeIterator.current();
 
-				    //calculate the 'real' cost to this node from the source (G)
+				    //calculate the 'real' cost to this node from the start
 				    var g:Number = _gCost[nextClosest] + edge.getCost();
 					
 					//if the node has not been added to the frontier, add it and update
-					//the G and F costs
+					//the gross, frontier, and heuristic costs accrued thus far
 					if ( null == _searchFrontier[edge.getTo()])
 					{
 						_fCost[edge.getTo()] = g + _heu.calculate(_graph, _goal, edge.getTo());
@@ -139,7 +139,7 @@ package com.cjm.game.ai.pathfinding.alg
 			return GraphSearch.UNSOLVED;
 		}
 
-		public function getPathToTarget():Vector.<int>
+		override public function getPathToTarget():Vector.<int>
 		{
 		    var path:Vector.<int>;
 

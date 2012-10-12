@@ -12,13 +12,7 @@ package com.cjm.game.core
 	 */
 	public class GameEntity extends Entity implements IGameEntity, IUpdate, IRender 
 	{
-		private var _updateSignal    :GameSignal;
-		private var _renderSignal    :GameSignal;
-		private var _typeSignal      :GameSignal;
-		private var _positionSignal  :GameSignal;
-		private var _scaleSignal     :GameSignal;
-		private var _radiusSignal    :GameSignal;
-		
+
 		protected var _world:IGameWorld   		   = null;
 		protected var _tagged:Boolean     		   = false;
 		
@@ -46,30 +40,30 @@ package com.cjm.game.core
 			return _world
 		}
 		
-		public function get updateSignal:IGameSignal {return _updateSignal;};
+
 		//Evaluate and set _alive and other internal states
 		public function update( time:Number ):void
 		{
 			
-			_updateSignal.dispatch(params);
+			
 		}
 		
 		
-		public function get renderSignal:IGameSignal{return _renderSignal;};
+		
 		//Mediate view location to stage
 		public function render( ...params ):void
 		{
-			renderSignal.dispatch(params);
+
 		}
 		
 		//For physics systems
-		public function get massSignal:IGameSignal{return _massSignal;};
+	
 		public function setMass(m:uint):Boolean 
 		{
 			var t:Number = _mass;
 			_mass = m;
 			
-			_massSignal.dispatch(t, m);//orig scale, changedto scale
+
 		}
 		
 		public function getMass():uint 
@@ -77,13 +71,13 @@ package com.cjm.game.core
 			return _mass;
 		}
 		
-		public function get scaleSignal():IGameSignal {return _scaleSignal;}
+
 		public function setScale(s:Number):void 
 		{
 			var t:Number = _scale;
 			_scale = s;
 			
-			scaleSignal.dispatch(t, s);//orig scale, changedto scale
+
 		}
 		
 		public function getScale():Number 
@@ -91,10 +85,9 @@ package com.cjm.game.core
 			return _scale
 		}
 		
-		public function get positionSignal():IGameSignal {return _positionSignal;}
+}
 		public function setPosition(v:Vector3D):void 
 		{
-			_positionSignal.dispatch(_position, v);//orig scale, changedto scale
 			
 			_position = v;
 		}
@@ -104,12 +97,11 @@ package com.cjm.game.core
 			return _position;
 		}
 		
-		public function get radiusSignal():IGameSignal {return _radiusSignal;}
+
 		public function setRadius(r:Number):void 
 		{
 			var t:Number = _radius;
 			_radius = r;
-			radiusSignal.dispatch(t, r);
 		}
 		
 		public function getRadius(b):Number 
@@ -122,7 +114,6 @@ package com.cjm.game.core
 			return _tagged
 		}
 		
-		public function get taggedSignal():IGameSignal {return _taggedSignal;}
 		public function setTagged(t):void
 		{
 			 _tagged = t;

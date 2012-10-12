@@ -16,25 +16,17 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.game.graph.EdgeIterator;
 	import com.cjm.game.graph.GraphEdge;
 	import com.cjm.game.graph.NavGraphEdge;
-	import com.cjm.game.ai.pathfinding.IPath;
-	import com.cjm.game.ai.pathfinding.Path;
+
 
 	public class BFS extends GraphSearch
 	{
-
-		//to aid legibility
-		private static const visited:int = 0;
-		private static const unvisited:int = 1;
-		private static const no_parent_assigned:int = 2;;
-
-		//create a typedef for the edge and node types used by the graph
-	  /*typedef typename graph_type::EdgeType Edge;
-		typedef typename graph_type::NodeType Node;*/
-
+		private static const VISITED:int = 0;
+		private static const UNVISITED:int = 1;
+		
 		//a reference to the graph to be searched
 		private var _graph;
 
-		//this records the indexes of all the nodes that are visited as the
+		//this records the indexes of all the nodes that are VISITED as the
 		//search progresses
 		private var  _visited:Vector.<int>;
 
@@ -58,6 +50,7 @@ package com.cjm.game.ai.pathfinding.alg
 		  
 			super( useTicks, tickAmt );
 			
+			_type = "BFS";
 			_graph = graph;
 			_start = start;
 			_goal = target
@@ -72,7 +65,7 @@ package com.cjm.game.ai.pathfinding.alg
 			_queue = new Array();
 			_queue.push( dummy );
 	
-			_visited[_start] = visited;
+			_visited[_start] = VISITED;
 		}
 
 
@@ -111,7 +104,7 @@ package com.cjm.game.ai.pathfinding.alg
 				}
 			   
 				//NOTE: this is difference between BFS and DFS
-				//_visited[ next.getTo()] = visited;// DFS
+				//_visited[ next.getTo()] = VISITED;// DFS
 				
 				//if the target has been found the method can return success
 				if ( next.getTo() == _goal )
@@ -129,12 +122,12 @@ package com.cjm.game.ai.pathfinding.alg
 				{
 					var edge:GraphEdge = edgeIterator.current();
 					
-					if ( _visited[edge.getTo()] == unvisited)
+					if ( _visited[edge.getTo()] == UNVISITED)
 					{
 						_queue.push( edge );
 						
 						//NOTE: this is difference between BFS and DFS
-						_visited[ edge.getTo()] = visited;//BFS
+						_visited[ edge.getTo()] = VISITED;//BFS
 					}
 				}
 			}

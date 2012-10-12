@@ -8,8 +8,11 @@ package com.cjm.game.ai.agent
 	import com.cjm.game.ai.agent.state.AgentState;
 	import com.cjm.game.ai.agent.state.AgentStateMachine;
 	import com.cjm.game.ai.behaviors.steering.SteeringSystem;
+	import com.cjm.game.ai.pathfinding.PathFinderSystem;
+	import com.cjm.game.ai.pathfinding.PathPlanner;
 	import com.cjm.game.core.GameMovingEntity;
 	import com.cjm.game.weapon.WeaponSystem;
+	import com.cjm.math.geom.Vector2D;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
 	import flash.geom.Vector3D;
@@ -19,9 +22,10 @@ package com.cjm.game.ai.agent
 	{
 		//systems
 		protected var _steeringSystem:SteeringSystem;
-		
+		protected var _weaponSystem:WeaponSystem;
+		protected var _pathPlanner:PathPlanner;
+		protected var _stateMachine:AgentStateMachine;
 		protected var _alive:Boolean                    = false;
-		protected var _stateMachine:AgentStateMachine					= new AgentState(null);
 		protected var _defense:Number					= 1;
 		protected var _offense:Number					= 1;
 		protected var _life:Number    					= 1;
@@ -33,36 +37,37 @@ package com.cjm.game.ai.agent
 		public function Agent( id :String ) 
 		{
 			super( id );
-			new AgentStateMachine
+		
 		}
 		
 		override public function initialize():void
 		{
 			//Initialize systems
-			_steeringSystem = new SteeringSystem( this );
-			
 			_stateMachine = AgentStateMachine.getInstance();
+			_steeringSystem = new SteeringSystem( this );
 			_weaponeSystem = new WeaponSystem( this );
+			_pathPlanner   = new PathPlanner( this );
 		}
 		
 		public function update(timeElapsed:Number):void
 		{
 			//Get steering force
 			///Force = Mass*Acceleration
-			var steeringForce:Vector3D = _steeringSystem.calculate();
-			
+			var steeringForce:Vector2D = _steeringSystem.calculate();
+		
 			///Acceleration = Force / Mass
 			var acceleration: Vector2D = steeringForce.scaleBy( getMass() );
 			
-			getVelocity().add( acceleration.scaleBy( timeElapsed ) );
+			_velocity.add( acceleration.scaleBy( timeElapsed ) );
 			
-			//TODO: Truncate to max speed
+			//Cap the speed
+			_velocity.truncate( _maxSpeed );
 			
 			//Update coordinate location
-			_position.add( getVelocity().scaleBy( timeElapsed ) );
+			_position.add( _velocity.scaleBy( timeElapsed ) );
 			
 			//Update heading if moving
-			if ( getVelocity().lengthSquared > 0.00000001 )
+			if ( _velocity.lengthSquared > 0.00000001 )
 			{
 				setHeading( _velocity.normalize() );
 			}

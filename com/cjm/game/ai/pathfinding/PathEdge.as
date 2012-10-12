@@ -11,7 +11,7 @@
 package com.cjm.game.ai.pathfinding
 {
 	import com.cjm.math.geom.Vector2D;
-	public class Edge
+	public class PathEdge
 	{
 		//positions of the source and destination nodes this edge connects
 		private var _source:Vector2D;
@@ -21,7 +21,7 @@ package com.cjm.game.ai.pathfinding
 		private var _behavior:int;
 		private var _doorID:int;
 
-		public function Edge( source:Vector2D, destination:Vector2D, behavior:int = 0, doorID:int = 0):void
+		public function PathEdge( source:Vector2D, destination:Vector2D, behavior:int = 0, doorID:int = 0):void
 		{
 			_source      = source;
 			_destination = destination;

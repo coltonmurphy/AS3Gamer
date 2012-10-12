@@ -18,6 +18,7 @@ package com.cjm.game.ai.pathfinding.alg
 		protected var _completed:Boolean;
 		protected var _solved:Boolean;
 		protected var _result:*;
+		protected var _type:String = "GraphSearch";
 		
 		public function GraphSearch( useTicks:Boolean = false, 
 								   tickPerCycle:int = 100) 
@@ -81,6 +82,8 @@ package com.cjm.game.ai.pathfinding.alg
 
 			return path;
 		}
+		
+		public function getType():String{return _type}
 	}
 
 }

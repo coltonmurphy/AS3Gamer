@@ -1,4 +1,5 @@
 
+/*Original from Matt Buckland. Modified to suit AS3 compiler.*/
 
 //----------------------- IndexedPriorityQLow ---------------------------
 //
@@ -8,15 +9,13 @@
 //  The priority in this implementation is the lowest valued key
 //------------------------------------------------------------------------
 package com.cjm.collections
-{
-	
+{	
 	public class IndexedPriorityQLow
 	{
-
 	    private var _keys:Vector<Number>;
 	    private var _data:Vector<int>;
 	    private var _invdata:Vector<int>;
-        private var _size:int,
+        private var _size:int; 
 		private var _maxSize:int;
 
 		//you must pass the constructor a reference to the std::vector the PQ
@@ -25,19 +24,36 @@ package com.cjm.collections
 	    {
 		    _keys = keys;
 		    _maxSize = maxSize;
-		    _size = 0;
-		    //_data.assign(MaxSize+1, 0);//TODO: port assign std::vector int
-		   // _invdata.assign(MaxSize+1, 0);//TODO: port assign std::vector int
-	    }
+		    
+			assign();
+		}
 		
-		private function swap( a:int,  b:int):void
+		//Initializes data vectors with a predefined priority of 0
+		private function assign():void
 		{
-			var temp:int = _data[a]; _data[a] = _data[b]; _data[b] = temp;
+			_size = 0;
+			_data    = new Vector.<int>();
+			_invdata = new Vector.<int>();
+			
+			var len:int = new int(_maxSize+1);
+			for ( i; i < len; i++ )
+			{
+				_data[i]    = 0;
+				_invdata[i] = 0;
+			}
+		}
+		
+		private function swap( a:int, b:int):void
+		{
+			var temp:int = _data[a];
+			_data[a] = _data[b]; 
+			_data[b] = temp;
 
-			//change the handles too
-			_invdata[_data[a]] = a; _invdata[_data[b]] = b;
+			_invdata[_data[a]] = a; 
+			_invdata[_data[b]] = b;
 		}
 
+		//bubbles value up to where it finds correct priority element, taking advantage of int's rounding assignment
 	    private function reorderUpwards(nd:int):void
 	    {
 			//move up the heap swapping the elements until the heap is ordered
@@ -49,32 +65,32 @@ package com.cjm.collections
 			}
 	    }
 
-		private function reorderDownwards( nd:int,  HeapSize:int):void
+		private function reorderDownwards( nd:int,  size:int):void
 		{
 			//move down the heap from node nd swapping the elements until
 			//the heap is reordered
-			while (2*nd <= HeapSize)
+			while (2*nd <= size)
 			{
-			  var child:int = 2 * nd;
+				var child:int = 2 * nd;
 
-			  //set child to smaller of nd's two children
-			  if ((child < HeapSize) && (_keys[_data[child]] > _keys[_data[child+1]]))
-			  {
-				++child;
-			  }
+				//set child to smaller of nd's two children
+				if ((child < HeapSize) && (_keys[_data[child]] > _keys[_data[child+1]]))
+				{
+					++child;
+				}
 
-			  //if this nd is larger than its child, swap
-			  if (_keys[_data[nd]] > _keys[_data[child]])
-			  {
-				swap(child, nd);
+				//if this nd is larger than its child, swap
+				if (_keys[_data[nd]] > _keys[_data[child]])
+				{
+					swap(child, nd);
 
-				//move the current node down the tree
-				nd = child;
-			  }
-			  else
-			  {
-				break;
-			  }
+					//move the current node down the tree
+					nd = child;
+				}
+				else
+			    {
+					break;
+				 }
 			}
 		  }
 
@@ -107,11 +123,10 @@ package com.cjm.collections
 			return _data[_size--];
 	    }
 
-	  //if the value of one of the client key's changes then call this with 
-	  //the key's index to adjust the queue accordingly
-	  public function changePriority(idx:int):void
-	  {
+	    //if a value changes, update its location by it's priority/value
+	    public function changePriority(idx:int):void
+	    {
 		   reorderUpwards(_invdata[idx]);
-	  }
+	    }
 	};
 }

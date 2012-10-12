@@ -12,26 +12,21 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.collections.Stack;
 	import com.cjm.game.graph.EdgeIterator;
 	import com.cjm.game.graph.GraphEdge;
+	import com.cjm.game.graph.IEdge;
+	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.graph.NavGraphEdge;
 	import com.cjm.game.ai.pathfinding.IPath;
 	import com.cjm.game.ai.pathfinding.Path;
 
 	public class DFS extends GraphSearch
 	{
-
-		//to aid legibility
-		private static const visited:int = 0;
-		private static const unvisited:int = 1;
-		private static const no_parent_assigned:int = 2;;
-
-		//create a typedef for the edge and node types used by the graph
-	  /*typedef typename graph_type::EdgeType Edge;
-		typedef typename graph_type::NodeType Node;*/
-
+		private static const VISITED:int = 0;
+		private static const UNVISITED:int = 1;
+		
 		//a reference to the graph to be searched
 		private var _graph;
 
-		//this records the indexes of all the nodes that are visited as the
+		//this records the indexes of all the nodes that are VISITED as the
 		//search progresses
 		private var  _visited:Vector.<int>;
 
@@ -55,13 +50,12 @@ package com.cjm.game.ai.pathfinding.alg
 		  
 			super( useTicks, tickAmt );
 			
+			_type = "DFS";
 			_graph = graph;
 			_start = start;
 			_goal = target
 			_visited =  new Vector<int>
 			_route   =  new Vector<int>
-			//create a std stack of edges
-			//std::stack<const Edge*> stack;
 
 			//create a dummy edge and put on the stack
 			var dummy:GraphEdge = new GraphEdge(_start, _start, 0);
@@ -91,7 +85,7 @@ package com.cjm.game.ai.pathfinding.alg
 
 			    //remove the edge from the stack
 			    //stack.pop();
-				var next:GraphEdge = stack.pop()//TODO: use top()
+				var next:IEdge = stack.pop()//TODO: use top()
 			
 				//make a note of the parent of the node this edge points to
 				_route[ next.getTo() ] = next.getFrom();
@@ -102,9 +96,9 @@ package com.cjm.game.ai.pathfinding.alg
 					_spanningTree.push( next );//push_back
 				}
 			   
-				//and mark it visited
+				//and mark it VISITED
 				//NOTE: this is difference between BFS and DFS
-				_visited[ next.getTo() ] = visited;//DFS
+				_visited[ next.getTo() ] = VISITED;//DFS
 
 				//if the target has been found the method can return success
 				if ( next.getTo() == _goal )
@@ -114,7 +108,7 @@ package com.cjm.game.ai.pathfinding.alg
 
 				//push the edges leading from the node this edge points to onto
 				//the stack (provided the edge does not point to a previously 
-				//visited node)
+				//VISITED node)
 				//graph_type::ConstEdgeIterator ConstEdgeItr(_graph, next.getTo());
 				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() )
 				
@@ -123,12 +117,12 @@ package com.cjm.game.ai.pathfinding.alg
 				{
 					var edge:GraphEdge = edgeIterator.current();
 					
-					if ( _visited[edge.getTo()] == unvisited)
+					if ( _visited[edge.getTo()] == UNVISITED)
 					{
 						_stack.push( edge );
 						
 						//NOTE: this is difference between BFS and DFS
-						//_visited[ edge.getTo()] = visited;//BFS
+						//_visited[ edge.getTo()] = VISITED;//BFS
 					}
 				}
 			}
