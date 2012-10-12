@@ -3,6 +3,7 @@ package com.cjm.game.weapon
 	import com.cjm.game.core.IGameEntity;
 	import com.cjm.game.core.IGameMovingEntity;
 	import flash.geom.Vector3D;
+	import flash.utils.setInterval;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -13,7 +14,7 @@ package com.cjm.game.weapon
 	public interface IProjectile extends IGameMovingEntity
 	{
 		public function getOrigin():IGameEntity;
-		
+		 setInterval
 		public function get onSetTarget:ISignal;
 		public function setTarget(t:Vector3D);
 		public function getTarget():Vector3D;

@@ -13,16 +13,21 @@ package com.cjm.math
 		}
 		
 		//Return value between -1 and 1
-		public static function randomClamped():Number
+		public static function randomClamped():omt
 		{
-			var result:Number = (Math.random() * 2) - 1;
+			var result:int = (Math.random() * 2) - 1;
 		}
 		
-		public static function clamp(val:uint, min:uint,max:uint):Number
+		public static function random( min:Number = Number.MIN_VALUE, max:Number = Number.MAX_VALUE )
 		{
-			if (val > max )
+			return min + (Math.random() * (max - min));
+		}
+		
+		public static function clamp(val:Number, min:Number,max:Number):Number
+		{
+			if (val > max || val < min )
 				val = min;
-				
+			
 			return val;
 		}
 		

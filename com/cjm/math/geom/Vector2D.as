@@ -6,26 +6,65 @@ package com.cjm.math.geom
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public class Vector2D extends Point 
+	public class Vector2D 
 	{
+		protected var _x:Number;
+		protected var _y:Number;
+		
 		public function Vector2D(x:Number=0, y:Number=0) 
 		{
-			super(x, y);
+			_x = x;
+			_y = y;
 		}
 		
 		public function zero():void
 		{
-			x = 0; y = 0;
+			_x = 0; _y = 0;
 		}
 		
-		public function isZero():void
+		public function isZero():Boolean
 		{
-			return x == 0 && y == 0;
+			return _x == 0 && _y == 0;
 		}
 		
-		public function get lengthSq():Number
+		public function equals( v:Vector2D ):Boolean
 		{
-			return (x*x + y*y);
+			return _x == v.x && _y == v.y;
+		}
+		
+		public function length():Number
+		{
+			return Math.sqrt(lengthSq); 
+		}
+		
+		public function lengthSq():Number
+		{
+			return (_x*_x + _y*_y);
+		}
+		
+		public function get x():Number 
+		{
+			return _x;
+		}
+		
+		public function set x(value:Number):void 
+		{
+			_x = value;
+		}
+		
+		public function get y():Number 
+		{
+			return _y;
+		}
+		
+		public function set y(value:Number):void 
+		{
+			_y = value;
+		}
+		
+		public function clone():Vector2D
+		{
+			return new Vector2D( _x, _y );
 		}
 		
 		/*Returns dot product, an angle between 2 vectors.
@@ -55,22 +94,23 @@ package com.cjm.math.geom
 		/*Returns a vector perpendicular to this one*/
 		public function getPerp():Vector2D
 		{
-			return new Vector2D(-y, x);
+			return new Vector2D(-_y, _x);
 		}
 		
 		//Set max length of vector
-		public function truncate( maxLength:Number ):void
+		public function truncate( max:Number ):void
 		{
-			if ( length > maxLength )
+			if ( length > max )
 			{
-				normalize( maxLength );//normalize is scalar to argument and should work fine
+				normalize( );//normalize is scalar to argument and should work fine
+				scaleBy( max );
 			}
 		}
 		
 		/*Returns the distance between vectors*/
 		public function getDistance( v:Vector2D ):Number
 		{
-			return Math.sqrt(distanceSq(v));
+			return Math.sqrt(getDistanceSq(v));
 		}
 		
 		/*Returns the distance between vectors*/
@@ -85,55 +125,115 @@ package com.cjm.math.geom
 		/*Reflect -
 		  given a normalized vector this method reflects the vector it
 		  is operating upon.*/ 
-		public function reflect( norm:Vector2D ):void
+		public function reflect( norm:Vector2D ):Vector2D
 		{
-			var clne = clone();
 			var scalar:Number = 2;
-			var dot:Vector2D = getDot( norm );
-			var rev:Vector2D = norm.getReverse();
-			var result = clne.add(2.0 * getDot( norm ) * norm.getReverse());//TODO: convert mult operator for vectors and scalars
-			return result;
+			var dot:Number = getDot( norm ) * scalar;
+			var rev:Vector2D = norm.getReverse().scaleBy( dot );
+			add( rev );
+			
+			return this;
 		}
 		
 		/*Returns the reverse vector of this vector, does not change this vector*/
 		public function getReverse():Vector2D
 		{
-			return new Vector2D(-x,-y);
+			return clone().reverse();
 		}
 		
-		public function divideBy( amount:Number ):void
+		//return 'this' instance for chaining methods
+		public function reverse():Vector2D
 		{
-			super.x /= amount;
-			super.y /= amount;
+			_x = -x;
+			_y = -y;
+			
+			return this;
 		}
 		
-		public function scaleBy( amount:Number ):void
+		//return 'this' instance for chaining methods
+		public function divideBy( amount:Number ):Vector2D
 		{
-			super.x *= amount;
-			super.y *= amount;
+			_x /= amount;
+			_y /= amount;
+			
+			return this;
 		}
 		
-		public function addBy( amount:Number ):void
+		//return 'this' instance for chaining methods
+		public function scaleBy( amount:Number ):Vector2D
 		{
-			super.x += amount;
-			super.y += amount;
+			_x *= amount;
+			_y *= amount;
+			
+			return this;
 		}
 		
-		public function subtractBy( amount:Number ):void
+		//return 'this' instance for chaining methods
+		public function addBy( amount:Number ):Vector2D
 		{
-			super.x -= amount;
-			super.y -= amount;
+			_x += amount;
+			_y += amount;
+			
+			return this;
 		}
 		
-		public function norm():void
+		//return 'this' instance for chaining methods
+		public function subtractBy( amount:Number ):Vector2D
+		{
+			_x -= amount;
+			_y -= amount;
+			
+			return this;
+		}
+		
+		//return 'this' instance for chaining methods
+		public function divide( v:Vector2D ):Vector2D
+		{
+			_x /= v.x;
+			_y /= v.y;
+			
+			return this;
+		}
+		
+		//return 'this' instance for chaining methods
+		public function multiply( v:Vector2D ):Vector2D
+		{
+			_x *= v.x;
+			_y *= v.y;
+			
+			return this;
+		}
+		
+		//return 'this' instance for chaining methods
+		public function add( v:Vector2D ):Vector2D
+		{
+			_x += v.x;
+			_y += v.y;
+			
+			return this;
+		}
+		
+		//return 'this' instance for chaining methods
+		public function subtract( v:Vector2D ):Vector2D
+		{
+			_x -= v.x;
+			_y -= v.y;
+			
+			return this;
+		}
+		
+		//return 'this' instance for chaining methods
+		public function normalize():Vector2D
 		{
 			if (length < Number.MIN_VALUE)
 			{
 				zero();
 			}
 			var inv:Number = 1.0 / length;
-			super.x *= inv;
-			super.y *= inv;
+			_x *= inv;
+			_y *= inv;
+			
+			return this;
 		}
 		
 		public static function Vec2DNormalize(v:Vector2D):Vector2D
@@ -164,7 +264,6 @@ package com.cjm.math.geom
 
 		public static function Vec2DDistanceSq(v1:Vector2D, v2:Vector2D):Number
 		{
-
 		    var yD = v2.y - v1.y;
 			var xD = v2.x - v1.x;
 
@@ -179,6 +278,48 @@ package com.cjm.math.geom
 		public static function Vec2DLengthSq(v:Vector2D):Number
 		{
 		  return (v.x*v.x + v.y*v.y);
+		}
+		
+		//treats a window as a toroid
+		public static function WrapAround( pos:Vector2D, MaxX:int, MaxY:int)
+		{
+		    if (pos.x > MaxX) {pos.x = 0.0;}
+
+		    if (pos.x < 0)    {pos.x = Number(MaxX);}
+
+		    if (pos.y < 0)    {pos.y = Number(MaxY);}
+
+		    if (pos.y > MaxY) {pos.y = 0.0;}
+		}
+
+		//returns true if the point p is not inside the region defined by top_left
+		//and bot_rgt
+		public static function NotInsideRegion( p:Vector2D,  topleft:Vector2D,  btmrgt:Vector2D):Boolean
+		{
+		  return (p.x < topleft.x) || (p.x > btmrgt.x) || 
+				 (p.y < topleft.y) || (p.y > btmrgt.y);
+		}
+
+		public static function InsideRegion(p:Vector2D,  topleft:Vector2D,  btmrgt:Vector2D):Boolean
+		{
+		  return !NotInsideRegion(p, topleft, btmrgt);
+		}
+
+		
+
+		//------------------ isSecondInFOVOfFirst -------------------------------------
+		//
+		//  returns true if the target position is in the field of view of the entity
+		//  positioned at posFirst facing in facingFirst
+		//-----------------------------------------------------------------------------
+		public static function isTargetInFOV( position:Vector2D, 
+											  direction:Vector2D,
+											  targetPosition:Vector2D, 
+											  fov:Number):Boolean
+		{
+		  var toTarget:Vector2D = targetPosition.subtract( position ).normalize();
+
+		  return direction.getDot(toTarget) >= Math.cos(fov/2.0);
 		}
 	}
 }

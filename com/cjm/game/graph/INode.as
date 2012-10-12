@@ -1,0 +1,1 @@
+﻿package com.cjm.game.graph{	import com.cjm.game.core.IRender;	import com.cjm.math.geom.Vector2D;	public interface INode 	{		public function getPosition():int 		public function getIndex():int 		public function equals(other:INode):Boolean	}}

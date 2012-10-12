@@ -2,7 +2,7 @@ package com.cjm.game.ai.behaviors.steering
 {
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
-	import com.cjm.utils.math.Vector2D;
+	import com.cjm.math.geom.Vector2D;
 	import flash.geom.Vector3D;
 	
 	/**
@@ -11,7 +11,7 @@ package com.cjm.game.ai.behaviors.steering
 	 */
 	internal class Seek extends Behavior 
 	{
-		protected var _gameEntity:IGameEntity;
+		protected var _targetPosition:Vector2D;
 	
 		override public function start( ...params ) :void
 		{
@@ -23,7 +23,7 @@ package com.cjm.game.ai.behaviors.steering
 		override public function calculate( multiplierModifier:Number = 1 ) :Vector2D
 		{
 			//TODO: Update with correct logic
-			var desiredVelocity = _gameEntity.getDistance(_owner.getPosition()).normalize() * _owner.getMaxSpeed();
+			var desiredVelocity = Vector2D.Vec2DNormalize( _targetPosition.subtract(_owner.getPosition())).scaleBy(_owner.getMaxSpeed());
 			_owner.getVelocity().scaleBy( desiredVelocity );
 			
 			return super.calculate( multiplierModifier );

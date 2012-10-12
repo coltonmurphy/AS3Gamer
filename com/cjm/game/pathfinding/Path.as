@@ -41,7 +41,7 @@ package com.cjm.game.pathfinding
 			
 			_view.graphics.lineStyle(3, 3);
 			
-			var it:Iterator = getIterator()
+			var it:Iterator = Iterator.getIterator( _nodes );
 			var line:Line = new Line( _view );
 	
 			while ( it.hasNext() )

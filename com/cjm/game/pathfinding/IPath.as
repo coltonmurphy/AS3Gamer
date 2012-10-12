@@ -10,7 +10,7 @@ package com.cjm.game.pathfinding
 	{
 		public function next():INode//using cursor for iterations
 		public function end():INode
-		public function front():INode;
+		public function begin():INode;
 		public function length():uint;
 		public function getNode( i:uint ):INode;
 		public function addNode( n:INode ):uint;
