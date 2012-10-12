@@ -4,11 +4,14 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.pathfinding.alg 
+package com.cjm.game.ai.pathfinding.alg 
 {
+	import adobe.utils.CustomActions;
+	import com.cjm.collections.IQueue;
 	import com.cjm.collections.IStack;
 	import com.cjm.collections.iterators.IIterator;
 	import com.cjm.collections.List;
+	import com.cjm.collections.Queue;
 	import com.cjm.collections.Stack;
 	import com.cjm.game.graph.EdgeIterator;
 	import com.cjm.game.graph.GraphEdge;
@@ -16,7 +19,7 @@ package com.cjm.game.pathfinding.alg
 	import com.cjm.game.pathfinding.IPath;
 	import com.cjm.game.pathfinding.Path;
 
-	public class DFS extends GraphSearch
+	public class BFS extends GraphSearch
 	{
 
 		//to aid legibility
@@ -48,9 +51,9 @@ package com.cjm.game.pathfinding.alg
 		//the source and target node indices
 		private var _start:int
 		private var _goal :int;
+		private var _queue :Array;
 
-
-		public function DFS( graph:IGraph, source:int, target:int = -1, useTicks:Boolean = false, tickAmt:int = -1 )
+		public function BFS( graph:IGraph, source:int, target:int = -1, useTicks:Boolean = false, tickAmt:int = -1 )
 		{               
 		  
 			super( useTicks, tickAmt );
@@ -66,8 +69,10 @@ package com.cjm.game.pathfinding.alg
 			//create a dummy edge and put on the stack
 			var dummy:GraphEdge = new GraphEdge(_start, _start, 0);
 		  
-			_stack = new Stack();
-			_stack.push( dummy );
+			_queue = new Array();
+			_queue.push( dummy );
+	
+			_visited[_start] = visited;
 		}
 
 
@@ -80,19 +85,22 @@ package com.cjm.game.pathfinding.alg
 
 		override public function searchOnce():int
 		{
-			if ( !_stack.size() )
+			//grab the next edge from top
+			//const Edge* Next = stack.top();//TODO: verify
+
+			//remove the edge from the stack
+			//stack.pop();
+
+			if ( _queue.isEmpty() )
 			{
 				 return GraphSearch.UNSOLVED_COMPLETE;
 			}
 			else
 			{
-				//grab the next edge from top
-			    //const Edge* Next = stack.top();//TODO: verify
-
-			    //remove the edge from the stack
-			    //stack.pop();
-				var next:GraphEdge = stack.pop()//TODO: use top()
+				var next:GraphEdge = _queue[0]//TODO: use front() if use Queue object
 			
+				_queue.pop();
+				
 				//make a note of the parent of the node this edge points to
 				_route[ next.getTo() ] = next.getFrom();
 
@@ -102,19 +110,17 @@ package com.cjm.game.pathfinding.alg
 					_spanningTree.push( next );//push_back
 				}
 			   
-				//and mark it visited
 				//NOTE: this is difference between BFS and DFS
-				_visited[ next.getTo() ] = visited;//DFS
-
+				//_visited[ next.getTo()] = visited;// DFS
+				
 				//if the target has been found the method can return success
 				if ( next.getTo() == _goal )
 				{
 					return GraphSearch.SOLVED;
 				}
-
-				//push the edges leading from the node this edge points to onto
-				//the stack (provided the edge does not point to a previously 
-				//visited node)
+	
+				//push the edges leading from the node at the end of this edge 
+                //onto the queue)
 				//graph_type::ConstEdgeIterator ConstEdgeItr(_graph, next.getTo());
 				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() )
 				
@@ -125,10 +131,10 @@ package com.cjm.game.pathfinding.alg
 					
 					if ( _visited[edge.getTo()] == unvisited)
 					{
-						_stack.push( edge );
+						_queue.push( edge );
 						
 						//NOTE: this is difference between BFS and DFS
-						//_visited[ edge.getTo()] = visited;//BFS
+						_visited[ edge.getTo()] = visited;//BFS
 					}
 				}
 			}

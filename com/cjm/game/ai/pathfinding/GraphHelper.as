@@ -1,25 +1,6 @@
 
-//-----------------------------------------------------------------------------
-//
-//  Name:   HandyGraphFunctions.h
-//
-//  Author: Mat Buckland (www.ai-junkie.com)
-//
-//  Desc:   As the name implies, some useful functions you can use with your
-//          graphs. 
 
-//          For the function templates, make sure your graph interface complies
-//          with the SparseGraph class
-//-----------------------------------------------------------------------------
-/*#include <iostream>
-
-#include "misc/Cgdi.h"
-#include "misc/utils.h"
-#include "misc/Stream_Utility_Functions.h"
-#include "Graph/GraphAlgorithms.h"
-#include "Graph/AStarHeuristicPolicies.h"*/
-
-package com.cjm.game.pathfinding
+package com.cjm.game.ai.pathfinding
 {
 	import com.cjm.game.ai.behaviors.steering.Interpose;
 	import com.cjm.game.graph.EdgeIterator;

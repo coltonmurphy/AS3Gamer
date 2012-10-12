@@ -4,7 +4,7 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.pathfinding.alg 
+package com.cjm.game.ai.pathfinding.alg 
 {
 	import com.cjm.collections.IQueue;
 	import com.cjm.collections.IStack;

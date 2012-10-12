@@ -1,6 +1,7 @@
 package com.cjm.game.core 
 {
 	import com.cjm.game.ai.agent.AgentSystem;
+	import com.cjm.game.ai.pathfinding.PathManager;
 	import com.cjm.game.trigger.TriggerSystem;
 	import com.cjm.math.geom.Matrix2D;
 	import com.cjm.math.geom.Vector2D;
@@ -16,6 +17,7 @@ package com.cjm.game.core
 	{
 		protected var _agentSystem:AgentSystem;
 		protected var _triggerSystem:TriggerSystem;
+		protected var _pathSystem:PathManager;
 		protected var _view:DisplayObject;
 		protected var _lastUpdateTime:Number;
 		
@@ -68,7 +70,7 @@ package com.cjm.game.core
 		{
 			_agentSystem.update( step );
 			_triggerSystem.update( step );
-			
+			_pathSystem.update()
 			//TODO:Physics system
 			
 			//TODO:Collision detection
@@ -297,6 +299,10 @@ package com.cjm.game.core
 		  return whiskers;
 		}
 		
+		public function getPathManager():PathManager
+		{
+			return _pathSystem;
+		}
 		public function destroy():void 
 		{
 			

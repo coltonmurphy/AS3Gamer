@@ -345,12 +345,9 @@ package com.cjm.game.graph
 	
 	
 	internal class NodeIterator extends Iterator
-	{
-		
+	{	
 	    //if a graph node is removed, it is not removed from the 
-        //vector of nodes (because that would mean changing all the indices of 
-        //all the nodes that have a higher index). This method takes a node
-        //iterator as a parameter and assigns the next valid element to it.
+        //vector of nodes (that would force us to reset all of the indices). 
 	    //Skips to next viable node location
         private function getNextValidNode( n:INode ):void
         { 

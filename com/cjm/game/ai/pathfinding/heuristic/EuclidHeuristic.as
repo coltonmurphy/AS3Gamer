@@ -1,4 +1,4 @@
-package com.cjm.game.pathfinding.heuristic 
+package com.cjm.game.ai.pathfinding.heuristic 
 {
 	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.pathfinding.INode;

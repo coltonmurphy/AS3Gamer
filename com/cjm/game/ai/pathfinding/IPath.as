@@ -1,4 +1,4 @@
-package com.cjm.game.pathfinding 
+package com.cjm.game.ai.pathfinding 
 {
 	import flash.geom.Vector3D;
 	

@@ -1,4 +1,4 @@
-package com.cjm.game.pathfinding 
+package com.cjm.game.ai.pathfinding 
 {
 	import com.cjm.game.core.GameError;
 	import com.cjm.game.core.GameSystem;

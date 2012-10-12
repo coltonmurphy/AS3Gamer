@@ -1,4 +1,4 @@
-package com.cjm.game.pathfinding.alg 
+package com.cjm.game.ai.pathfinding.alg 
 {
 	/**
 	 * ...
