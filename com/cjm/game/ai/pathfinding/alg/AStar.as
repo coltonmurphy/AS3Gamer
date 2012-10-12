@@ -16,10 +16,10 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.game.graph.GraphEdge;
 	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.graph.NavGraphEdge;
-	import com.cjm.game.pathfinding.heuristic.EuclidHeuristic;
-	import com.cjm.game.pathfinding.heuristic.IHeuristic;
-	import com.cjm.game.pathfinding.IPath;
-	import com.cjm.game.pathfinding.Path;
+	import com.cjm.game.ai.pathfinding.heuristic.EuclidHeuristic;
+	import com.cjm.game.ai.pathfinding.heuristic.IHeuristic;
+	import com.cjm.game.ai.pathfinding.IPath;
+	import com.cjm.game.ai.pathfinding.Path;
 	import com.cjm.collections.IndexedPriorityQLow;
 	
 	public class AStar extends GraphSearch

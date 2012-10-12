@@ -2,7 +2,7 @@ package com.cjm.game.graph
 {
 	import com.cjm.collections.iterators.IIterator;
 	import com.cjm.collections.iterators.Iterator;
-	import com.cjm.game.pathfinding.Edge;
+	import com.cjm.game.ai.pathfinding.Edge;
 	/**
 	 * ...
 	 * @author Colton Murphy

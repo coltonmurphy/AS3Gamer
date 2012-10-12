@@ -1,6 +1,6 @@
-import com.cjm.collections.Iterator;
+import com.cjm.collections.iterators.Iterator;
 import com.cjm.game.ai.agent.IAgent;
-import com.cjm.game.pathfinding.IPath;
+import com.cjm.game.ai.pathfinding.IPath;
 import com.cjm.game.trigger.ITrigger;
 import com.cjm.math.geom.Vector2D;
 

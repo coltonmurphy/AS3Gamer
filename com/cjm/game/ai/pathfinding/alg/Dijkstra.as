@@ -17,8 +17,8 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.game.graph.GraphEdge;
 	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.graph.NavGraphEdge;
-	import com.cjm.game.pathfinding.IPath;
-	import com.cjm.game.pathfinding.Path;
+	import com.cjm.game.ai.pathfinding.IPath;
+	import com.cjm.game.ai.pathfinding.Path;
 
 	public class Dijkstra extends GraphSearch
 	{

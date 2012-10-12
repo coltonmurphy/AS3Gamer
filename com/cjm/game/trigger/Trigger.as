@@ -6,7 +6,7 @@ package com.cjm.game.trigger
 	import flash.display.DisplayObject;
 	import org.osflash.signals.ISignal;
 	import flash.geom.Vector3D;
-	import com.cjm.game.pathfinding.INode;
+	import com.cjm.game.ai.pathfinding.INode;
 	import com.cjm.game.core.IGameEntity;
 	/**
 	 * ...

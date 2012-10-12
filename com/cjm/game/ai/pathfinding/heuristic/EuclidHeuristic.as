@@ -1,8 +1,8 @@
 package com.cjm.game.ai.pathfinding.heuristic 
 {
 	import com.cjm.game.graph.IGraph;
-	import com.cjm.game.pathfinding.INode;
-	import com.cjm.game.pathfinding.Node;
+	import com.cjm.game.ai.pathfinding.INode;
+	import com.cjm.game.ai.pathfinding.Node;
 	import formosus.ai.pathfinding.MapNode;
 	import formosus.collections.comparers.IComparer;
 	/**

@@ -3,8 +3,8 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
-	import com.cjm.game.pathfinding.INode;
-	import com.cjm.game.pathfinding.IPath;
+	import com.cjm.game.ai.pathfinding.INode;
+	import com.cjm.game.ai.pathfinding.IPath;
 	import com.cjm.patterns.behavioral.observer.INotification;
 	import com.cjm.patterns.behavioral.state.IState;
 	import com.cjm.patterns.structural.core.IContext;

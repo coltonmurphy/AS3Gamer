@@ -1,7 +1,7 @@
 package com.cjm.game.trigger 
 {
 	import com.cjm.game.core.IGameEntity;
-	import com.cjm.game.pathfinding.INode;
+	import com.cjm.game.ai.pathfinding.INode;
 	import flash.geom.Vector3D;
 	
 	/**

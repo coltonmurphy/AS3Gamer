@@ -9,9 +9,9 @@ package com.cjm.game.ai.pathfinding
 	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.graph.INode;
 	import com.cjm.game.graph.NavGraphNode;
-	import com.cjm.game.pathfinding.alg.Dijkstra;
-	import com.cjm.game.pathfinding.alg.Dykstra;
-	import com.cjm.game.pathfinding.Edge;
+	import com.cjm.game.ai.pathfinding.alg.Dijkstra;
+	import com.cjm.game.ai.pathfinding.alg.Dykstra;
+	import com.cjm.game.ai.pathfinding.Edge;
 	import com.cjm.math.geom.Vector2D;
 	public class GraphHelper
 	{
