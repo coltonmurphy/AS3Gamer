@@ -162,7 +162,7 @@ package com.cjm.game.ai.pathfinding.alg
 
 		    while ((nd != _start) && (_spt[nd] != 0))
 		    {
-			    nd = _spt[nd]->From();
+			    nd = _spt[nd].getFrom();
 
 			    path.unshift(nd);//push_front
 		    }
