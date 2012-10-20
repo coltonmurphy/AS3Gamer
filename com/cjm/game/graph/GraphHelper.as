@@ -1,35 +1,25 @@
 
-//-----------------------------------------------------------------------------
-//
-//  Name:   HandyGraphFunctions.h
-//
-//  Author: Mat Buckland (www.ai-junkie.com)
-//
-//  Desc:   As the name implies, some useful functions you can use with your
-//          graphs. 
-
-//          For the function templates, make sure your graph interface complies
-//          with the SparseGraph class
-//-----------------------------------------------------------------------------
-/*#include <iostream>
-
-#include "misc/Cgdi.h"
-#include "misc/utils.h"
-#include "misc/Stream_Utility_Functions.h"
-#include "Graph/GraphAlgorithms.h"
-#include "Graph/AStarHeuristicPolicies.h"*/
 
 package com.cjm.game.graph
 {
+
 	import com.cjm.collections.iterators.IIterator;
-	import com.cjm.game.ai.pathfinding.Edge;
+	import com.cjm.game.graph.GraphEdge;
+	import com.cjm.game.graph.IEdge;
+	import com.cjm.game.graph.IGraph;
+	import com.cjm.game.graph.INode;
+	import com.cjm.game.graph.NavGraphNode;
+	import com.cjm.game.ai.pathfinding.alg.Dijkstra;
+	import com.cjm.math.geom.Vector2D;
+	import com.cjm.pathfinding.alg.GraphSearch;
+	import com.cjm.utils.VectorUtil;
 	public class GraphHelper
 	{
 		//--------------------------- ValidNeighbour -----------------------------
 		//
 		//  returns true if x,y is a valid position in the map
 		//------------------------------------------------------------------------
-		public static function ValidNeighbour( x:int, y:int, NumCellsX:int, NumCellsY:int ):Boolean
+		public static function validNeighbour(int x, int y, int NumCellsX, int NumCellsY):Boolean
 		{
 		  return !((x < 0) || (x >= NumCellsX) || (y < 0) || (y >= NumCellsY));
 		}
@@ -39,54 +29,42 @@ package com.cjm.game.graph
 		//  use to add he eight neighboring edges of a graph node that 
 		//  is positioned in a grid layout
 		//------------------------------------------------------------------------
-		public static function AddAllNeighboursToGridNode( graph:IGraph,
-													       row:int,
-													       col:int,
-													       NumCellsX:int,
-													       NumCellsY:int)
+
+		public static function addAllNeighboursToGridNode(graph:IGraph,row:int, col:int, NumCellsX:int,  NumCellsY:int)
 		{   
 			for ( var i:int =-1; i<2; ++i)
 		    {
 			    for var j:int =-1; j<2; ++j)
 				{
-				   var nodeX:int = col+j;
+				   var nodeX:int= col+j;
 				   var nodeY:int = row+i;
 
-				   //skip if equal to this node
-				   if ( (i == 0) && (j==0) ) continue;
-
-				   //check to see if this is a valid neighbour
-				   if ( ValidNeighbour( nodeX, nodeY, NumCellsX, NumCellsY ) )
-				   {
-					    //calculate the distance to this node
-						var xIndex:int = row * NumCellsX + col;
-						var yIndex:int = nodeY * NumCellsX + nodeX;
-						
-					    var posNode:Vector2D        = graph.getNode( xIndex ).getPosition();
-					    var posNeighbour:Vector2D   = graph.getNode( yIndex ).getPosition();
-
-					    //var dist:Number = posNode.getDistance( posNeighbour );
-
-					    //this neighbour is okay so it can be added
+				  //skip if equal to this node
+				  if ( (i == 0) && (j==0) ) continue;
+				
+				  //check to see if this is a valid neighbour
+				  if (validNeighbour(nodeX, nodeY, NumCellsX, NumCellsY))
+				  {
+					//calculate the distance to this node
+					var xIndex:int = row   * NumCellsX + col;
+					var yIndex:int = nodeY * NumCellsX + nodeX;
 					
-					    //TODO: create edges
-					    /*graph_type::EdgeType NewEdge(row*NumCellsX+col,
-												 nodeY*NumCellsX+nodeX,
-												 dist);*/
+					var posNode:Vector2D        = graph.getNode(xIndex).getPosition();
+					var posNeighbour:Vector2D   = graph.getNode(yIndex).getPosition();
 
-						graph.addEdge( new Edge( posNode, posNeighbour ) );
+					//this neighbour is okay so it can be added
+				    var newEdge:GraphEdge = new GraphEdge( xIndex, yIndex, 
+														   Vector2D.Vec2DDistance( posNode, posNeighbour ) );
+					graph.addEdge( newEdge );
 					
-						//if graph is not a diagraph then an edge needs to be added going
-						//in the other direction
-						if (!graph.isDigraph())
-						{
-						    /*graph_type::EdgeType NewEdge(nodeY*NumCellsX+nodeX,
-												   row*NumCellsX+col,
-												   dist);*/
-											   
-						    graph.addEdge( new Edge( posNeighbour, posNode ) );
-						}
-				    }
+					//if graph is not a diagraph then an edge needs to be added going
+					//in the other direction
+					if (!graph.isDigraph())
+					{
+						newEdge = new GraphEdge( yIndex, xIndex, newEdge.getCost() );
+						graph.addEdge( newEdge );
+					}
+				  }
 				}
 		  }
 		}
@@ -99,44 +77,42 @@ package com.cjm.game.graph
 		//  and vertically 
 		//-----------------------------------------------------------------------------
 	
-		public static function CreateGrid( graph:IGraph,
+		public static function createGrid( graph:IGraph,
 									       cySize:int,
 									       cxSize:int,
 									       numCellsY:int,
-									       numCellsX:int)
+									       numCellsX:int )
 		{ 
-			//need some temporaries to help calculate each node center
-			//TODO: verify int to float
-			var cellWidth :Number = Number(cySize) / Number(numCellsX);
-			var cellHeight:Number = Number(cxSize) / Number(numCellsY);
+	
+		    var cellWidth  = Number(cySize) / Number(numCellsX);
+		    var cellHeight = Number(cxSize) / Number(numCellsY);
 
-			var midX = cellWidth / 2;
-			var midY = cellHeight / 2;
+		    var midX = cellWidth/2;
+		    var midY = cellHeight/2;
 
-		    //first create all the nodes
-		    for (var row:int = 0; row < numCellsY ; ++ro w)
+			//first create all the nodes
+		    for (var row:int = 0; row < numCellsY ; ++row)
 		    {
-			   for ( var col:int = 0; col < numCellsX; ++col )
-			   {
-			        /*graph.addNode(NavGraphNode<>(graph.getNextFreeNodeIndex(),
-										   Vector2D(midX + (col*CellWidth), midY + (row * CellHeight)))) */ ;
-				    graph.addNode( new Node(midX + (col*CellWidth),midY + (row * CellHeight)) )
-			    }
-		    }
-		    //now to calculate the edges. (A position in a 2d array [x][y] is the
-		    //same as [y*NumCellsX + x] in a 1d array). Each cell has up to eight
-		    //neighbours.
-		    for ( row=0; row<numCellsY; ++row)
-		    {
-			    for ( col=0; col<numCellsX; ++col)
+			    for ( var col:int = 0; col < numCellsX; ++col )
 			    {
-				   AddAllNeighboursToGridNode(graph, row, col, numCellsX, numCellsY);
+					var position:Vector2D = new Vector2D(midX + (col*cellWidth),midY + (row*cellHeight))
+					var index:Interpose   = graph.getNextFreeNodeIndex();
+					var node:GraphNode = new GraphNode( index, position );
+					graph.addNode( node );
 			    }
 		    }
+			
+			//now to calculate the edges. (A position in a 2d array [x][y] is the
+			//same as [y*NumCellsX + x] in a 1d array). Each cell has up to eight
+			//neighbours.
+			for ( row=0; row<numCellsY; ++row)
+			{
+				for ( col=0; col<numCellsX; ++col)
+				{
+					addAllNeighboursToGridNode(graph, row, col, numCellsX, numCellsY);
+				}
+			}
 		}  
-
-
-		
 
 
 		//--------------------------- WeightNavGraphNodeEdges -------------------------
@@ -145,39 +121,29 @@ package com.cjm.game.graph
 		//  all a node's edges, calculates their length, and multiplies
 		//  the value with the weight. Useful for setting terrain costs.
 		//------------------------------------------------------------------------
-		
-		public static function WeightNavGraphNodeEdges( graph:IGraph, node:int, weight:Number ):void
+		public static  function weightNavGraphNodeEdges( graph:IGraph, node:int, weight:Number = 1)
 		{
 		  //make sure the node is present
-		  //assert(node < graph.NumNodes());
-
+	
 		  //set the cost for each edge
-		  /*graph_type::ConstEdgeIterator ConstEdgeItr(graph, node);
-		  for (const graph_type::EdgeType* pE=ConstEdgeItr.begin();
-			   !ConstEdgeItr.end();
-			   pE=ConstEdgeItr.next())
-		  {*/
-		  
-		    var iterator:IIterator = graph.getEdgeIterator( node );
-		  
-		    while ( iterator.next())   
-		    {
-			    var edge:Edge = iterator.current();
-			    //calculate the distance between nodes
-			    /*double dist = Vec2DDistance(graph.GetNode(pE->From()).Pos(),
-									   graph.GetNode(pE->To()).Pos());*/
-				dist = Vec2DDistance(graph.GetNode(pE->From()).Pos(),
-									 graph.GetNode(pE->To()).Pos());
+		  var edgeIt:EdgeIterator = graph.getEdgeIterator( node );
+		  while( edgeIt.next() )
+		  {
+				var pE:IEdge = edgeIt.current() as IEdge;
+			  
+				//calculate the distance between nodes
+				var dist:Number = Vector2D.Vec2DDistance( graph.getNode( pE.getFrom() ).getPosition(),
+									   graph.getNode(pE.getTo()).getPosition());
 
-			    //set the cost of this edge
-			    graph.SetEdgeCost(pE->From(), pE->To(), dist * weight);
+				//set the cost of this edge
+				graph.setEdgeCost(pE.getFrom(), pE.getTo(), dist * weight);
 
-			//if not a digraph, set the cost of the parallel edge to be the same
-			if (!graph.isDigraph())
-			{      
-			  graph.SetEdgeCost(pE->To(), pE->From(), dist * weight);
+				//if not a digraph, set the cost of the parallel edge to be the same
+				if ( !graph.isDigraph()) 
+				{      
+					graph.setEdgeCost(pE.getTo(), pE.getFrom(), dist * weight);
+				}
 			}
-		  }
 		}
 
 
@@ -186,48 +152,48 @@ package com.cjm.game.graph
 		// creates a lookup table encoding the shortest path info between each node
 		// in a graph to every other
 		//-----------------------------------------------------------------------------
-		template <class graph_type>
-		std::vector<std::vector<int> > CreateAllPairsTable(const graph_type& G)
+		static public function createAllPairsTable( g:IGraph):Vector<Vector<int> >
 		{
-		  enum {no_path = -1};
+		  var no_path = -1;
 		  
-		  std::vector<int> row(G.NumNodes(), no_path);
+		  var row:Vector<int> = new Vector.<int>(g.getNumNodes());//TODO: padd with -1 for all subelements
+		  VectorUtil.Assign( row, G.getNumNodes(), no_path)
 		  
-		  std::vector<std::vector<int> > ShortestPaths(G.NumNodes(), row);
+		  var shortestPaths:Vector<Vector<int> > (g.getNumNodes(), row);
 
-		  for (var source:int=0; source<G.getNumNodes(); ++source)
+		  for (var source:int=0; source<g.getNumNodes(); ++source)
 		  {
-			//calculate the SPT for this node
-			//TODO:Dijkstra search
-			//Graph_SearchDijkstra<graph_type> search(G, source);
-
-			std::vector<const graph_type::EdgeType*> spt = search.getSPT();
+		
+			var graph:GraphSearch = new Dijkstra(g, source);
+            graph.search();
+			
+			//Shortest path tree
+			var spt:Vector.<IEdge> = graph.getSPT();
 
 			//now we have the SPT it's easy to work backwards through it to find
 			//the shortest paths from each node to this source node
-			for (int target = 0; target<G.NumNodes(); ++target)
+			for (var target:int = 0; target<g.getNumNodes(); ++target)
 			{
 			  //if the source node is the same as the target just set to target
-			  if (source == target)
+			  if ( source == target )
 			  {
-				ShortestPaths[source][target] = target;
+				  shortestPaths[source][target] = target;
 			  }
-
 			  else
 			  {
-				int nd = target;
+				var nd:int = target;
 
 				while ((nd != source) && (spt[nd] != 0))
 				{
-				  ShortestPaths[spt[nd]->From][target]= nd;
+				  shortestPaths[spt[nd].getFrom()][target]= nd;
 
-				  nd = spt[nd]->From;
+				  nd = spt[nd].getFrom();
 				}
 			  }
 			}//next target node
 		  }//next source node
 
-		  return ShortestPaths;
+		  return shortestPaths;
 		}
 
 
@@ -236,119 +202,90 @@ package com.cjm.game.graph
 		//  creates a lookup table of the cost associated from traveling from one
 		//  node to every other
 		//-----------------------------------------------------------------------------
-		/*template <class graph_type>*/
-		public static function createAllPairsCostsTable(const graph_type& G) : Vector< Vector<Number > > 
+		public static function createAllPairsCostsTable( g:IGraph ) : Vector< Vector<Number > > 
 		{
-		  //create a two dimensional vector
-		  std::vector<double> row(G.NumNodes(), 0.0);
-		  std::vector<std::vector<double> > PathCosts(G.NumNodes(), row);
-
-		  for (int source=0; source<G.NumNodes(); ++source)
-		  {
-			//do the search
-			Graph_SearchDijkstra<graph_type> search(G, source);
-
-			//iterate through every node in the graph and grab the cost to travel to
-			//that node
-			for (int target = 0; target<G.NumNodes(); ++target)
-			{
-			  if (source != target)
-			  {
-				PathCosts[source][target]= search.GetCostToNode(target);
-			  }
-			}//next target node
+		    var row:Vector.<Number> = new Vector.<Number> (g.getNumNodes());
+			VectorUtil.assign( row, g.getNumNodes(), 0 );
 			
-		  }//next source node
+			//create a two dimensional vector
+		    var pathCosts:Vector<Vector<Number> > = new Vector<Vector<Number> >(g.getNumNodes());
+            VectorUtil.assign( pathCosts, g.getNumNodes(), row );
+			
+		    for (var source:int =0; source<g.getNumNodes(); ++source)
+		    {
+				//do the search
+				var search:Dijkstra = new Dijkstra( g, start );
 
-		  return PathCosts;
+				//iterate through every node in the graph and grab the cost to travel to
+				//that node
+				for (var target:int = 0; target<g.getNumNodes(); ++target)
+				{
+					if ( source != target )
+					{
+						pathCosts[source][target] = search.getCostToNode(target);
+					}
+			    }//next target node
+				
+			 }//next source node
+
+		  return pathCosts;
 		}
 
 		//---------------------- CalculateAverageGraphEdgeLength ----------------------
 		//
-		//  determines the average length of the edges in a navgraph (using the 
+		//  Euclidean:determines the average length of the edges in a navgraph (using the 
 		//  distance between the source & target node positions (not the cost of the 
 		//  edge as represented in the graph, which may account for all sorts of 
 		//  other factors such as terrain type, gradients etc)
-		//------------------------------------------------------------------------------
-		/*template <class graph_type>*/
-		public function calculateAverageGraphEdgeLength( g:IGraph/*const graph_type& G*/)
+		//------------------------------------------------------------------------------	
+		public function calculateAverageGraphEdgeLength( g:IGraph ):Number
 		{
 			var totalLength:Number        = 0;
 		    var numEdgesCounted:Number    = 0;
-
-		 /* graph_type::ConstNodeIterator NodeItr(G);
-		    const graph_type::NodeType* pN;
-		    for (pN = NodeItr.begin(); !NodeItr.end(); pN=NodeItr.next())
-		    {
-			    graph_type::ConstEdgeIterator EdgeItr(G, pN->Index());
-			    for (const graph_type::EdgeType* pE = EdgeItr.begin(); !EdgeItr.end(); pE=EdgeItr.next())
-			    {
-			        //increment edge counter
-			        ++NumEdgesCounted;
-
-			        //add length of edge to total length
-			        TotalLength += Vec2DDistance(G.GetNode(pE->From()).Pos(), G.GetNode(pE->To()).Pos());
-				}
-			}*/
-
 		    var nodeItr:IIterator = g.getNodeIterator();
 		    while ( nodeItr.next() )
 		    {
-			    var pN = nodeItr.current();
-			    var edgeItr:IIterator = g.getEdgeIterator( nodeItr.cursor );
+			    var n:INode = nodeItr.current() as INode;
+			    var edgeItr:IIterator = g.getEdgeIterator( n.getIndex() );
 				
 			    while( edgeItr.next() )
 			    { 
-				    ++numEdgesCounted;
-
+					var e:IEdge = nodeItr.current() as IEdge;
+				    
 					//add length of edge to total length
-					totalLength += Vector2D.Vec2DDistance( g.getNode(pE.getFrom()).getPosition(), 
-														   g.getNode(pE.getTo()).getPosition());
+					var locA:Vector2D = g.getNode(e.getFrom()).getPosition();
+					var locB:Vector2D = g.getNode(e.getTo()).getPosition();
+					totalLength += Vector2D.Vec2DDistance( locA, locB );
+					++numEdgesCounted;
 			    }
 		    }
 		  
-		  return totalLength / (double)numEdgesCounted;
+		  return totalLength / numEdgesCounted;
 		}
 
 		//----------------------------- GetCostliestGraphEdge -------------------
 		//
 		//  returns the cost of the costliest edge in the graph
 		//-----------------------------------------------------------------------------
-	
 		public function  getCostliestGraphEdge( g:IGraph ):Number
 		{
 		  var greatest:Number = Number.MIN_VALUE;
-
-		  /*graph_type::ConstNodeIterator NodeItr(G);
-		  const graph_type::NodeType* pN;
-		  for (pN = NodeItr.begin(); !NodeItr.end(); pN=NodeItr.next())
-		  {
-			graph_type::ConstEdgeIterator EdgeItr(G, pN->Index());
-			for (const graph_type::EdgeType* pE = EdgeItr.begin(); !EdgeItr.end(); pE=EdgeItr.next())
-			{
-			  if (pE->Cost() > greatest)greatest = pE->Cost();
-			}
-		  }*/
-
 		  var nodeItr:IIterator = g.getNodeIterator();
 		  while ( nodeItr.next() )
 		  {
-			    var pN = nodeItr.current();
+			    var pN:INode = nodeItr.current() as INode;
 			  
-			    var edgeItr:IIterator = g.getEdgeIterator( nodeItr.cursor );
+			    var edgeItr:IIterator = g.getEdgeIterator( pN.getIndex() );
 			    while( edgeItr.next() )
 			    { 
-				    var pE:Edge = edgeItr.current();
+				    var e:IEdge = edgeItr.current() as IEdge;
 					
-				    if ( pE.getCost() > greatest)
-					 greatest = pE.getCost();
+				    if ( e.getCost() > greatest)
+					     greatest = e.getCost();
 			  }
 		  }
 		  return greatest;
 		}
-
-	#endif
-
 	}	
 }
 

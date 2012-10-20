@@ -51,22 +51,15 @@ package com.cjm.game.graph
 
 		public function getEdge(from:int, to:int):IEdge 
 		{
-			var edgeIt:IIterator = getEdgeIterator( from );
+			var edgeIt:EdgeIterator = getEdgeIterator( from );
 			
 			while ( edgeIt.next() )
 			{
-				var c:IEdge = edgeIt.current() as IEdge;
+				var e:IEdge = edgeIt.current() as IEdge;
 				
-				if ( c.getTo() == to )  return c;
+				if ( e.getTo() == to )  return e;
 			}
-			
-		    /*for (EdgeList::const_iterator curEdge = _edgeLists[from].begin();
-			   curEdge != _edgeLists[from].end();
-			   ++curEdge)
-		    {
-				if (curEdge->To() == to) return *curEdge;
-		    }*/
-			
+
 			return null;
 		}
 		
@@ -87,7 +80,7 @@ package com.cjm.game.graph
 			  
 		    else
 			{
-				_nodes.push( node);
+				_nodes.push( node );
 				_edgeLists.push( new Vector.<IEdge> );
 
 				return _nextNodeIndex++;
@@ -207,17 +200,6 @@ package com.cjm.game.graph
 				    break;
 				}
 			}
-			
-			/*for ( var curEdge = _edgeLists[from].begin(); 
-			   curEdge != _edgeLists[from].end();
-			   curEdge.next; curEdge )
-			{
-				if (curEdge->To() == to)
-				{
-				    curEdge->SetCost(NewCost);
-				     break;
-				}
-			}*/
 		}
 		
 		public function getNumNodes():int 
@@ -341,40 +323,40 @@ package com.cjm.game.graph
 				//TODO: remove edge list from _edgeLists is current list size is zero
 			}
 		};	
-	}
-	
-	
-	internal class NodeIterator extends Iterator
-	{	
-	    //if a graph node is removed, it is not removed from the 
-        //vector of nodes (that would force us to reset all of the indices). 
-	    //Skips to next viable node location
-        private function getNextValidNode( n:INode ):void
-        { 
-			var inval  = SparseGraph.INVALID_NODE_INDEX;
-			var valid  = n.getIndex() != inval;
-		
-			if ( valid ) return;
-				
-			while ( !valid  )
-			{
-				next();//updates current()
-				
-				valid  = current().getIndex() != invalid;
-			}
-        }
-
-        override public function next():Boolean
-        {
-			var validStep:Boolean = super.next();//index increment
-
-			if( validStep )
-			    getNextValidNode( current() as INode );
-
-			return validStep;
-        }  
-    }
-	
-	internal class EdgeIterator extends Iterator{	}
-	}
+	}	
 }
+import com.cjm.collections.iterators.Iterator;
+
+internal class NodeIterator extends Iterator
+{	
+	//if a graph node is removed, it is not removed from the 
+	//vector of nodes (that would force us to reset all of the indices). 
+	//Skips to next viable node location
+	private function getNextValidNode( n:INode ):void
+	{ 
+		var inval  = SparseGraph.INVALID_NODE_INDEX;
+		var valid  = n.getIndex() != inval;
+
+		if ( valid ) return;
+			
+		while ( !valid  )
+		{
+			next();//updates current()
+			
+			valid  = current().getIndex() != invalid;
+		}
+	}
+
+	override public function next():Boolean
+	{
+		var validStep:Boolean = super.next();//index increment
+
+		if( validStep )
+			getNextValidNode( current() as INode );
+
+		return validStep;
+	}  
+}
+	
+internal class EdgeIterator extends Iterator{	}
+	

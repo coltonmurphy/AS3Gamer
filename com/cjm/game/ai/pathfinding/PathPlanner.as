@@ -86,7 +86,7 @@ package com.cjm.game.ai.pathfinding
 
 			//iterate through all the triggers to find the closest *active* trigger of 
 			//TODO: Get a reference to all the triggers
-		    /*var it:Iterator  = _owner.getWorld().getMap().getTriggers();
+		    var it:Iterator  = Iterator.getIterator(_owner.getWorld().getMap().getTriggers());
 
 			while ( it.next()  )
 			{
@@ -178,7 +178,7 @@ package com.cjm.game.ai.pathfinding
 			if ( (e2.current().getBehavior() == EdgeType.NORMAL) &&
 				  _owner.canWalkBetween(e1.current().getSource(), e2.current().getDestination()) )
 			{
-			  e1.setDestination(e2..current().getDestination());
+			  e1.setDestination(e2.current().getDestination());
 			  //e2 = path.erase(e2);
 			  e2.index = path.removeNode(e2);
 			}
@@ -246,31 +246,17 @@ package com.cjm.game.ai.pathfinding
 		//  the path manager calls this to iterate once though the search cycle
 		//  of the currently assigned search algorithm.
 		//-----------------------------------------------------------------------------
-		 public function searchOnce():int
+		public function searchOnce():int
 		{
-		  assert (_currentSearch && "<public function CycleOnce>: No search object instantiated");
+		    var result:int = _currentSearch.searchOnce();
 
-		  var result:int = _currentSearch.searchOnce();
+		    //let the bot know a path has been found
+		    if (result == GraphSearch.SOLVED)
+		    {
+			   //Notify interested members
+		    }
 
-		
-
-		  //let the bot know a path has been found
-		  else if (result == GraphSearch.SOLVED)
-		  {
-			//if the search was for an item type then the final node in the path will
-			//represent a giver trigger. Consequently, it's worth passing the pointer
-			//to the trigger in the extra info field of the message. (The pointer
-			//will just be NULL if no trigger)
-			var pTrigger:ITrigger = _navGraph.getNode( _currentSearch.getPathToTarget().back() ).getExtraInfo();
-
-			Dispatcher.DispatchMsg(SEND_MSG_IMMEDIATELY,
-									SENDER_ID_IRRELEVANT,
-									_owner.ID(),
-									Msg_PathReady,
-									pTrigger);
-		  }
-
-		  return result;
+		    return result;
 		}
 
 		//------------------------ GetClosestNodeToPosition ---------------------------

@@ -65,7 +65,7 @@ package com.cjm.game.ai.pathfinding.alg
 		    _queue = new IndexedPriorityQLow(_fCost, _graph.getNumNodes());
 
             //put the source node on the queue
-            pq.insert(_start);
+            _queue.insert(_start);
 		}
 
 		//Shortest path tree:

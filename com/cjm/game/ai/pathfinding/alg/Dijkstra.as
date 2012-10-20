@@ -7,6 +7,7 @@
 package com.cjm.game.ai.pathfinding.alg 
 {
 	import adobe.utils.CustomActions;
+	import com.cjm.collections.IList;
 	import com.cjm.collections.IndexedPriorityQLow;
 	import com.cjm.collections.IQueue;
 	import com.cjm.collections.IStack;
@@ -16,6 +17,7 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.collections.Stack;
 	import com.cjm.game.graph.EdgeIterator;
 	import com.cjm.game.graph.GraphEdge;
+	import com.cjm.game.graph.IEdge;
 	import com.cjm.game.graph.IGraph;
 	import com.cjm.game.graph.NavGraphEdge;
 
@@ -79,7 +81,7 @@ package com.cjm.game.ai.pathfinding.alg
 
 		override public function searchOnce():int
 		{
-			
+		
 			if ( _queue.isEmpty() )
 			{
 				 return GraphSearch.UNSOLVED_COMPLETE;
