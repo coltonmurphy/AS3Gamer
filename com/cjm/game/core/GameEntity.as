@@ -22,6 +22,7 @@ package com.cjm.game.core
 		protected var _position:Vector3D           = new Vector3D();
 		protected var _radius:uint                 = 1;
 		protected var _mass:Number                 = 1;
+		protected var _facing:Vector2D;
 		
 		public function GameEntity( world:IGameWorld ) 
 		{

@@ -4,18 +4,17 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.ai.pathfinding.alg 
+package com.cjm.pathfinding.alg 
 {
-	import adobe.utils.CustomActions;
 	import com.cjm.collections.IQueue;
 	import com.cjm.collections.IStack;
 	import com.cjm.collections.iterators.IIterator;
 	import com.cjm.collections.List;
 	import com.cjm.collections.Queue;
 	import com.cjm.collections.Stack;
-	import com.cjm.game.graph.EdgeIterator;
-	import com.cjm.game.graph.GraphEdge;
-	import com.cjm.game.graph.NavGraphEdge;
+	import com.cjm.graph.EdgeIterator;
+	import com.cjm.graph.GraphEdge;
+	import com.cjm.graph.NavGraphEdge;
 
 
 	public class BFS extends GraphSearch
@@ -38,12 +37,12 @@ package com.cjm.game.ai.pathfinding.alg
 		//As the search progresses, this will hold all the edges the algorithm has
 		//examined. THIS IS NOT NECESSARY FOR THE SEARCH, IT IS HERE PURELY
 		//TO PROVIDE THE USER WITH SOME VISUAL FEEDBACK
-		private var  _spanningTree:Vector.<GraphEdge>;
+		private var  _spanningTree:Vector.<IEdge>;
 
 		//the source and target node indices
 		private var _start:int
 		private var _goal :int;
-		private var _queue :Array;
+		private var _queue:Array;
 
 		public function BFS( graph:IGraph, source:int, target:int = -1, useTicks:Boolean = false, tickAmt:int = -1 )
 		{               
@@ -56,9 +55,7 @@ package com.cjm.game.ai.pathfinding.alg
 			_goal = target
 			_visited =  new Vector<int>
 			_route   =  new Vector<int>
-			//create a std stack of edges
-			//std::stack<const Edge*> stack;
-
+		
 			//create a dummy edge and put on the stack
 			var dummy:GraphEdge = new GraphEdge(_start, _start, 0);
 		  
@@ -78,12 +75,6 @@ package com.cjm.game.ai.pathfinding.alg
 
 		override public function searchOnce():int
 		{
-			//grab the next edge from top
-			//const Edge* Next = stack.top();//TODO: verify
-
-			//remove the edge from the stack
-			//stack.pop();
-
 			if ( _queue.isEmpty() )
 			{
 				 return GraphSearch.UNSOLVED_COMPLETE;

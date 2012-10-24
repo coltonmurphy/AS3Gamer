@@ -12,8 +12,11 @@ package com.cjm.game.ai.agent
 	import com.cjm.game.ai.pathfinding.PathPlanner;
 	import com.cjm.game.core.GameMovingEntity;
 	import com.cjm.game.weapon.WeaponSystem;
+	import com.cjm.math.geom.Matrix2D;
 	import com.cjm.math.geom.Vector2D;
+	import com.cjm.math.MathUtil;
 	import flash.display.Shape;
+	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.geom.Vector3D;
 
@@ -32,7 +35,7 @@ package com.cjm.game.ai.agent
 		protected var _intellegence:Number				= 1;
 		protected var _awareness:Number;				= 1//line of sight radius
 		protected var _view:Shape						= new Rectangle(1,1,1,1);
-	
+	    
 		
 		public function Agent( id :String ) 
 		{
@@ -47,6 +50,8 @@ package com.cjm.game.ai.agent
 			_steeringSystem = new SteeringSystem( this );
 			_weaponeSystem = new WeaponSystem( this );
 			_pathPlanner   = new PathPlanner( this );
+			
+			_facing = _heading.clone();
 		}
 		
 		public function update(timeElapsed:Number):void
@@ -55,8 +60,15 @@ package com.cjm.game.ai.agent
 			///Force = Mass*Acceleration
 			var steeringForce:Vector2D = _steeringSystem.calculate();
 		
+			if ( steeringForce.isZero())
+			{
+			    var brakingRate = 0.8; 
+
+				_velocity.scaleBy( brakingRate );                                     
+			}
+			
 			///Acceleration = Force / Mass
-			var acceleration: Vector2D = steeringForce.scaleBy( getMass() );
+			var acceleration: Vector2D = steeringForce.divideBy( getMass() );
 			
 			_velocity.add( acceleration.scaleBy( timeElapsed ) );
 			
@@ -70,6 +82,8 @@ package com.cjm.game.ai.agent
 			if ( _velocity.lengthSquared > 0.00000001 )
 			{
 				setHeading( _velocity.normalize() );
+				
+				_side = _heading.getPerp();
 			}
 		}
 		
@@ -87,6 +101,73 @@ package com.cjm.game.ai.agent
 				_view.y = _position.y;
 				parentView.addChild(_view);
 			}	
+		}
+		
+		public function rotateFacingTowardPosition(target:Vector2D ):Boolean
+		{
+		    var toTarget:Vector2D = Vector2D.Vec2DNormalize(target.subtract( _position ));
+
+		    var dot:Number = _facing.getDot(toTarget);//TODO:use heading?
+
+		    //clamp to rectify any rounding errors
+		    MathUtil.clamp(dot, -1, 1);
+
+		    //determine the angle between the heading vector and the target
+		    var angle:Number = Math.acos(dot);
+
+		    //return true if the bot's facing is within WeaponAimTolerance degs of
+		    //facing the target
+		    var weaponAimTolerance:Number = 0.01; //2 degs approx
+
+		    if (angle < weaponAimTolerance)
+		    {
+			  _facing = toTarget;
+			  return true;
+		    }
+
+		    //clamp the amount to turn to the max turn rate
+		    if ( angle > _maxTurnRate ) angle = _maxTurnRate;
+		  
+		    //The next few lines use a rotation matrix to rotate the player's facing
+		    //vector accordingly
+		    var mat:Matrix2D = new Matrix2D();
+		  
+		    //notice how the direction of rotation has to be determined when creating
+		    //the rotation matrix
+		    mat.rotate(angle * _facing.getSign(toTarget));	
+		    mat.transformVector2D(_facing);
+
+		    return false;
+		}
+		
+		public function isAtPosition( pos:Vector2D):Boolean
+		{
+		    var tolerance:Number = 10;
+		  
+		     return Vector2D.Vec2DDistanceSq(_position, pos) < _radius;
+		}
+
+		//------------------------- hasLOSt0 ------------------------------------------
+		//
+		//  returns true if the bot has line of sight to the given position.
+		//-----------------------------------------------------------------------------
+		public function hasLOSto(pos:Vector2D):Boolean
+		{
+		  return _world.isLOSOkay(_position, pos);
+		}
+
+		//returns true if this bot can move directly to the given position
+		//without bumping into any walls
+		public function canWalkTo(pos:Vector2D)const
+		{
+		  return !_world.isPathObstructed(_position, pos, _radius);
+		}
+		
+		//similar to above. Returns true if the bot can move between the two
+		//given positions without bumping into any walls
+		public function canWalkBetween( from:Vector2D,  to:Vector2D)const
+		{
+		 return !_world.isPathObstructed(from, to, _radius);
 		}
 		
 		public function changeState( state:IState ):void

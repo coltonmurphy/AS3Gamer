@@ -4,7 +4,7 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.ai.pathfinding.alg 
+package com.cjm.pathfinding.alg 
 {
 	import adobe.utils.CustomActions;
 	import com.cjm.collections.IList;
@@ -15,34 +15,32 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.collections.List;
 	import com.cjm.collections.Queue;
 	import com.cjm.collections.Stack;
-	import com.cjm.game.graph.EdgeIterator;
-	import com.cjm.game.graph.GraphEdge;
-	import com.cjm.game.graph.IEdge;
-	import com.cjm.game.graph.IGraph;
-	import com.cjm.game.graph.NavGraphEdge;
+	import com.cjm.graph.IEdge;
+	import com.cjm.graph.IGraph;
+
 
 
 	public class Dijkstra extends GraphSearch
 	{
 		//a reference to the graph to be searched
 		private var _graph:IGraph;
-
+	
 		//this vector contains the edges that comprise the shortest path tree -
 		//a directed subtree of the graph that encapsulates the best paths from 
 		//every node on the SPT to the source node.
-		private var _spt:Vector<GraphEdge>;
+		private var _spt:Vector.<IEdge>;
 
 		//this is indexed into by node index and holds the total cost of the best
 	    //path found so far to the given node. For example, _costs[5]
 		//will hold the total cost of all the edges that comprise the best path
 		//to node 5, found so far in the search (if node 5 is present and has 
 		//been visited)
-		private var    _costs:Vector<Number> ; 
+		private var  _costs:Vector.<Number> ; 
 
 		//this is an indexed (by node) vector of 'parent' edges leading to nodes 
 		//connected to the SPT but that have not been added to the SPT yet. This is
 		//a little like the stack or queue used in BST and DST searches.
-		private var  _searchFrontier:Vector<GraphEdge>;
+		private var  _searchFrontier:Vector.<IEdge>;
 
 		//the source and target node indices
 		private var _start:int
@@ -53,7 +51,7 @@ package com.cjm.game.ai.pathfinding.alg
 		{               
 		 
 			super( useTicks, tickAmt );
-			
+	
 			_graph = graph;
 			_start = start;
 			_goal = target
@@ -97,7 +95,7 @@ package com.cjm.game.ai.pathfinding.alg
 				_spt[nextClosestNode] = _searchFrontier[nextClosestNode];
 
 				//if the target has been found exit
-				if ( nextClosestNode == _goal ) 
+				if ( nextClosestNode == _goal && _costs.length != 0)) //Creat a closed network starting and ending with
 					 return GraphSearch.SOLVED;
 
 	
@@ -111,7 +109,7 @@ package com.cjm.game.ai.pathfinding.alg
 					
 					  //the total cost to the node this edge points to is the cost to the
 					  //current node plus the cost of the edge connecting them.
-					  var newCost:Number = _costs[NextClosestNode] + edge.getCost();
+					  var newCost:Number = _costs[nextClosestNode] + edge.getCost();
 
 					  //if this edge has never been on the frontier make a note of the cost
 					  //to get to the node it points to, then add the edge to the frontier
@@ -120,7 +118,7 @@ package com.cjm.game.ai.pathfinding.alg
 					  {
 						_costs[edge.getTo()] = newCost;
 
-						pq.insert(edge.getTo());
+						_queue.insert(edge.getTo());
 
 						_searchFrontier[edge.getTo()] = edge;
 					  }

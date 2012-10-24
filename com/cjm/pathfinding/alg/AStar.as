@@ -4,7 +4,7 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.ai.pathfinding.alg 
+package com.cjm.pathfinding.alg 
 {
 	import com.cjm.collections.IQueue;
 	import com.cjm.collections.IStack;
@@ -12,12 +12,12 @@ package com.cjm.game.ai.pathfinding.alg
 	import com.cjm.collections.List;
 	import com.cjm.collections.Queue;
 	import com.cjm.collections.Stack;
-	import com.cjm.game.graph.EdgeIterator;
-	import com.cjm.game.graph.GraphEdge;
-	import com.cjm.game.graph.IGraph;
-	import com.cjm.game.graph.NavGraphEdge;
-	import com.cjm.game.ai.pathfinding.heuristic.EuclidHeuristic;
-	import com.cjm.game.ai.pathfinding.heuristic.IHeuristic;
+	import com.cjm.graph.EdgeIterator;
+	import com.cjm.graph.GraphEdge;
+	import com.cjm.graph.IGraph;
+	import com.cjm.graph.NavGraphEdge;
+	import com.cjm.pathfinding.heuristic.EuclidHeuristic;
+	import com.cjm.pathfinding.heuristic.IHeuristic;
 	import com.cjm.collections.IndexedPriorityQLow;
 	
 	public class AStar extends GraphSearch
@@ -34,8 +34,8 @@ package com.cjm.game.ai.pathfinding.alg
 		//priority queue indexes into.
 		private var _fCost:Vector.<Number>;
 
-		private var _spt:Vector<GraphEdge>;
-		private var _searchFrontier:Vector<GraphEdge>;
+		private var _spt:Vector.<GraphEdge>;
+		private var _searchFrontier:Vector.<GraphEdge>;
 
 		//the source and target node indices
 		private var _start:int

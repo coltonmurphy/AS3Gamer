@@ -1,4 +1,4 @@
-package com.cjm.game.graph 
+package com.cjm.graph 
 {
 	/**
 	 * ...

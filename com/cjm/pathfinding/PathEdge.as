@@ -8,7 +8,7 @@
 //          planner in the creation of paths. 
 //
 
-package com.cjm.game.ai.pathfinding
+package com.cjm.pathfinding
 {
 	import com.cjm.math.geom.Vector2D;
 	public class PathEdge

@@ -12,10 +12,11 @@ package com.cjm.game.core
 		protected var _speed:Number						= 0;
 		protected var _maxSpeed:Number				    = 10;
 		protected var _maxForce:Number				    = 10;
+		protected var _maxTurnRate:Number				    = 10;
 		protected var _turnRate:Number				    = 10;
 		protected var _velocity:Vector2D				= new Vector2D();
 		protected var _heading:Vector2D				    = new Vector2D();
-		
+		protected var _side:Vector2D
 		
 		public function GameMovingEntity() 
 		{
