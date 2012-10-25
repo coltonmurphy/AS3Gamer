@@ -198,7 +198,7 @@ package com.cjm.game.core
 		//--------------------- PointToLocalSpace --------------------------------
 		//
 		//------------------------------------------------------------------------
-		public static function PointToLocalSpace( p:Vector2D,
+		public function pointToLocalSpace( p:Vector2D,
 												  entityHeading:Vector2D, 
 												  entitySide:Vector2D, 
 												  entityPosition:Vector2D):Vector2D
@@ -229,7 +229,7 @@ package com.cjm.game.core
 		//--------------------- VectorToLocalSpace --------------------------------
 		//
 		//------------------------------------------------------------------------
-		public static function VectorToLocalSpace(vec:Vector2D,
+		public function vectorToLocalSpace(vec:Vector2D,
 												  entityHeading:Vector2D, 
 												  entitySide:Vector2D )
 		{ 
@@ -255,7 +255,7 @@ package com.cjm.game.core
 		//
 		//  rotates a vector ang rads around the origin
 		//-----------------------------------------------------------------------------
-		public static function Vec2DRotateAroundOrigin( v:Vector2D, ang:Number):void
+		public function vec2DRotateAroundOrigin( v:Vector2D, ang:Number):void
 		{
 		  //create a transformation matrix
 		  var m:Matrix2D = new Matrix2D();
@@ -267,7 +267,7 @@ package com.cjm.game.core
 		  mat.transformVector2Ds(v);
 		}
 
-		//------------------------ CreateWhiskers ------------------------------------
+		//------------------------ Create Whiskers -----------------------------------
 		//
 		//  given an origin, a facing direction, a 'field of view' describing the 
 		//  limit of the outer whiskers, a whisker length and the number of whiskers
@@ -275,7 +275,7 @@ package com.cjm.game.core
 		//  of whiskers radiating away from the origin and with equal distance between
 		//  them. (like the spokes of a wheel clipped to a specific segment size)
 		//----------------------------------------------------------------------------
-		public static function CreateWhiskers( amount:uint, length:Number,fov:Number,
+		public function createWhiskers( amount:uint, length:Number,fov:Number,
 													      facing:Vector2D,
 													      origin:Vector2D):Vector.<Vector2D>
 		{
@@ -290,7 +290,7 @@ package com.cjm.game.core
 		  {
 			//create the whisker extending outwards at this angle
 			temp = facing;
-			GameWorld.Vec2DRotateAroundOrigin(temp, angle);
+			vec2DRotateAroundOrigin(temp, angle);
 			whiskers.push(origin.addBy( length) .multiply( temp ));
 
 			angle+=sectorSize;

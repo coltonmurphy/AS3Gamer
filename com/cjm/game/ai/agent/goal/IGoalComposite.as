@@ -7,9 +7,9 @@ package com.cjm.game.ai.agent.goal
 	 */
 	public interface IGoalComposite extends IGoal
 	{
-		public function addSubGoal(goal:IGoal):void
-		public function processSubGoals():void;
-		public function removeAllSubGoals():void;
+		function addSubGoal(goal:IGoal):void
+		function processSubGoals():void;
+		function removeAllSubGoals():void; 
 	}
 	
 }

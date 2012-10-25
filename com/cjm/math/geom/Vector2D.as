@@ -34,7 +34,7 @@ package com.cjm.math.geom
 		
 		public function length():Number
 		{
-			return Math.sqrt(lengthSq); 
+			return Math.sqrt(lengthSq()); 
 		}
 		
 		public function lengthSq():Number
@@ -100,7 +100,7 @@ package com.cjm.math.geom
 		//Set max length of vector
 		public function truncate( max:Number ):void
 		{
-			if ( length > max )
+			if ( length() > max )
 			{
 				normalize( );//normalize is scalar to argument and should work fine
 				scaleBy( max );
@@ -223,13 +223,14 @@ package com.cjm.math.geom
 		}
 		
 		//return 'this' instance for chaining methods
-		public function normalize():Vector2D
+		public function normalize():Vector2D 
 		{
-			if (length < Number.MIN_VALUE)
+			var len:Number = length();
+			if (len < Number.MIN_VALUE)
 			{
 				zero();
 			}
-			var inv:Number = 1.0 / length;
+			var inv:Number = 1.0 / len;
 			_x *= inv;
 			_y *= inv;
 			

@@ -19,9 +19,9 @@ package com.cjm.graph
 		//
 		//  returns true if x,y is a valid position in the map
 		//------------------------------------------------------------------------
-		public static function isValidNeighbour(int x, int y, int NumCellsX, int NumCellsY):Boolean
+		public static function isValidNeighbour( x:int,  y:int,  cellsX:int, cellsY:int):Boolean
 		{
-		  return !((x < 0) || (x >= NumCellsX) || (y < 0) || (y >= NumCellsY));
+		  return !((x < 0) || (x >= cellsX) || (y < 0) || (y >= cellsY));
 		}
 		  
 		//----------------------Add All Neighbours ToGrid Node ------------------
@@ -127,7 +127,7 @@ package com.cjm.graph
 		  //make sure the node is present
 	
 		  //set the cost for each edge
-		  var edgeIt:EdgeIterator = graph.getEdgeIterator( node );
+		  var edgeIt:IIterator = graph.getEdgeIterator( node );
 		  while( edgeIt.next() )
 		  {
 				var pE:IEdge = edgeIt.current() as IEdge;
@@ -153,14 +153,14 @@ package com.cjm.graph
 		// creates a lookup table encoding the shortest path info between each node
 		// in a graph to every other
 		//-----------------------------------------------------------------------------
-		public static function createAllPairsTable( g:IGraph):Vector.<Vector.<int> >
+		public static function createAllPairsTable( g:IGraph):Vector.<Vector.<int> > 
 		{
 		    var no_path:int = -1;
 		  
 		    var row:Vector.<int> = new Vector.<int>(g.getNumNodes(), true);
 		    VectorUtil.assign( row, g.getNumNodes(), no_path)
 		  
-		    var shortestPaths:Vector<Vector.<int> >  = new Vector.<Vector.<int>>(g.getNumNodes(), true);
+		    var shortestPaths:Vector.<Vector.<int> >  = new Vector.<Vector.<int>>(g.getNumNodes(), true);
             VectorUtil.assign( shortestPaths, g.getNumNodes(), row);
 		  
 		    for (var source:int=0; source<g.getNumNodes(); ++source)
@@ -204,7 +204,7 @@ package com.cjm.graph
 		//  creates a lookup table of the cost associated from traveling from one
 		//  node to every other
 		//-----------------------------------------------------------------------------
-		public static function createAllPairsCostsTable( g:IGraph ) : Vector< Vector<Number > > 
+		public static function createAllPairsCostsTable( g:IGraph ) : Vector.< Vector.<Number > > 
 		{
 		    var row:Vector.<Number> = new Vector.<Number> (g.getNumNodes(), true);
 			VectorUtil.assign( row, g.getNumNodes(), 0 );

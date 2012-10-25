@@ -7,13 +7,13 @@ package com.cjm.game.core
 	 */
 	public interface IGameSystem extends IUpdate implements IRender, IDestroy
 	{
-		protected function initialize( ):void;
-		public function getEntities():Vector.<IGameEntity>;
-		public function addEntity( e:IGameEntity );
-		public function setActive(b:Boolean):void;
-		public function getActive( ):Boolean;
-		public function destroy( ):void;
-		public function render( ...params ):void;
+	    function initialize( ):void;
+		function getEntities():Vector.<IGameEntity>;
+		function addEntity( e:IGameEntity );
+		function setActive(b:Boolean):void;
+		function getActive( ):Boolean;
+		function destroy( ):void;
+		function render( ...params ):void; 
 	}
 	
 }

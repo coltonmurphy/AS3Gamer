@@ -9,23 +9,23 @@ package com.cjm.game.core
 	 */
 	public interface IGameMovingEntity extends IGameEntity
 	{
-		public function setVelocity(v:Vector2D):Boolean;
-		public function getVelocity():Vector2D;
+		function setVelocity(v:Vector2D):Boolean;
+		function getVelocity():Vector2D;
 		
-		public function setHeading(v:Vector2D):Boolean;
-		public function getHeading():Vector2D;
+		function setHeading(v:Vector2D):Boolean;
+		function getHeading():Vector2D;
 
-		public function setMaxSpeed(s:uint):Boolean;
-		public function getMaxSpeed():uint;
+		function setMaxSpeed(s:uint):Boolean;
+		function getMaxSpeed():uint;
 		
-		public function setSpeed(s:uint):Boolean;
-		public function getSpeed():uint;
+		function setSpeed(s:uint):Boolean;
+		function getSpeed():uint;
 		
-		public function setMaxForce(g:uint):Boolean;
-		public function getMaxForce():uint;
+		function setMaxForce(g:uint):Boolean;
+		function getMaxForce():uint;
 	
-		public function setTurnRate(g:uint):Boolean;
-		public function getTurnRate():uint;
+		function setTurnRate(g:uint):Boolean; 
+		function getTurnRate():uint;
 	}
 	
 }

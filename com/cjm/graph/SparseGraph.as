@@ -1,8 +1,8 @@
-package com.cjm.game.graph 
+package com.cjm.graph 
 {
 	import com.cjm.collections.iterators.IIterator;
 	import com.cjm.collections.iterators.Iterator;
-	import com.cjm.game.ai.pathfinding.Edge;
+	import com.cjm.pathfinding.IEdge;
 	/**
 	 * ...
 	 * @author Colton Murphy
@@ -326,7 +326,7 @@ package com.cjm.game.graph
 	}	
 }
 import com.cjm.collections.iterators.Iterator;
-
+import com.cjm.graph.INode; 
 internal class NodeIterator extends Iterator
 {	
 	//if a graph node is removed, it is not removed from the 

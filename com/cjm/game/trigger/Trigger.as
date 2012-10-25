@@ -16,7 +16,7 @@ package com.cjm.game.trigger
 	{
 		protected var _dispatcher:IGameSignal;//Bridged
 		
-		protected var _region:ITriggerRegion;
+		protected var _region:ITriggerRegion; 
 		protected var _active:Boolean;
 		protected var _region:ITriggerRegion;
 		protected var _graphNode:INode;

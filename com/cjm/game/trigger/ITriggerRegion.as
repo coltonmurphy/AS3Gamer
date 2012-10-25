@@ -8,6 +8,6 @@ package com.cjm.game.trigger
 	 */
 	public interface ITriggerRegion 
 	{
-		public function isTouching(e:IGameEntity, radius:Number):Boolean 
+		function isTouching(e:IGameEntity, radius:Number):Boolean
 	}
 }

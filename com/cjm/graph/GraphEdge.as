@@ -1,10 +1,10 @@
-package com.cjm.game.graph 
+package com.cjm.graph 
 {
 	/**
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public class GraphEdge 
+	public class GraphEdge implements IEdge
 	{
 		protected var _from:int//node index of from node
 		protected var _to:int//node index of from node
@@ -34,7 +34,7 @@ package com.cjm.game.graph
 			return _to;
 		}
 		
-		public function setCost(c:Number):void
+		public function setCost(c:Number):void 
 		{
 			_cost = c;
 		}
@@ -44,13 +44,9 @@ package com.cjm.game.graph
 			return _cost;
 		}
 		
-		public function equals( e:GraphEdge ):Boolean
+		public function equals( e:IEdge ):Boolean
 		{
-			return e.getFrom() == getFrom() && 
-				   e.getTo() == getTo() && 
-				   e.getCost() == getCost());
+			return Boolean(e.getFrom() == getFrom() && e.getTo() == getTo() && e.getCost() == getCost());
 		}
-		
 	}
-
 }

@@ -6,18 +6,18 @@ package com.cjm.graph
 	 */
 	public interface IEdge 
 	{
-		public function setFrom(f:int):void
+		function setFrom(f:int):void
 
-		public function getFrom():int
+		function getFrom():int
 
-		public function setTo(f:int):void
+		function setTo(f:int):void
 
-		public function getTo():int
+		function getTo():int
 
-		public function setCost(c:Number):void
+		function setCost(c:Number):void
 
-		public function getCost():Number
+		function getCost():Number
 		
-		public function equals( e:GraphEdge ):Boolean	
+		function equals( e:GraphEdge ):Boolean	
 	}
 }

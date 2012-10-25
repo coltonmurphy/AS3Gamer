@@ -1,5 +1,6 @@
 package com.cjm.game.core 
 {
+	import com.cjm.math.geom.Vector2D;
 	import flash.geom.Vector3D;
 	
 	/**
@@ -8,18 +9,18 @@ package com.cjm.game.core
 	 */
 	public interface IGameWorld extends IUpdate implements ITick, IRun
 	{
-		public function initialize():void
-		public function render( ...params ):void;
-		public function tick( ...param ):void;
-		public function run():Boolean;
-		public function pause():Boolean;
+		function initialize():void
+		function render( ...params ):void;
+		function tick( ...param ):void;
+		function run():Boolean;
+		function pause():Boolean; 
 		
 		//Tag for processing
-		public function tagObstaclesWithinViewRange( ige:IGameEntity, range:Number ):Boolean;
+		function tagObstaclesWithinViewRange( ige:IGameEntity, range:Number ):Boolean;
 		
 		//Calculate point to local space
-		public function pointToLocalSpace( obstaclePos:Vector3D, myHeading:Number, mySide:Vector3D, myPos:Vector3D ):Vector3D;
-		public function pointToGlobalSpace( obstaclePos:Vector3D, myHeading:Number, mySide:Vector3D, myPos:Vector3D ):Vector3D;
+		function pointToLocalSpace( obstaclePos:Vector2D, myHeading:Vector2D, mySide:Vector2D, myPos:Vector2D ):Vector2D;
+		function pointToGlobalSpace( obstaclePos:Vector2D, myHeading:Vector2D, mySide:Vector2D, myPos:Vector2D ):Vector2D;
 	}
 	
 }

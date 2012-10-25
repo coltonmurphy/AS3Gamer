@@ -1,5 +1,6 @@
 package com.cjm.game.core 
 {
+	import com.cjm.math.geom.Vector2D;
 	import com.cjm.patterns.core.IEntity;
 	import com.cjm.patterns.core.IUpdate;
 	import flash.display.DisplayObject;
@@ -12,31 +13,31 @@ package com.cjm.game.core
 	 */
 	public interface IGameEntity extends IUpdate implements IRender
 	{
-		protected function initialize( ):void;//Scalable, systems, variable sets, called in construction
+		function initialize( ):void;//Scalable, systems, variable sets, called in construction
 		
-		public function render(...params):void;
-		public function getWorld():IGameWorld;
+		function render(...params):void;
+		function getWorld():IGameWorld;
 
-		public function isToBeRemoved():Boolean;
-		public function remove( ):void;
-		public function destroy( ):void;
-		public function isAlive( ):void;
+		function isToBeRemoved():Boolean;
+		function remove( ):void;
+		function destroy( ):void;
+		function isAlive( ):void;
 		
-		public function isTagged():Boolean;
-		public function setTagged(t:Boolean):void;
+		function isTagged():Boolean;
+		function setTagged(t:Boolean):void;
 		
-		public function setMass(m:uint):Boolean;
-		public function getMass():uint;
+		function setMass(m:uint):Boolean;
+		function getMass():uint;
 
-		public function setScale(s:Number):void
-		public function getScale():Number;
+		function setScale(s:Number):void
+		function getScale():Number;
 
-		public function setPosition(v:Vector3D):void
-		public function getPosition():Vector3D;
+		function setPosition(v:Vector2D):void
+		function getPosition():Vector2D;
 		
-		public function setRadius(b:Number):void
-		public function getRadius(b):Number;
+		function setRadius(b:Number):void
+		function getRadius(b):Number;
 		
-		public function getDistance(s:Vector3D):Number
+		function getDistance(s:Vector3D):Number
 	}
 }

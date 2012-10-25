@@ -95,13 +95,13 @@ package com.cjm.pathfinding.alg
 				_spt[nextClosestNode] = _searchFrontier[nextClosestNode];
 
 				//if the target has been found exit
-				if ( nextClosestNode == _goal && _costs.length != 0)) //Creat a closed network starting and ending with
+				if ( nextClosestNode == _goal /*&& _costs.length != 0*/) //Creat a closed network starting and ending with
 					 return GraphSearch.SOLVED;
 
 	
 				//push the edges leading from the node at the end of this edge 
                 //onto the queue)
-				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() )
+				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() );
 				
 				while ( edgeIterator.next() )
 				{

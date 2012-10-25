@@ -1,4 +1,4 @@
-package com.cjm.game.ai.pathfinding.alg 
+package com.cjm.pathfinding.alg 
 {
 	/**
 	 * ...
@@ -17,7 +17,7 @@ package com.cjm.game.ai.pathfinding.alg
 		protected var _ticksCount:int;
 		protected var _completed:Boolean;
 		protected var _solved:Boolean;
-		protected var _result:*;
+		protected var _result:*; 
 		protected var _type:String = "GraphSearch";
 		
 		public function GraphSearch( useTicks:Boolean = false, 

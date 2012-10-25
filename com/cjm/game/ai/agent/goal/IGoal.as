@@ -6,13 +6,13 @@ package com.cjm.game.ai.agent.goal
 	 */
 	public interface IGoal 
 	{
-		public function activate():void;
-		public function process():void;
-		public function terminate():void;
-		public function addSubGoal( goal:IGoal ):void;
-		public function isActive():Boolean;
-		public function isCompleted():Boolean;
-		public function hasFailed():Boolean;
-		public function getType():String;
+		function activate():void;
+		function process():void;
+		function terminate():void;
+		function addSubGoal( goal:IGoal ):void;
+		function isActive():Boolean;
+		function isCompleted():Boolean;
+		function hasFailed():Boolean; 
+		function getType():String;
 	}
 }
