@@ -6,14 +6,18 @@ package com.cjm.utils
 	 */
 	public class VectorUtil 
 	{
-		public static function assign(vec:Vector.<*>, size:Number, char:* = "0"):Vector.<*>
+		public static function assign(vec:*, char:* = "0"):*
 		{
-			var diff:Number = size - vec.length;
-			for (var i:int = 0; i < diff; i++)
+			if (vec["fixed"] != null && vec["length"] != null)
 			{
-				vec.push(char);
+				var diff:Number = vec.length;
+				for (var i:int = 0; i < diff; i++)
+				{
+					vec[i] = char;
+				}
 			}
 			return vec;
+			
 		}
 	}
 

@@ -22,9 +22,7 @@ package com.cjm.pathfinding.alg
 
 	public class Dijkstra extends GraphSearch
 	{
-		//a reference to the graph to be searched
-		private var _graph:IGraph;
-	
+
 		//this vector contains the edges that comprise the shortest path tree -
 		//a directed subtree of the graph that encapsulates the best paths from 
 		//every node on the SPT to the source node.
@@ -43,21 +41,18 @@ package com.cjm.pathfinding.alg
 		private var  _searchFrontier:Vector.<IEdge>;
 
 		//the source and target node indices
-		private var _start:int
-		private var _goal :int;
+		
 		private var _queue:IndexedPriorityQLow;
 
 		public function Dijkstra( graph:IGraph, source:int, target:int = -1, useTicks:Boolean = false, tickAmt:int = -1 )
 		{               
 		 
-			super( useTicks, tickAmt );
+			super( graph, source, target, useTicks, tickAmt );
 	
-			_graph = graph;
-			_start = start;
-			_goal = target
-			_visited =  new Vector<int>
-			_route   =  new Vector<int>
-			
+		
+			_searchFrontier =  new Vector<IEdge>
+			_spt            =  new Vector<IEdge>
+			_costs          = new Vector.<IEdge>
 		
 			//create an indexed priority queue that sorts smallest to largest
 		    //(front to back).Note that the maximum number of elements the iPQ
@@ -101,7 +96,7 @@ package com.cjm.pathfinding.alg
 	
 				//push the edges leading from the node at the end of this edge 
                 //onto the queue)
-				var edgeIterator:IIterator = graph.getEdgeIterator( next.getTo() );
+				var edgeIterator:IIterator = graph.getEdgeIterator( nextClosestNode );//TODO: verify index
 				
 				while ( edgeIterator.next() )
 				{

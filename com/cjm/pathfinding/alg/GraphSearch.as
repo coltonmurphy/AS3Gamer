@@ -1,5 +1,6 @@
 package com.cjm.pathfinding.alg 
 {
+	import com.cjm.graph.IGraph;
 	/**
 	 * ...
 	 * @author Colton Murphy
@@ -19,11 +20,14 @@ package com.cjm.pathfinding.alg
 		protected var _solved:Boolean;
 		protected var _result:*; 
 		protected var _type:String = "GraphSearch";
-		
-		public function GraphSearch( useTicks:Boolean = false, 
-								   tickPerCycle:int = 100) 
+		protected var _start:int
+		protected var _goal :int;
+		protected var _graph:IGraph;
+		public function GraphSearch( g:IGraph, source:int, target:int, useTicks:Boolean = false, tickPerCycle:int = 100) 
 		{
-			
+			_graph = g; 
+			_start = source;
+			_goal = target;
 			_useTicks = useTicks;
 			_ticksPerCycle = tickPerCycle;
 			_ticksCount = 0;
@@ -34,9 +38,9 @@ package com.cjm.pathfinding.alg
 		public function search():void
 		{	
 			//While we are not finished, and if we are using tick count then increment and check if satisfied, if not ticking or if ticking and not satisfied, the while loop will continue
-			while ( !_completed && (_useTicks && (_ticksCount++ == tickPerCycle)) )
+			while ( !_completed && (_useTicks && (_ticksCount++ == _ticksPerCycle)) )
 			{
-				var resultType:int = cycleOnce();
+				var resultType:int = searchOnce();
 		
 				_solved    = resultType == SOLVED;
 				_completed = resultType == SOLVED || resultType == UNSOLVED_COMPLETE;
@@ -46,7 +50,7 @@ package com.cjm.pathfinding.alg
 		}
 		
 		/*This method is checked within internal processing*/
-		public function isSolved():void
+		public function isSolved():Boolean
 		{
 			return _solved;
 		}
@@ -62,25 +66,10 @@ package com.cjm.pathfinding.alg
 			return UNSOLVED_COMPLETE;
 		}
 		
-		//Return indices of nodes in graph
-		public function getPathToTarget():Vector.<int> 
+		public function getPathToTarget():Vector.<int>
 		{
-			var path:Vector.<int>  = new Vector.<int> ();
-
-			//just return an empty path if no path to target found or if
-			//no target has been specified
-			if ( !_solved || _goal < 0 ) return path;
-
-			var index:int = _goal;
-			path.unshift(index);
-
-			while (index != _start)
-			{
-				index = _route[index];
-				path.unshift(index);//push_front
-			}
-
-			return path;
+			trace("getPathToTarget needs to be overridden: " + getType());
+			return new Vector.<int>
 		}
 		
 		public function getType():String{return _type}

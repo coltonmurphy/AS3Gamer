@@ -14,7 +14,8 @@ package com.cjm.pathfinding.alg
 	import com.cjm.collections.Stack;
 	import com.cjm.graph.EdgeIterator;
 	import com.cjm.graph.GraphEdge;
-	import com.cjm.graph.NavGraphEdge;
+	import com.cjm.graph.IEdge;
+
 
 
 	public class BFS extends GraphSearch
@@ -22,8 +23,7 @@ package com.cjm.pathfinding.alg
 		private static const VISITED:int = 0;
 		private static const UNVISITED:int = 1;
 		
-		//a reference to the graph to be searched
-		private var _graph;
+	
 
 		//this records the indexes of all the nodes that are VISITED as the
 		//search progresses
@@ -37,25 +37,18 @@ package com.cjm.pathfinding.alg
 		//As the search progresses, this will hold all the edges the algorithm has
 		//examined. THIS IS NOT NECESSARY FOR THE SEARCH, IT IS HERE PURELY
 		//TO PROVIDE THE USER WITH SOME VISUAL FEEDBACK
-		private var  _spanningTree:Vector.<IEdge>;
-
-		//the source and target node indices
-		private var _start:int
-		private var _goal :int;
+		private var _spanningTree:Vector.<IEdge>;
 		private var _queue:Array;
 
 		public function BFS( graph:IGraph, source:int, target:int = -1, useTicks:Boolean = false, tickAmt:int = -1 )
 		{               
-		  
-			super( useTicks, tickAmt );
-			
+			super( graph, source, target, useTicks, tickAmt );
+		
 			_type = "BFS";
-			_graph = graph;
-			_start = start;
-			_goal = target
 			_visited =  new Vector<int>
 			_route   =  new Vector<int>
-		
+		    _spanningTree = new Vector.<IEdge>
+			
 			//create a dummy edge and put on the stack
 			var dummy:GraphEdge = new GraphEdge(_start, _start, 0);
 		  
@@ -126,7 +119,26 @@ package com.cjm.pathfinding.alg
 			return GraphSearch.UNSOLVED;
 		}
 
+		//Return indices of nodes in graph
+		public function getPathToTarget():Vector.<int> 
+		{
+			var path:Vector.<int>  = new Vector.<int> ();
 
+			//just return an empty path if no path to target found or if
+			//no target has been specified
+			if ( !_solved || _goal < 0 ) return path;
+
+			var index:int = _goal;
+			path.unshift(index);
+
+			while (index != _start)
+			{
+				index = _route[index];
+				path.unshift(index);//push_front
+			}
+
+			return path;
+		}
 		
 	}
 }

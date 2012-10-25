@@ -10,17 +10,19 @@
 //------------------------------------------------------------------------
 package com.cjm.collections
 {	
+	import adobe.utils.CustomActions;
+	import com.cjm.utils.VectorUtil;
 	public class IndexedPriorityQLow
 	{
-	    private var _keys:Vector<Number>;
-	    private var _data:Vector<int>;
-	    private var _invdata:Vector<int>;
+	    private var _keys:Vector.<Number>;
+	    private var _data:Vector.<int>;
+	    private var _invdata:Vector.<int>; 
         private var _size:int; 
 		private var _maxSize:int;
 
 		//you must pass the constructor a reference to the std::vector the PQ
 	    //will be indexing into and the maximum size of the queue.
-	    public function IndexedPriorityQLow(keys:Vector<Number>, maxSize:int)
+	    public function IndexedPriorityQLow(keys:Vector.<Number>, maxSize:int)
 	    {
 		    _keys = keys;
 		    _maxSize = maxSize;
@@ -32,15 +34,10 @@ package com.cjm.collections
 		private function assign():void
 		{
 			_size = 0;
-			_data    = new Vector.<int>();
-			_invdata = new Vector.<int>();
-			
-			var len:int = new int(_maxSize+1);
-			for ( i; i < len; i++ )
-			{
-				_data[i]    = 0;
-				_invdata[i] = 0;
-			}
+			_data    = new Vector.<int>(_maxSize+1, true);
+			_invdata = new Vector.<int>(_maxSize+1, true);
+			VectorUtil.assign(_data, 0 );
+			VectorUtil.assign(_invdata, 0 );
 		}
 		
 		private function swap( a:int, b:int):void
@@ -74,7 +71,7 @@ package com.cjm.collections
 				var child:int = 2 * nd;
 
 				//set child to smaller of nd's two children
-				if ((child < HeapSize) && (_keys[_data[child]] > _keys[_data[child+1]]))
+				if ((child < _size) && (_keys[_data[child]] > _keys[_data[child+1]]))
 				{
 					++child;
 				}

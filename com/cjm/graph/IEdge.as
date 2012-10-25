@@ -18,6 +18,6 @@ package com.cjm.graph
 
 		function getCost():Number
 		
-		function equals( e:GraphEdge ):Boolean	
+		function equals( e:IEdge ):Boolean	
 	}
 }

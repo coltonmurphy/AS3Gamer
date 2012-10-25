@@ -4,19 +4,17 @@
 	 * @author Colton Murphy
 	 */
 
-package com.cjm.game.ai.pathfinding.alg 
+package com.cjm.pathfinding.alg 
 {
 	import com.cjm.collections.IStack;
 	import com.cjm.collections.iterators.IIterator;
 	import com.cjm.collections.List;
 	import com.cjm.collections.Stack;
-	import com.cjm.game.graph.EdgeIterator;
-	import com.cjm.game.graph.GraphEdge;
-	import com.cjm.game.graph.IEdge;
-	import com.cjm.game.graph.IGraph;
-	import com.cjm.game.graph.NavGraphEdge;
-	import com.cjm.game.ai.pathfinding.IPath;
-	import com.cjm.game.ai.pathfinding.Path;
+	import com.cjm.graph.EdgeIterator;
+	import com.cjm.graph.GraphEdge;
+	import com.cjm.graph.IEdge;
+	import com.cjm.graph.IGraph;
+
 
 	public class DFS extends GraphSearch
 	{
@@ -130,7 +128,26 @@ package com.cjm.game.ai.pathfinding.alg
 			return GraphSearch.UNSOLVED;
 		}
 
+		//Return indices of nodes in graph
+		public function getPathToTarget():Vector.<int> 
+		{
+			var path:Vector.<int>  = new Vector.<int> ();
 
+			//just return an empty path if no path to target found or if
+			//no target has been specified
+			if ( !_solved || _goal < 0 ) return path;
+
+			var index:int = _goal;
+			path.unshift(index);
+
+			while (index != _start)
+			{
+				index = _route[index];
+				path.unshift(index);//push_front
+			}
+
+			return path;
+		}
 		
 	}
 }

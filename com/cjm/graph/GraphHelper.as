@@ -8,11 +8,11 @@ package com.cjm.graph
 	import com.cjm.graph.IEdge;
 	import com.cjm.graph.IGraph;
 	import com.cjm.graph.INode;
-	import com.cjm.graph.NavGraphNode;
 	import com.cjm.pathfinding.alg.Dijkstra;
 	import com.cjm.math.geom.Vector2D;
 	import com.cjm.pathfinding.alg.GraphSearch;
 	import com.cjm.utils.VectorUtil;
+	
 	public class GraphHelper
 	{
 		//--------------------------- Valid Neighbour ----------------------------
@@ -158,15 +158,15 @@ package com.cjm.graph
 		    var no_path:int = -1;
 		  
 		    var row:Vector.<int> = new Vector.<int>(g.getNumNodes(), true);
-		    VectorUtil.assign( row, g.getNumNodes(), no_path)
+		    row = VectorUtil.assign( row, no_path );
 		  
 		    var shortestPaths:Vector.<Vector.<int> >  = new Vector.<Vector.<int>>(g.getNumNodes(), true);
-            VectorUtil.assign( shortestPaths, g.getNumNodes(), row);
+            VectorUtil.assign( shortestPaths, row);
 		  
 		    for (var source:int=0; source<g.getNumNodes(); ++source)
 		    {
 		
-			    var graph:GraphSearch = new Dijkstra(g, source);
+			    var graph:Dijkstra = new Dijkstra(g, source);
                 graph.search();
 			
 			    //Shortest path tree
@@ -207,16 +207,16 @@ package com.cjm.graph
 		public static function createAllPairsCostsTable( g:IGraph ) : Vector.< Vector.<Number > > 
 		{
 		    var row:Vector.<Number> = new Vector.<Number> (g.getNumNodes(), true);
-			VectorUtil.assign( row, g.getNumNodes(), 0 );
+			VectorUtil.assign( row, 0 );
 			
 			//create a two dimensional vector
 		    var pathCosts:Vector.<Vector.<Number> > = new Vector.<Vector.<Number> >(g.getNumNodes(),true);
-            VectorUtil.assign( pathCosts, g.getNumNodes(), row );
+            VectorUtil.assign( pathCosts, row );
 			
 		    for (var source:int =0; source<g.getNumNodes(); ++source)
 		    {
 				//do the search
-				var search:Dijkstra = new Dijkstra( g, start );
+				var search:Dijkstra = new Dijkstra( g, source );
 
 				//assign cost from source to target in 2d vector
 				for (var target:int = 0; target<g.getNumNodes(); ++target)

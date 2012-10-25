@@ -15,16 +15,12 @@ package com.cjm.pathfinding.alg
 	import com.cjm.graph.EdgeIterator;
 	import com.cjm.graph.GraphEdge;
 	import com.cjm.graph.IGraph;
-	import com.cjm.graph.NavGraphEdge;
 	import com.cjm.pathfinding.heuristic.EuclidHeuristic;
 	import com.cjm.pathfinding.heuristic.IHeuristic;
 	import com.cjm.collections.IndexedPriorityQLow;
 	
 	public class AStar extends GraphSearch
 	{
-
-		//a reference to the graph to be searched
-		private var _graph:IGraph;
 
 		//indexed into my node. Contains the 'real' accumulative cost to that node
 		private var _gCost:Vector.<Number>;
@@ -38,22 +34,17 @@ package com.cjm.pathfinding.alg
 		private var _searchFrontier:Vector.<GraphEdge>;
 
 		//the source and target node indices
-		private var _start:int
-		private var _goal :int;
 		private var _heu  :IHeuristic;
 		private var _queue:IndexedPriorityQLow;
 		
-		public static var EuclidHueristic:IHeuristic = new EuclidHeuristic();
+		public static const EuclidHueristic:IHeuristic = new EuclidHeuristic();
 		
        
 		public function AStar( graph:IGraph, source:int, target:int = -1, h:IHeuristic=AStar.EuclidHueristic, useTicks:Boolean = false, tickAmt:int = -1 )
 		{               
-			super( useTicks, tickAmt );
+			super( graph, source, target, useTicks, tickAmt );
 			
 			_type = "AStar";
-			_graph = graph;
-			_start = start;
-			_goal = target
 			_visited =  new Vector<int>
 			_route   =  new Vector<int>
 			_heu = h;
