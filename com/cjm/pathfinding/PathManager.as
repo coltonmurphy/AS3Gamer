@@ -2,7 +2,7 @@
 
 package com.cjm.pathfinding
 {
-	import com.cjm.game.ai.pathfinding.alg.GraphSearch;
+	import com.cjm.pathfinding.alg.GraphSearch;
 	import com.cjm.game.core.GameSystem;
 	import com.cjm.game.core.IUpdate;
 	

@@ -11,9 +11,9 @@ package com.cjm.game.weapon
 	{
 		protected var _owner:IGameEntity;
 		
-		public function WeaponSystem( world:IGameEntity, owner:IGameEntity ) 
+		public function WeaponSystem( owner:IGameEntity ) 
 		{
-			super( world )
+			super( owner.getWorld() )
 			
 			_owner = owner;
 		}
@@ -23,7 +23,10 @@ package com.cjm.game.weapon
 			//Targeting system
 		}
 		
-		
+		public function changeWeapon( type:uint )
+		{
+			
+		}
 	}
 
 }

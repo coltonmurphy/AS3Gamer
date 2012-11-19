@@ -16,7 +16,7 @@ package com.cjm.math.geom
 	{
 		//given a plane and a ray this function determins how far along the ray 
 		//an interestion occurs. Returns negative if the ray is parallel
-		public static function GetDistanceToRayPlaneIntersection( rayOrigin:Vector2D,
+		public static function getDistanceToRayPlaneIntersection( rayOrigin:Vector2D,
 													  rayHeading:Vector2D,
 													  planePoint:Vector2D,  //any point on the plane
 													  planeNormal:Vector2D):Number
@@ -40,7 +40,7 @@ package com.cjm.math.geom
 		private static const plane_front:int    = 1;
 		private static const on_plane:int       = 2;
 		
-		public static function WhereIsPoint( point:Vector2D,
+		public static function whereIsPoint( point:Vector2D,
 									   pointOnPlane:Vector2D, //any point on the plane
 									   planeNormal:Vector2D):int 
 		{
@@ -63,7 +63,7 @@ package com.cjm.math.geom
 
 		private static const pi:Number = 3.14159;
 		//-------------------------- GetRayCircleIntersect -----------------------------
-		public static function GetRayCircleIntersect( rayOrigin:Vector2D,
+		public static function getRayCircleIntersect( rayOrigin:Vector2D,
 											 rayHeading:Vector2D,
 											 circleOrigin:Vector2D,
 											 radius:Number):Number
@@ -82,7 +82,7 @@ package com.cjm.math.geom
 		}
 
 		//----------------------------- DoRayCircleIntersect --------------------------
-		public static function DoRayCircleIntersect( rayOrigin:Vector2D,
+		public static function doRayCircleIntersect( rayOrigin:Vector2D,
 													 rayHeading:Vector2D,
 													 circleOrigin:Vector2D,
 													 radius:Number):Boolean
@@ -105,7 +105,7 @@ package com.cjm.math.geom
 		//
 		//  thanks to Dave Eberly for this one.
 		//------------------------------------------------------------------------
-		public static function GetTangentPoints ( centerV:Vector2D,  radius:Number, point:Vector2D , tanV1:Vector2D, tanV2:Vector2D):Boolean
+		public static function getTangentPoints ( centerV:Vector2D,  radius:Number, point:Vector2D , tanV1:Vector2D, tanV2:Vector2D):Boolean
 		{
 			var vectors:Vector.<Vector2D> = new Vector.<Vector2D>;
 			
@@ -135,7 +135,7 @@ package com.cjm.math.geom
 		//  given a line segment AB and a point P, this function calculates the 
 		//  perpendicular distance between them
 		//------------------------------------------------------------------------
-		public static function GetDistToLineSegment( A:Vector2D,
+		public static function getDistToLineSegment( A:Vector2D,
 										             B:Vector2D,
 										             P:Vector2D):Number
 		{
@@ -162,7 +162,7 @@ package com.cjm.math.geom
 		//
 		//  as above, but avoiding sqrt
 		//------------------------------------------------------------------------
-		public static function GetDistToLineSegmentSq( A:Vector2D,
+		public static function getDistToLineSegmentSq( A:Vector2D,
 										               B:Vector2D,
 										               P:Vector2D):Number
 		{
@@ -193,7 +193,7 @@ package com.cjm.math.geom
 		//
 		//----------------------------------------------------------------- 
 
-		public static function LinesIntersect( A:Vector2D,
+		public static function lineIntersection2D( A:Vector2D,
 									           B:Vector2D,
 											   C:Vector2D, 
 											   D:Vector2D):Boolean
@@ -228,7 +228,7 @@ package com.cjm.math.geom
 		//
 		//----------------------------------------------------------------- 
 
-		public static function DistanceToLineIntersection(  A:Vector2D,
+		public static function getDistanceToLineIntersection2D(  A:Vector2D,
 									                      B:Vector2D,
 												          C:Vector2D, 
 												          D:Vector2D):Number
@@ -269,7 +269,7 @@ package com.cjm.math.geom
 		//  occurs along AB. Also returns the 2d vector point to the point of
 		//  intersection
 		//----------------------------------------------------------------- 
-		public static function VectorOfLineIntersection( A:Vector2D,
+		public static function getVectorOfLineIntersection2D( A:Vector2D,
 									         B:Vector2D,
 									         C:Vector2D, 
 										     D:Vector2D):Vector2D
@@ -303,7 +303,7 @@ package com.cjm.math.geom
 		//
 		//  tests two polygons for intersection. *Does not check for enclosure*
 		//------------------------------------------------------------------------
-		public static function ObjectsIntersect(object1:Vector.<<Vector2D>> ,object2:Vector.<<Vector2D>>):Boolean
+		public static function objectIntersection2D(object1:Vector.<<Vector2D>> ,object2:Vector.<<Vector2D>>):Boolean
 		{
 		  //test each line segment of object1 against each segment of object2
 		  for (var r=0; r<object1.length-1; ++r)//.size() == length
@@ -328,7 +328,7 @@ package com.cjm.math.geom
 		//  tests a line segment against a polygon for intersection
 		//  *Does not check for enclosure*
 		//------------------------------------------------------------------------
-		public static function LineIntersectsObject( A:Vector2D, B:Vector2D, object:Vector.<<Vector2D>> )
+		public static function segmentObjectIntersection2D( A:Vector2D, B:Vector2D, object:Vector.<<Vector2D>> )
 		{
 		  //test AB against each segment of object
 		  for (var r=0; r<object.length-1; ++r)
@@ -347,7 +347,7 @@ package com.cjm.math.geom
 		//
 		//  Returns true if the two circles overlap
 		//------------------------------------------------------------------------
-		public static function CirclesOverlapped( x1:Number,  y1:Number,  r1:Number, 
+		public static function twoCirclesOverlapped( x1:Number,  y1:Number,  r1:Number, 
 												  x2:Number,  y2:Number,  r2:Number):Boolean
 		{
 		    var dist = Math.sqrt( (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
@@ -364,7 +364,7 @@ package com.cjm.math.geom
 		//
 		//  Returns true if the two circles overlap
 		//------------------------------------------------------------------------
-		public static function CirclesOverlappedVec2D( c1:Vector2D, r1:Number, c2:Vector2D, r2:Number ):Boolean
+		public static function twoCirclesOverlappedVec2D( c1:Vector2D, r1:Number, c2:Vector2D, r2:Number ):Boolean
 		{
 		    var dist:Number = c1.getDistance( c2 );
 
@@ -380,7 +380,7 @@ package com.cjm.math.geom
 		//
 		//  returns true if one circle encloses the other
 		//-------------------------------------------------------------------------
-		public static function CirclesEnclosed( x1:Number,  y1:Number,  r1:Number, x2:Number,  y2:Number,  r2:Number):Boolean
+		public static function twoCirclesEnclosed( x1:Number,  y1:Number,  r1:Number, x2:Number,  y2:Number,  r2:Number):Boolean
 		{
 			var dist:Number = Math.sqrt( (x1-x2) * (x1-x2) +
 											(y1-y2) * (y1-y2));
@@ -397,7 +397,7 @@ package com.cjm.math.geom
 		//
 		// see http://astronomy.swin.edu.au/~pbourke/geometry/2circle/
 		//------------------------------------------------------------------------ 
-		public static function GetCirclesIntersectionPoints( x1:Number,  y1:Number,  r1:Number, x2:Number,  y2:Number,  r2:Number):Vector.<Vector2D>
+		public static function getTwoCirclesIntersectionPoints( x1:Number,  y1:Number,  r1:Number, x2:Number,  y2:Number,  r2:Number):Vector.<Vector2D>
 		{
 			var result:Vector.<Vector2D> = new Vector.<Vector2D>;
 			
@@ -446,18 +446,21 @@ package com.cjm.math.geom
 		//
 		// see http://mathforum.org/library/drmath/view/54785.html
 		//-----------------------------------------------------------------------
-		public static function GetCirclesIntersectionArea( x1:Number,  y1:Number,  r1:Number,  x2:Number,  y2:Number,  r2:Number):Number
+		public static function getTwoCirclesIntersectionArea( x1:Number,  y1:Number,  r1:Number,  x2:Number,  y2:Number,  r2:Number):Number
 		{
 		  //first calculate the intersection points
-		  var iX1, iY1, iX2, iY2;
+		  var iX1; 
+		  var iY1; 
+		  var iX2; 
+		  var iY2;
 
-		  if(CirclesIntersectionPoints(x1,y1,r1,x2,y2,r2,iX1,iY1,iX2,iY2).length == 0)
+		  if(getCirclesIntersectionPoints(x1,y1,r1,x2,y2,r2,iX1,iY1,iX2,iY2).length == 0)
 		  {
-			return 0.0; //no overlap
+			 return 0.0; //no overlap
 		  }
 
 		  //calculate the distance between the circle centers
-		  var d:Number = sqrt( (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
+		  var d:Number = Math.sqrt( (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 
 		  //find the angles given that A and B are the two circle centers
 		  //and C and D are the intersection points
@@ -480,7 +483,7 @@ package com.cjm.math.geom
 		//
 		//  given the radius, calculates the area of a circle
 		//-----------------------------------------------------------------------
-		public static function GetCircleArea( radius:Number ):Number
+		public static function getCircleArea( radius:Number ):Number
 		{
 		    return Math.PI * radius * radius;
 		}
@@ -490,7 +493,7 @@ package com.cjm.math.geom
 		//
 		//  returns true if the point p is within the radius of the given circle
 		//------------------------------------------------------------------------
-		public static function PointInCircle( cpos:Vector2D, radius:Number , point:Vector2D):Boolean
+		public static function isPointInCircle( cpos:Vector2D, radius:Number , point:Vector2D):Boolean
 		{
 		    var distSq:Number = point.getDistanceSq( cpos );
 
@@ -507,7 +510,7 @@ package com.cjm.math.geom
 		//  returns true if the line segemnt AB intersects with a circle at
 		//  position P with radius radius
 		//------------------------------------------------------------------------
-		public static function  LineIntersectsCircle( A:Vector2D,//edge/line start
+		public static function  lineSegmentCircleIntersection( A:Vector2D,//edge/line start
 													  B:Vector2D,//edge/line end
 													  C:Vector2D,//circle position
 													  radius:Number//circle radius
@@ -537,19 +540,19 @@ package com.cjm.math.geom
 		//
 		//  returns false if no intersection point is found
 		//-----------------------------------------------------------------------------
-		inline bool GetLineSegmentCircleClosestIntersectionPoint(Vector2D A,
-																 Vector2D B,
-																 Vector2D pos,
-																 double    radius,
-																 Vector2D& IntersectionPoint)
+		public static function  getLineSegmentCircleClosestIntersectionPoint( A:Vector2D,
+																  B:Vector2D,
+																  pos:Vector2D,
+																  radius:Number,
+																  IntersectionPoint:Vector2D /*is a deep reference*/):Boolean
 		{
-		  Vector2D toBNorm = Vec2DNormalize(B-A);
+		  var toBNorm:Vector2D = Vector2D.Vec2DNormalize(B.subtract(A))//TODO: should clone vector math?;
 
 		  //move the circle into the local space defined by the vector B-A with origin
 		  //at A
-		  Vector2D LocalPos = PointToLocalSpace(pos, toBNorm, toBNorm.Perp(), A);
+		  var LocalPos:Vector2D = Geometry2D.pointToLocalSpace(pos, toBNorm, toBNorm.getPerp(), A);
 
-		  bool ipFound = false;
+		  var ipFound:Boolean = false;
 
 		  //if the local position + the radius is negative then the circle lays behind
 		  //point A so there is no intersection possible. If the local x pos minus the 
@@ -560,31 +563,216 @@ package com.cjm.math.geom
 		  {
 			 //if the distance from the x axis to the object's position is less
 			 //than its radius then there is a potential intersection.
-			 if (fabs(LocalPos.y) < radius)
+			 if (Math.abs(LocalPos.y) < radius)//fabs
 			 {
 				//now to do a line/circle intersection test. The center of the 
 				//circle is represented by A, B. The intersection points are 
 				//given by the formulae x = A +/-sqrt(r^2-B^2), y=0. We only 
 				//need to look at the smallest positive value of x.
-				double a = LocalPos.x;
-				double b = LocalPos.y;       
+				var a:Number = LocalPos.x;
+				var b:Number = LocalPos.y;       
 
-				double ip = a - sqrt(radius*radius - b*b);
+				var ip:Number = a - Math.sqrt(radius*radius - b*b);
 
 				if (ip <= 0)
 				{
-				  ip = a + sqrt(radius*radius - b*b);
+				  ip = a + Math.sqrt(radius*radius - b*b);
 				}
 
 				ipFound = true;
 
-				IntersectionPoint = A+ toBNorm*ip;
+				IntersectionPoint = A.add(toBNorm).scaleBy(ip);//A+ toBNorm*ip;
 			 }
 		   }
 
 		  return ipFound;
 		}
 
+		
+		//--------------------------- WorldTransform -----------------------------
+		//
+		//  given a std::vector of 2D vectors, a position, orientation and scale,
+		//  this function transforms the 2D vectors into the object's world space
+		//------------------------------------------------------------------------
+		public static function worldTransform(points:Vector.<Vector2D>, pos:Vector2D,forward:Vector2D, side:Vector2D,scale:Vector2D):Vector<Vector2D>
+		{
+			//copy the original vertices into the buffer about to be transformed
+		    var tranVector2Ds:Vector.<Vector2D> = points.slice();
+		  
+		    //create a transformation matrix
+		    var m :Matrix2D = new Matrix2D();
+			
+			//scale
+		    if ( (scale.x != 1.0) || (scale.y != 1.0) )
+		    {
+				m.scale(scale.x, scale.y);
+		    }
+
+			//rotate
+			m.rotateVec2D(forward, side);
+
+			//and translate
+			m.translate(pos.x, pos.y);
+			
+		    //now transform the object's vertices
+		    m.transformVector2Ds(tranVector2Ds);
+
+		    return tranVector2Ds;
+		}
+		
+		//--------------------- PointToWorldSpace --------------------------------
+		//
+		//  Transforms a point from the agent's local space into world space
+		//------------------------------------------------------------------------
+		public static function pointToWorldSpace( point:Vector2D,
+										   entityHeading:Vector2D,
+										   entitySide:Vector2D,
+										   entityPosition:Vector2D):Vector2D
+		{
+			//make a copy of the point
+		    var p:Vector2D = point.clone();
+		  
+		    //create a transformation matrix
+			var m :Matrix2D = new Matrix2D();
+
+			//rotate
+			m.rotateVec2D(entityHeading, entitySide);
+
+			//and translate
+			m.translate(entityPosition.x, entityPosition.y);
+			
+		    //now transform the vertices
+		    m.transformVector2D(p);
+
+		   nreturn p;
+		}
+		
+		//--------------------- VectorToWorldSpace --------------------------------
+		//
+		//  Transforms a vector from the agent's local space into world space
+		//------------------------------------------------------------------------
+		public static function vectorToWorldSpace( v:Vector2D,
+										    entityHeading:Vector2D,
+										    entitySide:Vector2D):Vector2D
+		{
+			//make a copy of the point
+			var vec = v.clone();
+		  
+		    //create a transformation matrix
+			var m :Matrix2D = new Matrix2D();
+
+			//rotate
+			m.rotateVec2D(entityHeading, entitySide);
+
+		    //now transform the vertices
+		    m.transformVector2D(vec);
+
+		    return vec;
+		}
+		
+		//--------------------- PointToLocalSpace --------------------------------
+		//
+		//------------------------------------------------------------------------
+		public static function pointToLocalSpace( p:Vector2D,
+												  entityHeading:Vector2D, 
+												  entitySide:Vector2D, 
+												  entityPosition:Vector2D):Vector2D
+		{
+			//make a copy of the point
+		    var tp = p.clone();
+		  
+		    //create a transformation matrix
+			var m:Matrix2D = new Matrix2D();
+
+		    var tx:Number = -entityPosition.getDot(entityHeading);
+		    var ty:Number = -entityPosition.getDot(entitySide);
+
+		    //create the transformation matrix
+		    m._11(entityHeading.x); 
+			m._12(entitySide.x);
+		    m._21(entityHeading.y); 
+			m._22(entitySide.y);
+		    m._31(tx);           
+			m._32(ty);
+			
+		    //now transform the vertices
+		    m.transformVector2D(tp);
+
+		    return tp;
+		}
+
+		//--------------------- VectorToLocalSpace --------------------------------
+		//
+		//------------------------------------------------------------------------
+		public static function vectorToLocalSpace(vec:Vector2D,
+												  entityHeading:Vector2D, 
+												  entitySide:Vector2D )
+		{ 
+			//make a copy of the point
+		    var tp:Vector2D = vec.clone();
+		  
+		    //create a transformation matrix
+			var m:Matrix2D = new Matrix2D();
+
+		    //create the transformation matrix
+		    m._11(entityHeading.x);
+			m._12(entitySide.x);
+		    m._21(entityHeading.y);
+			m._22(entitySide.y);
+			
+		    //now transform the vertices
+		    m.transformVector2D(tp);
+
+		    return tp;
+		}
+
+		//-------------------------- Vec2DRotateAroundOrigin --------------------------
+		//
+		//  rotates a vector ang rads around the origin
+		//-----------------------------------------------------------------------------
+		public static function vec2DRotateAroundOrigin( v:Vector2D, ang:Number):void
+		{
+		  //create a transformation matrix
+		  var m:Matrix2D = new Matrix2D();
+
+		  //rotate
+		  m.rotate(ang);
+			
+		  //now transform the object's vertices
+		  mat.transformVector2Ds(v);
+		}
+
+		//------------------------ Create Whiskers -----------------------------------
+		//
+		//  given an origin, a facing direction, a 'field of view' describing the 
+		//  limit of the outer whiskers, a whisker length and the number of whiskers
+		//  this method returns a vector containing the end positions of a series
+		//  of whiskers radiating away from the origin and with equal distance between
+		//  them. (like the spokes of a wheel clipped to a specific segment size)
+		//----------------------------------------------------------------------------
+		public static function createWhiskers( amount:uint, length:Number,fov:Number,
+													      facing:Vector2D,
+													      origin:Vector2D):Vector.<Vector2D>
+		{
+		  //this is the magnitude of the angle separating each whisker
+		  var sectorSize:Number = fov/Number(amount-1);
+
+		  var whiskers:Vector<Vector2D> = new Vector.<Vector2D>();
+		  var temp:Vector2D = new Vector2D;
+		  var angle:Number = -fov*0.5; 
+		
+		  for ( var w=0:uint; w<amount; ++w)
+		  {
+			//create the whisker extending outwards at this angle
+			temp = facing;
+			vec2DRotateAroundOrigin(temp, angle);
+			whiskers.push(origin.addBy( length) .multiply( temp ));
+
+			angle+=sectorSize;
+		  }
+
+		  return whiskers;
+		}
 	}
 }
 

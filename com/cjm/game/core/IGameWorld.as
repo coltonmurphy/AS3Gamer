@@ -17,10 +17,6 @@ package com.cjm.game.core
 		
 		//Tag for processing
 		function tagObstaclesWithinViewRange( ige:IGameEntity, range:Number ):Boolean;
-		
-		//Calculate point to local space
-		function pointToLocalSpace( obstaclePos:Vector2D, myHeading:Vector2D, mySide:Vector2D, myPos:Vector2D ):Vector2D;
-		function pointToGlobalSpace( obstaclePos:Vector2D, myHeading:Vector2D, mySide:Vector2D, myPos:Vector2D ):Vector2D;
 	}
 	
 }

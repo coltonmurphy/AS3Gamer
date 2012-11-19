@@ -1,9 +1,10 @@
 package com.cjm.game.weapon 
 {
+	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.core.GameSystem;
 	import com.cjm.game.core.IGameEntity;
 	import com.cjm.game.core.IGameWorld;
-	import flash.geom.Vector3D;
+	import com.cjm.math.geom.Vector2D
 	
 	/**
 	 * ...
@@ -12,9 +13,9 @@ package com.cjm.game.weapon
 	public class TargetingSystem extends GameSystem 
 	{
 		
-		public function TargetingSystem(world:IGameWorld) 
+		public function TargetingSystem(owner:IAgent) 
 		{
-			super(world);
+			super(owner.getWorld());
 			
 		}
 		

@@ -65,6 +65,8 @@ package com.cjm.game.ai.behaviors.steering
 		
 		public function SteeringSystem( owner:IGameMovingEntity ) 
 		{
+			super( owner.getWorld() );
+			
 			_owner = owner;
 			_entityBehaviors = new Dictionary( true );
 			_entityActiveBehaviors = new Array
@@ -116,7 +118,7 @@ package com.cjm.game.ai.behaviors.steering
 		public function calculate():Vector2D
 		{
 			//reset the steering force
-		    _steeringForce.Zero();
+		    _steeringForce.zero();
 
 		    //use space partitioning to calculate the neighbours of this vehicle
 		    //if switched on. If not, use the standard tagging system

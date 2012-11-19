@@ -7,22 +7,19 @@ package com.cjm.patterns.core
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public class Entity extends Abstract implements IEntity 
+	public class Entity extends Object implements IEntity 
 	{
 		protected var _type:String;
+		protected var _name:String;
 		
-		public function Entity() 
+		public function Entity( type:String="Entity", name:String='None' ) 
 		{
-			
+			_type = type;
+			_name = name;
 		}
 		public function getType():String
 		{
-			throw new Error("Entity subclass must override getType() method");
+			return _type;
 		}
-		public function setType(t:String):void
-		{
-			throw new Error("Entity subclass must override getType() method");
-		};
 	}
-
 }

@@ -1,6 +1,6 @@
 
 
-package com.cjm.game.ai.pathfinding
+package com.cjm.pathfinding
 {
 	import com.cjm.collections.iterators.Iterator;
 	import com.cjm.game.ai.agent.IAgent;

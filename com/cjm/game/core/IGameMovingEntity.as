@@ -1,6 +1,6 @@
 package com.cjm.game.core 
 {
-	import com.cjm.utils.math.Vector2D;
+	import com.cjm.math.geom.Vector2D;
 
 	
 	/**
@@ -12,6 +12,7 @@ package com.cjm.game.core
 		function setVelocity(v:Vector2D):Boolean;
 		function getVelocity():Vector2D;
 		
+		function rotateFacingTowardPosition( target:Vector2D ):Boolean
 		function setHeading(v:Vector2D):Boolean;
 		function getHeading():Vector2D;
 

@@ -7,6 +7,7 @@ package com.cjm.game.ai.behaviors.steering
 	import com.cjm.game.ai.agent.IAgent;
 	import com.cjm.game.ai.behaviors.Behavior;
 	import com.cjm.game.core.IGameEntity;
+	import com.cjm.math.geom.Geometry2D;
 	import com.cjm.utils.math.Vector2D;
 
 	internal class ObstacleAvoidance extends Behavior
@@ -45,7 +46,7 @@ package com.cjm.game.ai.behaviors.steering
 				if ( curbObj.isTagged() )
 				{
 					//Local position
-					var localPos:Vector2D = curbObj.getWorld().pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
+					var localPos:Vector2D = Geometry2D.pointToLocalSpace( curbObj.getPosition(), _owner.getHeading(), _owner.getSide(), _owner.getPosition());
 			
 					//If the local position has a negative x calue then it must lay behind th agent
 					if ( localPos.x >= 0 )
@@ -96,7 +97,7 @@ package com.cjm.game.ai.behaviors.steering
 			}
 			
 			//Steering force updated
-			_steeringForce = _owner.getWorld().pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
+			_steeringForce = Geometry2D.pointToGlobalSpace(_steeringForce, _owner.getHeading(), _owner.getSide() )
 			
 			return super.calculate( multiplierModifier );
 		}

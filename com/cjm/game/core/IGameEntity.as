@@ -4,8 +4,7 @@ package com.cjm.game.core
 	import com.cjm.patterns.core.IEntity;
 	import com.cjm.patterns.core.IUpdate;
 	import flash.display.DisplayObject;
-	import flash.geom.Vector3D;
-	import org.osflash.signals.ISignal;
+
 	
 	/**
 	 * ...
@@ -26,6 +25,9 @@ package com.cjm.game.core
 		function isTagged():Boolean;
 		function setTagged(t:Boolean):void;
 		
+		function setFacing(val:Vector2D):void;
+		function getFacing():Vector2D;
+		
 		function setMass(m:uint):Boolean;
 		function getMass():uint;
 
@@ -38,6 +40,6 @@ package com.cjm.game.core
 		function setRadius(b:Number):void
 		function getRadius(b):Number;
 		
-		function getDistance(s:Vector3D):Number
+		function getDistance(s:Vector2D):Number
 	}
 }
