@@ -1,4 +1,3 @@
-AS3Gamer Read Me:
-This package is in flux; in progress. 
-It is a, ActionScript3 game engine utilizing 2D Vector Math. It does/will use conventional methodologies for Game AI, ie, pathfinding, steering behaviors, advanced data structures, ect.
-Updates will take place periodically. Any questions, email coltonjmurphy@gmail.com
+
+It is an ActionScript3 game engine utilizing 2D Vector Math. It does/will use conventional methodologies for Game AI, ie, pathfinding, steering behaviors, advanced data structures, ect.
+This logic is in flux; progressing. Updates will take place periodically. Any questions or suggestions, please email me at coltonjmurphy@gmail.com.
