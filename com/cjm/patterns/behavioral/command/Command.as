@@ -13,34 +13,48 @@ package com.cjm.patterns.behavioral.command
 	 */
 	public class Command extends Abstract implements ICommand 
 	{
-		public var facade:IFacade;
+		private var _facade:IFacade;
 		private var _context:IContext;
-		private var _note:INotification;
-		private var _onExecute:ISignal;
-		private var _onUndo:ISignal;
+		private var _note:INotification; // store for undo's 
+		protected var _onExecute:ISignal;
+		protected var _onUndo:ISignal;
+		
+		public function Command()
+		{
+			_onExecute = new Signal( Array );
+			_onUndo    = new Signal( Array );
+		}
 		
 		public function execute( c:IContext, n:INotification ):Boolean
 		{
 			_context = c;
-			_note = n;
-			onExecute.dispatch(c,n);
+			_note    = n;
+			onExecute.dispatch([_context, _note]);
+			retyrb true;
 		};
 		
 		public function undo( ):Boolean
 		{
-		
-			onUndo.dispatch(_context,_note);
+			if ( null != _note )
+			{
+				onUndo.dispatch( [_context, _note] );
+			
+				_context = null;
+				_note    = null;
+				return true;
+			}
+			
+			return false;
 		};
 		
 		public function get onExecute():ISignal 
 		{
-			return return _onExecute || (_onExecute = new Signal(_context,_note ));
+			return _onExecute;
 		}
 		
 		public function get onUndo():ISignal 
 		{
-			return return _onUndo || (_onUndo = new Signal(_context,_note ));
+			return _onUndo; 
 		}
 	}
-
 }

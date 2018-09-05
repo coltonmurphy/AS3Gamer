@@ -1,6 +1,6 @@
 package com.cjm.patterns.behavioral.observer
 {
-	
+	import com.cjm.patterns.core.IEntity;
 	/**
 	 * ...
 	 * @author Colton Murphy
@@ -9,8 +9,8 @@ package com.cjm.patterns.behavioral.observer
 	{
 		public function getBody():*
 		public function setBody(b:*):*
-		public function getNote():String
-		public function setNote(s:String):*
+		public function getString():String
+		public function setString(s:String):*
 
 	}
 	

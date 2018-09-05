@@ -22,6 +22,7 @@ package com.cjm.view
 			if ( ! _hasStarted )
 			{
 				_canvas.moveTo( x, y );
+				_hasStarted = true;
 			}
 			else
 			{
