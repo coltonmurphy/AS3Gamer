@@ -13,7 +13,6 @@ package com.cjm.math.geom
 	  
 		public function InvertedAABBox2D( tl:Vector2D, br:Vector2D)
 		{
-			_renderSignal = new Signal(Array)
 		    _topLeft = tl;
 		    _bottomRight = br;
 		    _center = tl.clone().add(br).divideBy( 2 );
@@ -43,9 +42,9 @@ package com.cjm.math.geom
 		    var renderCenter:Boolean = params.length ? params[0] : false; 
 			
 			//todo: graphic collision detection
-			//todo: possibly supply drawing context or dispatch info for rendering engine to prioritize and validate
+			//todo: possibly supply drawing context or dispatch info for rendering engine to prioritize and render updates, validation, collision, ect
 			
-			/*var gdi:*  we will likely create a singleton to manage render updates, validation, collision, ect
+			/*var gdi:*  we will likely create a singleton for centralized data comparison and renderings
 		    gdi.line(left(), top(), right(), top() );
 		    gdi.line(left(), bottom(), right(), bottom() );
 		    gdi.line(left(), top(), left(), bottom() );
