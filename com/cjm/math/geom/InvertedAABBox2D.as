@@ -2,8 +2,9 @@
 
 package com.cjm.math.geom
 {
-	import com.cjm.game.core.IRender;
-	
+	import com.cjm.core.IRender;
+
+
 	public class InvertedAABBox2D implements IRender
 	{
 		private var  _topLeft:Vector2D;
@@ -12,6 +13,7 @@ package com.cjm.math.geom
 	  
 		public function InvertedAABBox2D( tl:Vector2D, br:Vector2D)
 		{
+			_renderSignal = new Signal(Array)
 		    _topLeft = tl;
 		    _bottomRight = br;
 		    _center = tl.clone().add(br).divideBy( 2 );
@@ -20,10 +22,10 @@ package com.cjm.math.geom
 	    //returns true if the bbox described by other intersects with this one
 	    public function isOverlappedWith(const InvertedAABBox2D& other):Boolean
 	    {
-			return !((other.top() > this.bottom()) ||
-				   (other.bottom() < this.top()) ||
-				   (other.left() > this.right()) ||
-				   (other.right() < this.left()));
+			return !((other.top() > bottom()) ||
+				   (other.bottom() < top()) ||
+				   (other.left() > right()) ||
+				   (other.right() < left()));
 	    }
 
 	  
@@ -40,16 +42,20 @@ package com.cjm.math.geom
 	    {
 		    var renderCenter:Boolean = params.length ? params[0] : false; 
 			
-		    gdi.line((int)left(), top(), right(), top() );
-		    gdi.line((int)left(), bottom(), right(), bottom() );
-		    gdi.line((int)left(), top(), left(), bottom() );
-		    gdi.line((int)Right(), top(), right(), bottom() );
-
+			//todo: graphic collision detection
+			//todo: possibly supply drawing context or dispatch info for rendering engine to prioritize and validate
+			
+			/*var gdi:*  we will likely create a singleton to manage render updates, validation, collision, ect
+		    gdi.line(left(), top(), right(), top() );
+		    gdi.line(left(), bottom(), right(), bottom() );
+		    gdi.line(left(), top(), left(), bottom() );
+		    gdi.line(right(), top(), right(), bottom() );
 
 			if (renderCenter)
 			{
 			    gdi.circle(_center, 5);
-			}
+			}*/
+	
 	    }
 
 	};

@@ -6,11 +6,10 @@ package com.cjm.ui
 	 * ...
 	 * @author Colton Murphy
 	 */
-	public interface IButton
+	public interface IButton extends IInteractable
 	{
 		public function set label( value:String ):void
-		public function set enabled( value:Boolean ):void
-		
+
 		protected function onClickEvent( event:MouseEvent ):void
 		protected function onPressEvent( event:MouseEvent ):void
 		protected function onReleaseEvent( event:MouseEvent ):void
